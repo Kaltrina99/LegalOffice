@@ -15,4 +15,8 @@
     <ProjectReference Include="..\LegalOfficeWeb_DataAccess\LegalOfficeWeb_DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
