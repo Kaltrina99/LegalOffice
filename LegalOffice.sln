@@ -3,7 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalOfficeWeb_Server", "LegalOfficeWeb_Server\LegalOfficeWeb_Server.csproj", "{FE55576C-423D-474C-848D-9ED09E756890}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LegalOfficeWeb_Server", "LegalOfficeWeb_Server\LegalOfficeWeb_Server.csproj", "{FE55576C-423D-474C-848D-9ED09E756890}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LegalOfficeWeb_Models", "LegalOfficeWeb_Models\LegalOfficeWeb_Models.csproj", "{258BD305-8C9D-40EC-96D4-17F154D88C66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalOfficeWeb_Client", "LegalOfficeWeb_Client\LegalOfficeWeb_Client.csproj", "{6117F255-7060-4593-8CE0-223D8AB6D57B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalOfficeWeb_Business", "LegalOfficeWeb_Business\LegalOfficeWeb_Business.csproj", "{E06C1230-32A1-430E-9A1D-31770B0A8606}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalOfficeWeb_Common", "LegalOfficeWeb_Common\LegalOfficeWeb_Common.csproj", "{66416FB5-5282-491B-8807-93B71F41F777}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalOfficeWeb_DataAccess", "LegalOfficeWeb_DataAccess\LegalOfficeWeb_DataAccess.csproj", "{A6397F97-424F-4A5F-85F5-D669F18F538A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalOfficeWeb_API", "LegalOfficeWeb_API\LegalOfficeWeb_API.csproj", "{2319548E-37E0-4A9B-ABF7-B01EA70E3C14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +27,30 @@ Global
 		{FE55576C-423D-474C-848D-9ED09E756890}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE55576C-423D-474C-848D-9ED09E756890}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE55576C-423D-474C-848D-9ED09E756890}.Release|Any CPU.Build.0 = Release|Any CPU
+		{258BD305-8C9D-40EC-96D4-17F154D88C66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{258BD305-8C9D-40EC-96D4-17F154D88C66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{258BD305-8C9D-40EC-96D4-17F154D88C66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{258BD305-8C9D-40EC-96D4-17F154D88C66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6117F255-7060-4593-8CE0-223D8AB6D57B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6117F255-7060-4593-8CE0-223D8AB6D57B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6117F255-7060-4593-8CE0-223D8AB6D57B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6117F255-7060-4593-8CE0-223D8AB6D57B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E06C1230-32A1-430E-9A1D-31770B0A8606}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E06C1230-32A1-430E-9A1D-31770B0A8606}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E06C1230-32A1-430E-9A1D-31770B0A8606}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E06C1230-32A1-430E-9A1D-31770B0A8606}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66416FB5-5282-491B-8807-93B71F41F777}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66416FB5-5282-491B-8807-93B71F41F777}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66416FB5-5282-491B-8807-93B71F41F777}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66416FB5-5282-491B-8807-93B71F41F777}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6397F97-424F-4A5F-85F5-D669F18F538A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6397F97-424F-4A5F-85F5-D669F18F538A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6397F97-424F-4A5F-85F5-D669F18F538A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6397F97-424F-4A5F-85F5-D669F18F538A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2319548E-37E0-4A9B-ABF7-B01EA70E3C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2319548E-37E0-4A9B-ABF7-B01EA70E3C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2319548E-37E0-4A9B-ABF7-B01EA70E3C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2319548E-37E0-4A9B-ABF7-B01EA70E3C14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
