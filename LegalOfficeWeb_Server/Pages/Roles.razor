@@ -1,0 +1,46 @@
+﻿@page "/role"
+
+@inject IRoleRepository _roleRepository
+
+
+<h3>Roles</h3>
+<table class="table table-bordered">
+                 <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Actions</th>
+                         <th>Name</th>
+                        <th>Actions</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var objCat in Role)
+                    {
+                        <tr>
+                            <td>
+                                @objCat.RoleId
+                            </td> 
+                             <td>
+                                @objCat.RoleName
+                            </td> 
+                             <td>
+                                @objCat.RoleNameAl
+                            </td> 
+                             <td>
+                                @objCat.Active
+                            </td> 
+                            
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+@code {
+    private List<Role> Role { get; set; } = new List<Role>();
+    protected override async Task OnInitializedAsync()
+    {
+        Role = _roleRepository.GetAll();
+    }
+
+}

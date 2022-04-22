@@ -12,8 +12,4 @@
     <ProjectReference Include="..\LegalOfficeWeb_Models\LegalOfficeWeb_Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repository\IRepository\" />
-  </ItemGroup>
-
 </Project>
