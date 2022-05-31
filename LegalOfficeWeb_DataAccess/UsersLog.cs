@@ -3,14 +3,9 @@ using System.Collections.Generic;
 
 namespace LegalOfficeWeb_DataAccess
 {
-    public partial class User
+    public partial class UsersLog
     {
-        public User()
-        {
-            UserRoles = new HashSet<UserRole>();
-        }
-
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public string? UserName { get; set; }
         public string? Password { get; set; }
         public string? Email { get; set; }
@@ -21,7 +16,7 @@ namespace LegalOfficeWeb_DataAccess
         public int? BlockedUser { get; set; }
         public DateTime? BlockedDate { get; set; }
         public int? EmpId { get; set; }
-
-        public virtual ICollection<UserRole> UserRoles { get; set; }
+        public int? LogUserId { get; set; }
+        public DateTime? LogDate { get; set; }
     }
 }

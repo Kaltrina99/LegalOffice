@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_DataAccess
 {
     public partial class CvlRiskLevel
     {
@@ -10,8 +10,9 @@ namespace LegalOfficeWeb_DataAccess.Data
             CvlProcesses = new HashSet<CvlProcess>();
         }
 
-        public int CvlRiskLevelId { get; set; }
-        public string? CvlRiskLevelName { get; set; }
+        public int RiskLevelId { get; set; }
+        public string? RiskLevelName { get; set; }
+        public bool? Active { get; set; }
 
         public virtual ICollection<CvlProcess> CvlProcesses { get; set; }
     }

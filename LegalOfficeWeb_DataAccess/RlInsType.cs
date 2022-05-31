@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_DataAccess
 {
     public partial class RlInsType
     {

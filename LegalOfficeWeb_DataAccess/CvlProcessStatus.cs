@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_DataAccess
 {
     public partial class CvlProcessStatus
     {
@@ -10,10 +10,10 @@ namespace LegalOfficeWeb_DataAccess.Data
             CvlProcessDetails = new HashSet<CvlProcessDetail>();
         }
 
-        public int CvlProcessStatusId { get; set; }
-        public string? CvlProcessStatusName { get; set; }
-        public string? CvlProcessStatusNameAl { get; set; }
-        public bool? CvlProcessStatusIsActive { get; set; }
+        public int ProcessStatusId { get; set; }
+        public string? ProcessStatusName { get; set; }
+        public string? ProcessStatusNameAl { get; set; }
+        public bool? Active { get; set; }
 
         public virtual ICollection<CvlProcessDetail> CvlProcessDetails { get; set; }
     }

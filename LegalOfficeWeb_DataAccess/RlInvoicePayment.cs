@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_DataAccess
 {
     public partial class RlInvoicePayment
     {
         public int Id { get; set; }
         public int? AgreementId { get; set; }
-        public int? CaseId { get; set; }
-        public string? AgencyId { get; set; }
-        public int? EldebitorId { get; set; }
         public int? InvoiceId { get; set; }
-        public int? InvoiceIdccp { get; set; }
-        public int? InvoiceIdrl { get; set; }
-        public decimal? InvoiceAmount { get; set; }
-        public decimal? InvoiceAmountInv { get; set; }
         public int? CollectionId { get; set; }
+        public int? ArchiveId { get; set; }
         public decimal? Credit { get; set; }
         public decimal? CreditInv { get; set; }
         public int? CreatedUser { get; set; }

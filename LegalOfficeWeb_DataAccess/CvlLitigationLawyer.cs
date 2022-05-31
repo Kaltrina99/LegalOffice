@@ -1,11 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_DataAccess
 {
     public partial class CvlLitigationLawyer
     {
-        public int CvlLitigationLawyerId { get; set; }
-        public string? CvlLitigationLawyerName { get; set; }
+        public CvlLitigationLawyer()
+        {
+            CvlProcesses = new HashSet<CvlProcess>();
+        }
+
+        public int LitigationLawyerId { get; set; }
+        public string? LitigationLawyerName { get; set; }
+        public bool? Active { get; set; }
+
+        public virtual ICollection<CvlProcess> CvlProcesses { get; set; }
     }
 }

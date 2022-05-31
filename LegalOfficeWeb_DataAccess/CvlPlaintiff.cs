@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_DataAccess
 {
     public partial class CvlPlaintiff
     {
-        public int? CvlProcessId { get; set; }
-        public string? CvlPlaintiffName { get; set; }
-        public string? CvlPlaintiffIdentityNr { get; set; }
-        public string? CvlPlaintBusinessNr { get; set; }
-        public bool? CvlPfIsDeleted { get; set; }
+        public int? ProcessId { get; set; }
+        public string? PlaintiffName { get; set; }
+        public string? PlaintiffIdentityNr { get; set; }
+        public string? PlaintBusinessNr { get; set; }
+        public bool? PfIsDeleted { get; set; }
 
-        public virtual CvlProcess? CvlProcess { get; set; }
+        public virtual CvlProcess? Process { get; set; }
     }
 }

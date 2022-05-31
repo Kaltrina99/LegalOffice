@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_DataAccess
 {
     public partial class CvlProcessDetail
     {
-        public int CvlProcessDetailId { get; set; }
-        public int? CvlProcessId { get; set; }
-        public int? CvlProcessStatusId { get; set; }
-        public DateTime? CvlPdDate { get; set; }
-        public DateTime? CvlPdCreateDate { get; set; }
-        public int? CvlPdCreateUserId { get; set; }
-        public string? CvlPdCreateComment { get; set; }
-        public string? CvlPdDocumentPath { get; set; }
-        public bool? CvlPdIsDeleted { get; set; }
-        public int? CvlPdIsDeletedUserId { get; set; }
-        public DateTime? CvlPdIsDeletedDate { get; set; }
-        public string? CvlPdIsDeletedComment { get; set; }
-        public decimal? CvlCaseFinishedAmount { get; set; }
-        public int? CvlFinishedKedsdebitor { get; set; }
+        public int ProcessDetailId { get; set; }
+        public int? ProcessId { get; set; }
+        public int? ProcessStatusId { get; set; }
+        public DateTime? PdDate { get; set; }
+        public DateTime? PdCreatedDate { get; set; }
+        public int? PdCreatedUser { get; set; }
+        public string? PdCreatedComment { get; set; }
+        public string? PdDocumentPath { get; set; }
+        public bool? PdDeleted { get; set; }
+        public int? PdDeletedUser { get; set; }
+        public DateTime? PdDeletedDate { get; set; }
+        public string? PdDeletedComment { get; set; }
+        public decimal? CaseFinishedAmount { get; set; }
+        public int? FinishedKedsdebitor { get; set; }
 
-        public virtual CvlProcess? CvlProcess { get; set; }
-        public virtual CvlProcessStatus? CvlProcessStatus { get; set; }
+        public virtual CvlProcess? Process { get; set; }
+        public virtual CvlProcessStatus? ProcessStatus { get; set; }
     }
 }

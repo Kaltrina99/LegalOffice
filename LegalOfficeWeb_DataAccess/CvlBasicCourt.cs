@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_DataAccess
 {
     public partial class CvlBasicCourt
     {
@@ -10,8 +10,9 @@ namespace LegalOfficeWeb_DataAccess.Data
             CvlProcesses = new HashSet<CvlProcess>();
         }
 
-        public int CvlBasicCourtId { get; set; }
-        public string? CvlBasicCourtName { get; set; }
+        public int BasicCourtId { get; set; }
+        public string? BasicCourtName { get; set; }
+        public bool? Active { get; set; }
 
         public virtual ICollection<CvlProcess> CvlProcesses { get; set; }
     }

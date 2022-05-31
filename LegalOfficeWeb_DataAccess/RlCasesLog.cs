@@ -3,17 +3,9 @@ using System.Collections.Generic;
 
 namespace LegalOfficeWeb_DataAccess
 {
-    public partial class RlCase
+    public partial class RlCasesLog
     {
-        public RlCase()
-        {
-            RlAgreements = new HashSet<RlAgreement>();
-            RlCaseDocs = new HashSet<RlCaseDoc>();
-            RlCaseHistories = new HashSet<RlCaseHistory>();
-            RlCaseInputs = new HashSet<RlCaseInput>();
-        }
-
-        public int CaseId { get; set; }
+        public int? CaseId { get; set; }
         public string? CaseNr { get; set; }
         public string? AgencyId { get; set; }
         public int? EldebitorId { get; set; }
@@ -31,11 +23,7 @@ namespace LegalOfficeWeb_DataAccess
         public int? DeletedUser { get; set; }
         public DateTime? DeletedDate { get; set; }
         public string? DeletedComment { get; set; }
-
-        public virtual RlDepartment? Department { get; set; }
-        public virtual ICollection<RlAgreement> RlAgreements { get; set; }
-        public virtual ICollection<RlCaseDoc> RlCaseDocs { get; set; }
-        public virtual ICollection<RlCaseHistory> RlCaseHistories { get; set; }
-        public virtual ICollection<RlCaseInput> RlCaseInputs { get; set; }
+        public int? LogUserId { get; set; }
+        public DateTime? LogDate { get; set; }
     }
 }

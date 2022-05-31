@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_DataAccess
 {
     public partial class RlAgrinvoice
     {
@@ -15,9 +15,9 @@ namespace LegalOfficeWeb_DataAccess.Data
         public int? InvoiceIdrl { get; set; }
         public decimal? InvoiceAmount { get; set; }
         public decimal? InvoiceAmountInv { get; set; }
-        public bool? Deleted { get; set; }
-        public int? DeletedUser { get; set; }
-        public DateTime? DeletedDate { get; set; }
+        public int? CreatedUser { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public bool? Active { get; set; }
 
         public virtual RlAgreement? Agreement { get; set; }
     }

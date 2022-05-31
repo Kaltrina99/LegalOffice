@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_DataAccess
 {
     public partial class CvlExpert
     {
-        public int CvlExpertId { get; set; }
-        public string? CvlExpertName { get; set; }
+        public int ExpertId { get; set; }
+        public string? ExpertName { get; set; }
+        public bool? Active { get; set; }
     }
 }

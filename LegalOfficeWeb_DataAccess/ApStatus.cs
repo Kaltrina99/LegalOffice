@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace LegalOfficeWeb_DataAccess
 {
-    public partial class RlCaseStatus
+    public partial class ApStatus
     {
-        public RlCaseStatus()
+        public ApStatus()
         {
-            RlCaseHistories = new HashSet<RlCaseHistory>();
+            ApHistories = new HashSet<ApHistory>();
         }
 
         public int StatusId { get; set; }
@@ -15,6 +15,6 @@ namespace LegalOfficeWeb_DataAccess
         public string? StatusNameAl { get; set; }
         public bool? Active { get; set; }
 
-        public virtual ICollection<RlCaseHistory> RlCaseHistories { get; set; }
+        public virtual ICollection<ApHistory> ApHistories { get; set; }
     }
 }

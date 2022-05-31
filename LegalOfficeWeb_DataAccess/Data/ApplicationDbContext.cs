@@ -1,11 +1,7 @@
-﻿using LegalOfficeWeb_DataAccess.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace LegalOfficeWeb_DataAccess.Data
 {
@@ -13,12 +9,23 @@ namespace LegalOfficeWeb_DataAccess.Data
     {
         public ApplicationDbContext()
         {
-
         }
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
         {
-
         }
+
+        public virtual DbSet<ApHistory> ApHistories { get; set; } = null!;
+        public virtual DbSet<ApMain> ApMains { get; set; } = null!;
+        public virtual DbSet<ApStatus> ApStatuses { get; set; } = null!;
+        public virtual DbSet<CcDecisionType> CcDecisionTypes { get; set; } = null!;
+        public virtual DbSet<CcDetail> CcDetails { get; set; } = null!;
+        public virtual DbSet<CcInstanceType> CcInstanceTypes { get; set; } = null!;
+        public virtual DbSet<CcMain> CcMains { get; set; } = null!;
+        public virtual DbSet<CcPhase> CcPhases { get; set; } = null!;
+        public virtual DbSet<CcPhaseType> CcPhaseTypes { get; set; } = null!;
+        public virtual DbSet<CcStatus> CcStatuses { get; set; } = null!;
         public virtual DbSet<CvlBasicCourt> CvlBasicCourts { get; set; } = null!;
         public virtual DbSet<CvlDefendantCompany> CvlDefendantCompanies { get; set; } = null!;
         public virtual DbSet<CvlDepartment> CvlDepartments { get; set; } = null!;
@@ -28,7 +35,9 @@ namespace LegalOfficeWeb_DataAccess.Data
         public virtual DbSet<CvlPlaintiff> CvlPlaintiffs { get; set; } = null!;
         public virtual DbSet<CvlProcess> CvlProcesses { get; set; } = null!;
         public virtual DbSet<CvlProcessDetail> CvlProcessDetails { get; set; } = null!;
+        public virtual DbSet<CvlProcessExpert> CvlProcessExperts { get; set; } = null!;
         public virtual DbSet<CvlProcessLog> CvlProcessLogs { get; set; } = null!;
+        public virtual DbSet<CvlProcessSexpert> CvlProcessSexperts { get; set; } = null!;
         public virtual DbSet<CvlProcessStatus> CvlProcessStatuses { get; set; } = null!;
         public virtual DbSet<CvlReason> CvlReasons { get; set; } = null!;
         public virtual DbSet<CvlRiskLevel> CvlRiskLevels { get; set; } = null!;
@@ -36,97 +45,326 @@ namespace LegalOfficeWeb_DataAccess.Data
         public virtual DbSet<CvlSubReason> CvlSubReasons { get; set; } = null!;
         public virtual DbSet<RlAgrNatification> RlAgrNatifications { get; set; } = null!;
         public virtual DbSet<RlAgreement> RlAgreements { get; set; } = null!;
+        public virtual DbSet<RlAgreementDetail> RlAgreementDetails { get; set; } = null!;
         public virtual DbSet<RlAgrinstallment> RlAgrinstallments { get; set; } = null!;
         public virtual DbSet<RlAgrinvoice> RlAgrinvoices { get; set; } = null!;
         public virtual DbSet<RlCase> RlCases { get; set; } = null!;
+        public virtual DbSet<RlCaseDoc> RlCaseDocs { get; set; } = null!;
         public virtual DbSet<RlCaseHistory> RlCaseHistories { get; set; } = null!;
+        public virtual DbSet<RlCaseInput> RlCaseInputs { get; set; } = null!;
         public virtual DbSet<RlCaseNatification> RlCaseNatifications { get; set; } = null!;
         public virtual DbSet<RlCaseStatus> RlCaseStatuses { get; set; } = null!;
+        public virtual DbSet<RlCasesLog> RlCasesLogs { get; set; } = null!;
         public virtual DbSet<RlCninvoice> RlCninvoices { get; set; } = null!;
+        public virtual DbSet<RlDepartment> RlDepartments { get; set; } = null!;
         public virtual DbSet<RlInsType> RlInsTypes { get; set; } = null!;
         public virtual DbSet<RlInvoicePayment> RlInvoicePayments { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<UserRole> UserRoles { get; set; } = null!;
+        public virtual DbSet<UsersLog> UsersLogs { get; set; } = null!;
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{ 
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
-        //        optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=HammurabiDB;Trusted_Connection=true");
-        //    }
-        //}
+//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//        {
+//            if (!optionsBuilder.IsConfigured)
+//            {
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//                optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=HammurabiDB;Trusted_Connection=true");
+//            }
+//        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ApHistory>(entity =>
+            {
+                entity.ToTable("AP_History");
+
+                entity.Property(e => e.AphistoryId).HasColumnName("APHistoryID");
+
+                entity.Property(e => e.ApmainId).HasColumnName("APMainID");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DeletedComment).HasMaxLength(500);
+
+                entity.Property(e => e.DeletedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.StatusComment).HasMaxLength(500);
+
+                entity.Property(e => e.StatusDate).HasColumnType("datetime");
+
+                entity.Property(e => e.StatusId).HasColumnName("StatusID");
+
+                entity.HasOne(d => d.Apmain)
+                    .WithMany(p => p.ApHistories)
+                    .HasForeignKey(d => d.ApmainId)
+                    .HasConstraintName("FK_AP_History_AP_Main");
+
+                entity.HasOne(d => d.Status)
+                    .WithMany(p => p.ApHistories)
+                    .HasForeignKey(d => d.StatusId)
+                    .HasConstraintName("FK_AP_History_AP_Status");
+            });
+
+            modelBuilder.Entity<ApMain>(entity =>
+            {
+                entity.ToTable("AP_Main");
+
+                entity.Property(e => e.ApmainId).HasColumnName("APMainID");
+
+                entity.Property(e => e.CaseId).HasColumnName("CaseID");
+
+                entity.Property(e => e.Comment).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DeletedComment).HasMaxLength(500);
+
+                entity.Property(e => e.DeletedDate).HasColumnType("date");
+            });
+
+            modelBuilder.Entity<ApStatus>(entity =>
+            {
+                entity.HasKey(e => e.StatusId);
+
+                entity.ToTable("AP_Status");
+
+                entity.Property(e => e.StatusId).HasColumnName("StatusID");
+
+                entity.Property(e => e.StatusName).HasMaxLength(50);
+
+                entity.Property(e => e.StatusNameAl)
+                    .HasMaxLength(50)
+                    .HasColumnName("StatusNameAL");
+            });
+
+            modelBuilder.Entity<CcDecisionType>(entity =>
+            {
+                entity.HasKey(e => e.DecisionTypeId);
+
+                entity.ToTable("CC_DecisionType");
+
+                entity.Property(e => e.DecisionTypeId).HasColumnName("DecisionTypeID");
+
+                entity.Property(e => e.DecisionTypeName).HasMaxLength(50);
+
+                entity.Property(e => e.DecisionTypeNameAl)
+                    .HasMaxLength(50)
+                    .HasColumnName("DecisionTypeNameAL");
+            });
+
+            modelBuilder.Entity<CcDetail>(entity =>
+            {
+                entity.HasKey(e => e.DetailId);
+
+                entity.ToTable("CC_Details");
+
+                entity.Property(e => e.DetailId).HasColumnName("DetailID");
+
+                entity.Property(e => e.CaseId).HasColumnName("CaseID");
+
+                entity.Property(e => e.ChargeType).HasMaxLength(50);
+
+                entity.Property(e => e.CourtCaseNr).HasMaxLength(50);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DateOfDelivery).HasColumnType("date");
+
+                entity.Property(e => e.DeletedComment).HasMaxLength(500);
+
+                entity.Property(e => e.DeletedDate).HasColumnType("date");
+
+                entity.Property(e => e.InstanceTypeId).HasColumnName("InstanceTypeID");
+
+                entity.Property(e => e.LegalComment).HasMaxLength(500);
+
+                entity.Property(e => e.LegalName).HasMaxLength(250);
+
+                entity.Property(e => e.LegalPerson).HasMaxLength(250);
+
+                entity.HasOne(d => d.InstanceType)
+                    .WithMany(p => p.CcDetails)
+                    .HasForeignKey(d => d.InstanceTypeId)
+                    .HasConstraintName("FK_CC_Details_CC_InstanceTypes");
+            });
+
+            modelBuilder.Entity<CcInstanceType>(entity =>
+            {
+                entity.HasKey(e => e.InstanceTypeId);
+
+                entity.ToTable("CC_InstanceTypes");
+
+                entity.Property(e => e.InstanceTypeId).HasColumnName("InstanceTypeID");
+
+                entity.Property(e => e.InstanceName).HasMaxLength(50);
+
+                entity.Property(e => e.InstanceNameAl)
+                    .HasMaxLength(50)
+                    .HasColumnName("InstanceNameAL");
+            });
+
+            modelBuilder.Entity<CcMain>(entity =>
+            {
+                entity.ToTable("CC_Main");
+
+                entity.Property(e => e.CcmainId).HasColumnName("CCMainID");
+
+                entity.Property(e => e.CaseId).HasColumnName("CaseID");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("date");
+
+                entity.Property(e => e.DecisionComment).HasMaxLength(500);
+
+                entity.Property(e => e.DecisionTypeId).HasColumnName("DecisionTypeID");
+
+                entity.Property(e => e.DeletedComment).HasMaxLength(500);
+
+                entity.Property(e => e.DeletedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.StatusComment).HasMaxLength(500);
+
+                entity.Property(e => e.StatusId).HasColumnName("StatusID");
+
+                entity.HasOne(d => d.DecisionType)
+                    .WithMany(p => p.CcMains)
+                    .HasForeignKey(d => d.DecisionTypeId)
+                    .HasConstraintName("FK_CC_Main_CC_DecisionType");
+
+                entity.HasOne(d => d.Status)
+                    .WithMany(p => p.CcMains)
+                    .HasForeignKey(d => d.StatusId)
+                    .HasConstraintName("FK_CC_Main_CC_Status");
+            });
+
+            modelBuilder.Entity<CcPhase>(entity =>
+            {
+                entity.HasKey(e => e.PhaseId);
+
+                entity.ToTable("CC_Phase");
+
+                entity.Property(e => e.PhaseId).HasColumnName("PhaseID");
+
+                entity.Property(e => e.CaseId).HasColumnName("CaseID");
+
+                entity.Property(e => e.CreatedComment).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PhaseTypeId).HasColumnName("PhaseTypeID");
+
+                entity.Property(e => e.ProcessDate).HasColumnType("date");
+
+                entity.Property(e => e.ProcessNr).HasMaxLength(50);
+
+                entity.Property(e => e.VerificationDate).HasColumnType("date");
+
+                entity.HasOne(d => d.PhaseType)
+                    .WithMany(p => p.CcPhases)
+                    .HasForeignKey(d => d.PhaseTypeId)
+                    .HasConstraintName("FK_CC_Phase_CC_PhaseTypes");
+            });
+
+            modelBuilder.Entity<CcPhaseType>(entity =>
+            {
+                entity.HasKey(e => e.PhaseTypeId);
+
+                entity.ToTable("CC_PhaseTypes");
+
+                entity.Property(e => e.PhaseTypeId).HasColumnName("PhaseTypeID");
+
+                entity.Property(e => e.PhaseTypeName).HasMaxLength(250);
+
+                entity.Property(e => e.PhaseTypeNameAl)
+                    .HasMaxLength(250)
+                    .HasColumnName("PhaseTypeNameAL");
+            });
+
+            modelBuilder.Entity<CcStatus>(entity =>
+            {
+                entity.HasKey(e => e.StatusId);
+
+                entity.ToTable("CC_Status");
+
+                entity.Property(e => e.StatusId).HasColumnName("StatusID");
+
+                entity.Property(e => e.StatusName).HasMaxLength(50);
+
+                entity.Property(e => e.StatusNameAl)
+                    .HasMaxLength(50)
+                    .HasColumnName("StatusNameAL");
+            });
+
             modelBuilder.Entity<CvlBasicCourt>(entity =>
             {
+                entity.HasKey(e => e.BasicCourtId);
+
                 entity.ToTable("CVL_BasicCourt");
 
-                entity.Property(e => e.CvlBasicCourtId).HasColumnName("CVL_BasicCourtID");
+                entity.Property(e => e.BasicCourtId).HasColumnName("BasicCourtID");
 
-                entity.Property(e => e.CvlBasicCourtName)
-                    .HasMaxLength(50)
-                    .HasColumnName("CVL_BasicCourtName");
+                entity.Property(e => e.BasicCourtName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<CvlDefendantCompany>(entity =>
             {
+                entity.HasKey(e => e.DefendantCompanyId);
+
                 entity.ToTable("CVL_DefendantCompany");
 
-                entity.Property(e => e.CvlDefendantCompanyId).HasColumnName("CVL_DefendantCompanyID");
+                entity.Property(e => e.DefendantCompanyId).HasColumnName("DefendantCompanyID");
 
-                entity.Property(e => e.CvlDefendantCompanyName)
-                    .HasMaxLength(50)
-                    .HasColumnName("CVL_DefendantCompanyName");
+                entity.Property(e => e.DefendantCompanyName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<CvlDepartment>(entity =>
             {
+                entity.HasKey(e => e.DepartmentId);
+
                 entity.ToTable("CVL_Department");
 
-                entity.Property(e => e.CvlDepartmentId).HasColumnName("CVL_DepartmentID");
+                entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
 
-                entity.Property(e => e.CvlDepartmentName)
-                    .HasMaxLength(50)
-                    .HasColumnName("CVL_DepartmentName");
+                entity.Property(e => e.DepartmentName).HasMaxLength(50);
 
-                entity.Property(e => e.CvlDepartmentNameAl)
+                entity.Property(e => e.DepartmentNameAl)
                     .HasMaxLength(50)
-                    .HasColumnName("CVL_DepartmentNameAL");
+                    .HasColumnName("DepartmentNameAL");
             });
 
             modelBuilder.Entity<CvlExpert>(entity =>
             {
+                entity.HasKey(e => e.ExpertId);
+
                 entity.ToTable("CVL_Expert");
 
-                entity.Property(e => e.CvlExpertId).HasColumnName("CVL_ExpertID");
+                entity.Property(e => e.ExpertId).HasColumnName("ExpertID");
 
-                entity.Property(e => e.CvlExpertName)
-                    .HasMaxLength(50)
-                    .HasColumnName("CVL_ExpertName");
+                entity.Property(e => e.ExpertName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<CvlJudge>(entity =>
             {
+                entity.HasKey(e => e.JudgeId);
+
                 entity.ToTable("CVL_Judge");
 
-                entity.Property(e => e.CvlJudgeId).HasColumnName("CVL_JudgeID");
+                entity.Property(e => e.JudgeId).HasColumnName("JudgeID");
 
-                entity.Property(e => e.CvlJudgeName)
-                    .HasMaxLength(50)
-                    .HasColumnName("CVL_JudgeName");
+                entity.Property(e => e.JudgeName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<CvlLitigationLawyer>(entity =>
             {
+                entity.HasKey(e => e.LitigationLawyerId);
+
                 entity.ToTable("CVL_litigationLawyer");
 
-                entity.Property(e => e.CvlLitigationLawyerId).HasColumnName("CVL_litigationLawyerID");
+                entity.Property(e => e.LitigationLawyerId).HasColumnName("litigationLawyerID");
 
-                entity.Property(e => e.CvlLitigationLawyerName)
+                entity.Property(e => e.LitigationLawyerName)
                     .HasMaxLength(50)
-                    .HasColumnName("CVL_litigationLawyerName");
+                    .HasColumnName("litigationLawyerName");
             });
 
             modelBuilder.Entity<CvlPlaintiff>(entity =>
@@ -135,203 +373,190 @@ namespace LegalOfficeWeb_DataAccess.Data
 
                 entity.ToTable("CVL_Plaintiff");
 
-                entity.Property(e => e.CvlPfIsDeleted).HasColumnName("CVL_PF_IsDeleted");
+                entity.Property(e => e.PfIsDeleted).HasColumnName("PF_IsDeleted");
 
-                entity.Property(e => e.CvlPlaintBusinessNr)
-                    .HasMaxLength(50)
-                    .HasColumnName("CVL_PlaintBusinessNr");
+                entity.Property(e => e.PlaintBusinessNr).HasMaxLength(50);
 
-                entity.Property(e => e.CvlPlaintiffIdentityNr)
-                    .HasMaxLength(50)
-                    .HasColumnName("CVL_PlaintiffIdentityNr");
+                entity.Property(e => e.PlaintiffIdentityNr).HasMaxLength(50);
 
-                entity.Property(e => e.CvlPlaintiffName)
-                    .HasMaxLength(250)
-                    .HasColumnName("CVL_PlaintiffName");
+                entity.Property(e => e.PlaintiffName).HasMaxLength(250);
 
-                entity.Property(e => e.CvlProcessId).HasColumnName("CVL_ProcessID");
+                entity.Property(e => e.ProcessId).HasColumnName("ProcessID");
 
-                entity.HasOne(d => d.CvlProcess)
+                entity.HasOne(d => d.Process)
                     .WithMany()
-                    .HasForeignKey(d => d.CvlProcessId)
+                    .HasForeignKey(d => d.ProcessId)
                     .HasConstraintName("FK_CVL_Plaintiff_CVL_Process");
             });
 
             modelBuilder.Entity<CvlProcess>(entity =>
             {
+                entity.HasKey(e => e.ProcessId);
+
                 entity.ToTable("CVL_Process");
 
-                entity.Property(e => e.CvlProcessId).HasColumnName("CVL_ProcessID");
+                entity.Property(e => e.ProcessId).HasColumnName("ProcessID");
 
-                entity.Property(e => e.CvlBasicCourtId).HasColumnName("CVL_BasicCourtID");
+                entity.Property(e => e.BasicCourtId).HasColumnName("BasicCourtID");
 
-                entity.Property(e => e.CvlCreateDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("CVL_CreateDate");
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.CvlCreateUserId).HasColumnName("CVL_CreateUserID");
+                entity.Property(e => e.DefendantCompanyId).HasColumnName("DefendantCompanyID");
 
-                entity.Property(e => e.CvlDefendantCompanyId).HasColumnName("CVL_DefendantCompanyID");
+                entity.Property(e => e.DeletedComment).HasMaxLength(250);
 
-                entity.Property(e => e.CvlDepartmentId).HasColumnName("CVL_DepartmentID");
+                entity.Property(e => e.DeletedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.CvlEventDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("CVL_EventDate");
+                entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
 
-                entity.Property(e => e.CvlExpertIds)
-                    .HasMaxLength(500)
-                    .HasColumnName("CVL_ExpertIDs");
+                entity.Property(e => e.EventDate).HasColumnType("datetime");
 
-                entity.Property(e => e.CvlIsDeleted).HasColumnName("CVL_IsDeleted");
+                entity.Property(e => e.JudgeId).HasColumnName("JudgeID");
 
-                entity.Property(e => e.CvlIsDeletedComment)
-                    .HasMaxLength(250)
-                    .HasColumnName("CVL_IsDeletedComment");
+                entity.Property(e => e.LastProcessStatusId).HasColumnName("LastProcessStatusID");
 
-                entity.Property(e => e.CvlIsDeletedDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("CVL_IsDeletedDate");
+                entity.Property(e => e.LastStatusComment).HasMaxLength(2500);
 
-                entity.Property(e => e.CvlIsDeletedUserId).HasColumnName("CVL_IsDeletedUserID");
+                entity.Property(e => e.LastStatusDate).HasColumnType("datetime");
 
-                entity.Property(e => e.CvlIsFinished).HasColumnName("CVL_IsFinished");
+                entity.Property(e => e.LitigationLawyerId).HasColumnName("litigationLawyerID");
 
-                entity.Property(e => e.CvlJudgeId).HasColumnName("CVL_JudgeID");
+                entity.Property(e => e.OldProcessId).HasColumnName("OldProcessID");
 
-                entity.Property(e => e.CvlLastProcessStatusId).HasColumnName("CVL_LastProcessStatusID");
+                entity.Property(e => e.ProcessCaseNumber).HasMaxLength(250);
 
-                entity.Property(e => e.CvlLastStatusComment)
-                    .HasMaxLength(2500)
-                    .HasColumnName("CVL_LastStatusComment");
+                entity.Property(e => e.ProcessComment).HasMaxLength(2500);
 
-                entity.Property(e => e.CvlLastStatusDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("CVL_LastStatusDate");
+                entity.Property(e => e.ProcessDate).HasColumnType("datetime");
 
-                entity.Property(e => e.CvlLitigationLawyerId).HasColumnName("CVL_litigationLawyerID");
+                entity.Property(e => e.ProcessValue).HasColumnType("money");
 
-                entity.Property(e => e.CvlProcessCaseNumber)
-                    .HasMaxLength(250)
-                    .HasColumnName("CVL_ProcessCaseNumber");
+                entity.Property(e => e.ReasonId).HasColumnName("ReasonID");
 
-                entity.Property(e => e.CvlProcessComment)
-                    .HasMaxLength(2500)
-                    .HasColumnName("CVL_ProcessComment");
+                entity.Property(e => e.RiskLevelId).HasColumnName("RiskLevelID");
 
-                entity.Property(e => e.CvlProcessDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("CVL_ProcessDate");
+                entity.Property(e => e.SubReasonId).HasColumnName("SubReasonID");
 
-                entity.Property(e => e.CvlProcessPlaintiffName)
-                    .HasMaxLength(500)
-                    .HasColumnName("CVL_ProcessPlaintiffName");
-
-                entity.Property(e => e.CvlProcessValue)
-                    .HasColumnType("money")
-                    .HasColumnName("CVL_ProcessValue");
-
-                entity.Property(e => e.CvlReasonId).HasColumnName("CVL_ReasonID");
-
-                entity.Property(e => e.CvlRiskLevelId).HasColumnName("CVL_RiskLevelID");
-
-                entity.Property(e => e.CvlSexpertIds)
-                    .HasMaxLength(500)
-                    .HasColumnName("CVL_SExpertIDs");
-
-                entity.Property(e => e.CvlSubReasonId).HasColumnName("CVL_SubReasonID");
-
-                entity.HasOne(d => d.CvlBasicCourt)
+                entity.HasOne(d => d.BasicCourt)
                     .WithMany(p => p.CvlProcesses)
-                    .HasForeignKey(d => d.CvlBasicCourtId)
+                    .HasForeignKey(d => d.BasicCourtId)
                     .HasConstraintName("FK_CVL_Process_CVL_BasicCourt");
 
-                entity.HasOne(d => d.CvlDefendantCompany)
+                entity.HasOne(d => d.DefendantCompany)
                     .WithMany(p => p.CvlProcesses)
-                    .HasForeignKey(d => d.CvlDefendantCompanyId)
+                    .HasForeignKey(d => d.DefendantCompanyId)
                     .HasConstraintName("FK_CVL_Process_CVL_DefendantCompany");
 
-                entity.HasOne(d => d.CvlDepartment)
+                entity.HasOne(d => d.Department)
                     .WithMany(p => p.CvlProcesses)
-                    .HasForeignKey(d => d.CvlDepartmentId)
+                    .HasForeignKey(d => d.DepartmentId)
                     .HasConstraintName("FK_CVL_Process_CVL_Department");
 
-                entity.HasOne(d => d.CvlJudge)
+                entity.HasOne(d => d.Judge)
                     .WithMany(p => p.CvlProcesses)
-                    .HasForeignKey(d => d.CvlJudgeId)
+                    .HasForeignKey(d => d.JudgeId)
                     .HasConstraintName("FK_CVL_Process_CVL_Judge");
 
-                entity.HasOne(d => d.CvlReason)
+                entity.HasOne(d => d.LitigationLawyer)
                     .WithMany(p => p.CvlProcesses)
-                    .HasForeignKey(d => d.CvlReasonId)
+                    .HasForeignKey(d => d.LitigationLawyerId)
+                    .HasConstraintName("FK_CVL_Process_CVL_litigationLawyer");
+
+                entity.HasOne(d => d.Reason)
+                    .WithMany(p => p.CvlProcesses)
+                    .HasForeignKey(d => d.ReasonId)
                     .HasConstraintName("FK_CVL_Process_CVL_Reason");
 
-                entity.HasOne(d => d.CvlRiskLevel)
+                entity.HasOne(d => d.RiskLevel)
                     .WithMany(p => p.CvlProcesses)
-                    .HasForeignKey(d => d.CvlRiskLevelId)
+                    .HasForeignKey(d => d.RiskLevelId)
                     .HasConstraintName("FK_CVL_Process_CVL_RiskLevel");
 
-                entity.HasOne(d => d.CvlSubReason)
+                entity.HasOne(d => d.SubReason)
                     .WithMany(p => p.CvlProcesses)
-                    .HasForeignKey(d => d.CvlSubReasonId)
+                    .HasForeignKey(d => d.SubReasonId)
                     .HasConstraintName("FK_CVL_Process_CVL_SubReason");
             });
 
             modelBuilder.Entity<CvlProcessDetail>(entity =>
             {
+                entity.HasKey(e => e.ProcessDetailId)
+                    .HasName("PK_CLV_ProcessDetail");
+
                 entity.ToTable("CVL_ProcessDetail");
 
-                entity.Property(e => e.CvlProcessDetailId).HasColumnName("CVL_ProcessDetailID");
+                entity.Property(e => e.ProcessDetailId).HasColumnName("ProcessDetailID");
 
-                entity.Property(e => e.CvlCaseFinishedAmount)
-                    .HasColumnType("money")
-                    .HasColumnName("CVL_CaseFinishedAmount");
+                entity.Property(e => e.CaseFinishedAmount).HasColumnType("money");
 
-                entity.Property(e => e.CvlFinishedKedsdebitor).HasColumnName("CVL_FinishedKEDSDebitor");
+                entity.Property(e => e.FinishedKedsdebitor).HasColumnName("FinishedKEDSDebitor");
 
-                entity.Property(e => e.CvlPdCreateComment)
+                entity.Property(e => e.PdCreatedComment)
                     .HasMaxLength(2500)
-                    .HasColumnName("CVL_PD_CreateComment");
+                    .HasColumnName("PD_CreatedComment");
 
-                entity.Property(e => e.CvlPdCreateDate)
+                entity.Property(e => e.PdCreatedDate)
                     .HasColumnType("datetime")
-                    .HasColumnName("CVL_PD_CreateDate");
+                    .HasColumnName("PD_CreatedDate");
 
-                entity.Property(e => e.CvlPdCreateUserId).HasColumnName("CVL_PD_CreateUserID");
+                entity.Property(e => e.PdCreatedUser).HasColumnName("PD_CreatedUser");
 
-                entity.Property(e => e.CvlPdDate)
+                entity.Property(e => e.PdDate)
                     .HasColumnType("datetime")
-                    .HasColumnName("CVL_PD_Date");
+                    .HasColumnName("PD_Date");
 
-                entity.Property(e => e.CvlPdDocumentPath)
+                entity.Property(e => e.PdDeleted).HasColumnName("PD_Deleted");
+
+                entity.Property(e => e.PdDeletedComment)
                     .HasMaxLength(250)
-                    .HasColumnName("CVL_PD_DocumentPath");
+                    .HasColumnName("PD_DeletedComment");
 
-                entity.Property(e => e.CvlPdIsDeleted).HasColumnName("CVL_PD_IsDeleted");
-
-                entity.Property(e => e.CvlPdIsDeletedComment)
-                    .HasMaxLength(250)
-                    .HasColumnName("CVL_PD_IsDeletedComment");
-
-                entity.Property(e => e.CvlPdIsDeletedDate)
+                entity.Property(e => e.PdDeletedDate)
                     .HasColumnType("datetime")
-                    .HasColumnName("CVL_PD_IsDeletedDate");
+                    .HasColumnName("PD_DeletedDate");
 
-                entity.Property(e => e.CvlPdIsDeletedUserId).HasColumnName("CVL_PD_IsDeletedUserID");
+                entity.Property(e => e.PdDeletedUser).HasColumnName("PD_DeletedUser");
 
-                entity.Property(e => e.CvlProcessId).HasColumnName("CVL_ProcessID");
+                entity.Property(e => e.PdDocumentPath)
+                    .HasMaxLength(250)
+                    .HasColumnName("PD_DocumentPath");
 
-                entity.Property(e => e.CvlProcessStatusId).HasColumnName("CVL_ProcessStatusID");
+                entity.Property(e => e.ProcessId).HasColumnName("ProcessID");
 
-                entity.HasOne(d => d.CvlProcess)
+                entity.Property(e => e.ProcessStatusId).HasColumnName("ProcessStatusID");
+
+                entity.HasOne(d => d.Process)
                     .WithMany(p => p.CvlProcessDetails)
-                    .HasForeignKey(d => d.CvlProcessId)
+                    .HasForeignKey(d => d.ProcessId)
                     .HasConstraintName("FK_CLV_ProcessDetail_CVL_Process");
 
-                entity.HasOne(d => d.CvlProcessStatus)
+                entity.HasOne(d => d.ProcessStatus)
                     .WithMany(p => p.CvlProcessDetails)
-                    .HasForeignKey(d => d.CvlProcessStatusId)
+                    .HasForeignKey(d => d.ProcessStatusId)
                     .HasConstraintName("FK_CLV_ProcessDetail_CVL_ProcessStatus");
+            });
+
+            modelBuilder.Entity<CvlProcessExpert>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("CVL_ProcessExpert");
+
+                entity.Property(e => e.ActiveDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ExpertId).HasColumnName("ExpertID");
+
+                entity.Property(e => e.ProcessId).HasColumnName("ProcessID");
+
+                entity.HasOne(d => d.Expert)
+                    .WithMany()
+                    .HasForeignKey(d => d.ExpertId)
+                    .HasConstraintName("FK_CVL_ProcessExpert_CVL_Expert");
+
+                entity.HasOne(d => d.Process)
+                    .WithMany()
+                    .HasForeignKey(d => d.ProcessId)
+                    .HasConstraintName("FK_CVL_ProcessExpert_CVL_Process");
             });
 
             modelBuilder.Entity<CvlProcessLog>(entity =>
@@ -340,156 +565,141 @@ namespace LegalOfficeWeb_DataAccess.Data
 
                 entity.ToTable("CVL_ProcessLog");
 
-                entity.Property(e => e.CvlBasicCourtId).HasColumnName("CVL_BasicCourtID");
+                entity.Property(e => e.BasicCourtId).HasColumnName("BasicCourtID");
 
-                entity.Property(e => e.CvlCreateDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("CVL_CreateDate");
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.CvlCreateUserId).HasColumnName("CVL_CreateUserID");
+                entity.Property(e => e.DefendantCompanyId).HasColumnName("DefendantCompanyID");
 
-                entity.Property(e => e.CvlDefendantCompanyId).HasColumnName("CVL_DefendantCompanyID");
+                entity.Property(e => e.DeletedComment).HasMaxLength(250);
 
-                entity.Property(e => e.CvlDepartmentId).HasColumnName("CVL_DepartmentID");
+                entity.Property(e => e.DeletedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.CvlEventDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("CVL_EventDate");
+                entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
 
-                entity.Property(e => e.CvlExpertIds)
-                    .HasMaxLength(500)
-                    .HasColumnName("CVL_ExpertIDs");
+                entity.Property(e => e.EventDate).HasColumnType("datetime");
 
-                entity.Property(e => e.CvlIsDeleted).HasColumnName("CVL_IsDeleted");
+                entity.Property(e => e.JudgeId).HasColumnName("JudgeID");
 
-                entity.Property(e => e.CvlIsDeletedComment)
-                    .HasMaxLength(250)
-                    .HasColumnName("CVL_IsDeletedComment");
+                entity.Property(e => e.LastProcessStatusId).HasColumnName("LastProcessStatusID");
 
-                entity.Property(e => e.CvlIsDeletedDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("CVL_IsDeletedDate");
+                entity.Property(e => e.LastStatusComment).HasMaxLength(2500);
 
-                entity.Property(e => e.CvlIsDeletedUserId).HasColumnName("CVL_IsDeletedUserID");
+                entity.Property(e => e.LastStatusDate).HasColumnType("datetime");
 
-                entity.Property(e => e.CvlIsFinished).HasColumnName("CVL_IsFinished");
+                entity.Property(e => e.LitigationLawyerId).HasColumnName("litigationLawyerID");
 
-                entity.Property(e => e.CvlJudgeId).HasColumnName("CVL_JudgeID");
+                entity.Property(e => e.LogDate).HasColumnType("date");
 
-                entity.Property(e => e.CvlLastProcessStatusId).HasColumnName("CVL_LastProcessStatusID");
+                entity.Property(e => e.LogUserId).HasColumnName("LogUserID");
 
-                entity.Property(e => e.CvlLastStatusComment)
-                    .HasMaxLength(2500)
-                    .HasColumnName("CVL_LastStatusComment");
+                entity.Property(e => e.ProcessCaseNumber).HasMaxLength(250);
 
-                entity.Property(e => e.CvlLastStatusDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("CVL_LastStatusDate");
+                entity.Property(e => e.ProcessComment).HasMaxLength(2500);
 
-                entity.Property(e => e.CvlLitigationLawyerId).HasColumnName("CVL_litigationLawyerID");
+                entity.Property(e => e.ProcessDate).HasColumnType("datetime");
 
-                entity.Property(e => e.CvlProcessCaseNumber)
-                    .HasMaxLength(250)
-                    .HasColumnName("CVL_ProcessCaseNumber");
+                entity.Property(e => e.ProcessId).HasColumnName("ProcessID");
 
-                entity.Property(e => e.CvlProcessComment)
-                    .HasMaxLength(2500)
-                    .HasColumnName("CVL_ProcessComment");
+                entity.Property(e => e.ProcessValue).HasColumnType("money");
 
-                entity.Property(e => e.CvlProcessDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("CVL_ProcessDate");
+                entity.Property(e => e.ReasonId).HasColumnName("ReasonID");
 
-                entity.Property(e => e.CvlProcessId).HasColumnName("CVL_ProcessID");
+                entity.Property(e => e.RiskLevelId).HasColumnName("RiskLevelID");
 
-                entity.Property(e => e.CvlProcessPlaintiffName)
-                    .HasMaxLength(500)
-                    .HasColumnName("CVL_ProcessPlaintiffName");
+                entity.Property(e => e.SubReasonId).HasColumnName("SubReasonID");
+            });
 
-                entity.Property(e => e.CvlProcessValue)
-                    .HasColumnType("money")
-                    .HasColumnName("CVL_ProcessValue");
+            modelBuilder.Entity<CvlProcessSexpert>(entity =>
+            {
+                entity.HasNoKey();
 
-                entity.Property(e => e.CvlReasonId).HasColumnName("CVL_ReasonID");
+                entity.ToTable("CVL_ProcessSExpert");
 
-                entity.Property(e => e.CvlRiskLevelId).HasColumnName("CVL_RiskLevelID");
+                entity.Property(e => e.ActiveDate).HasColumnType("datetime");
 
-                entity.Property(e => e.CvlSexpertIds)
-                    .HasMaxLength(500)
-                    .HasColumnName("CVL_SExpertIDs");
+                entity.Property(e => e.ProcessId).HasColumnName("ProcessID");
 
-                entity.Property(e => e.CvlSubReasonId).HasColumnName("CVL_SubReasonID");
+                entity.Property(e => e.SexpertId).HasColumnName("SExpertID");
+
+                entity.HasOne(d => d.Process)
+                    .WithMany()
+                    .HasForeignKey(d => d.ProcessId)
+                    .HasConstraintName("FK_CVL_ProcessSExpert_CVL_Process");
+
+                entity.HasOne(d => d.Sexpert)
+                    .WithMany()
+                    .HasForeignKey(d => d.SexpertId)
+                    .HasConstraintName("FK_CVL_ProcessSExpert_CVL_SExpert");
             });
 
             modelBuilder.Entity<CvlProcessStatus>(entity =>
             {
+                entity.HasKey(e => e.ProcessStatusId);
+
                 entity.ToTable("CVL_ProcessStatus");
 
-                entity.Property(e => e.CvlProcessStatusId).HasColumnName("CVL_ProcessStatusID");
+                entity.Property(e => e.ProcessStatusId).HasColumnName("ProcessStatusID");
 
-                entity.Property(e => e.CvlProcessStatusIsActive).HasColumnName("CVL_ProcessStatusIsActive");
+                entity.Property(e => e.ProcessStatusName).HasMaxLength(250);
 
-                entity.Property(e => e.CvlProcessStatusName)
+                entity.Property(e => e.ProcessStatusNameAl)
                     .HasMaxLength(250)
-                    .HasColumnName("CVL_ProcessStatusName");
-
-                entity.Property(e => e.CvlProcessStatusNameAl)
-                    .HasMaxLength(250)
-                    .HasColumnName("CVL_ProcessStatusNameAL");
+                    .HasColumnName("ProcessStatusNameAL");
             });
 
             modelBuilder.Entity<CvlReason>(entity =>
             {
+                entity.HasKey(e => e.ReasonId);
+
                 entity.ToTable("CVL_Reason");
 
-                entity.Property(e => e.CvlReasonId).HasColumnName("CVL_ReasonID");
+                entity.Property(e => e.ReasonId).HasColumnName("ReasonID");
 
-                entity.Property(e => e.CvlReasonName)
-                    .HasMaxLength(250)
-                    .HasColumnName("CVL_ReasonName");
+                entity.Property(e => e.ReasonName).HasMaxLength(250);
 
-                entity.Property(e => e.CvlReasonNameAl)
+                entity.Property(e => e.ReasonNameAl)
                     .HasMaxLength(250)
-                    .HasColumnName("CVL_ReasonNameAL");
+                    .HasColumnName("ReasonNameAL");
             });
 
             modelBuilder.Entity<CvlRiskLevel>(entity =>
             {
+                entity.HasKey(e => e.RiskLevelId);
+
                 entity.ToTable("CVL_RiskLevel");
 
-                entity.Property(e => e.CvlRiskLevelId).HasColumnName("CVL_RiskLevelID");
+                entity.Property(e => e.RiskLevelId).HasColumnName("RiskLevelID");
 
-                entity.Property(e => e.CvlRiskLevelName)
-                    .HasMaxLength(50)
-                    .HasColumnName("CVL_RiskLevelName");
+                entity.Property(e => e.RiskLevelName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<CvlSexpert>(entity =>
             {
+                entity.HasKey(e => e.SexpertId);
+
                 entity.ToTable("CVL_SExpert");
 
-                entity.Property(e => e.CvlSexpertId).HasColumnName("CVL_SExpertID");
+                entity.Property(e => e.SexpertId).HasColumnName("SExpertID");
 
-                entity.Property(e => e.CvlSexpertName)
+                entity.Property(e => e.SexpertName)
                     .HasMaxLength(50)
-                    .HasColumnName("CVL_SExpertName");
+                    .HasColumnName("SExpertName");
             });
 
             modelBuilder.Entity<CvlSubReason>(entity =>
             {
+                entity.HasKey(e => e.SubReasonId);
+
                 entity.ToTable("CVL_SubReason");
 
-                entity.Property(e => e.CvlSubReasonId).HasColumnName("CVL_SubReasonID");
+                entity.Property(e => e.SubReasonId).HasColumnName("SubReasonID");
 
-                entity.Property(e => e.CvlSubReasonIsActive).HasColumnName("CVL_SubReasonIsActive");
+                entity.Property(e => e.SubReasonName).HasMaxLength(250);
 
-                entity.Property(e => e.CvlSubReasonName)
+                entity.Property(e => e.SubReasonNameAl)
                     .HasMaxLength(250)
-                    .HasColumnName("CVL_SubReasonName");
-
-                entity.Property(e => e.CvlSubReasonNameAl)
-                    .HasMaxLength(250)
-                    .HasColumnName("CVL_SubReasonNameAL");
+                    .HasColumnName("SubReasonNameAL");
             });
 
             modelBuilder.Entity<RlAgrNatification>(entity =>
@@ -498,13 +708,15 @@ namespace LegalOfficeWeb_DataAccess.Data
 
                 entity.Property(e => e.AgreementId).HasColumnName("AgreementID");
 
-                entity.Property(e => e.CaseId).HasColumnName("CaseID");
-
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DeletedDate).HasColumnType("date");
 
                 entity.Property(e => e.Email).HasMaxLength(250);
 
                 entity.Property(e => e.PhoneNr).HasMaxLength(50);
+
+                entity.Property(e => e.SentDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Agreement)
                     .WithMany(p => p.RlAgrNatifications)
@@ -520,28 +732,68 @@ namespace LegalOfficeWeb_DataAccess.Data
 
                 entity.Property(e => e.AgreementId).HasColumnName("AgreementID");
 
-                entity.Property(e => e.Address).HasMaxLength(500);
+                entity.Property(e => e.AgencyId)
+                    .HasMaxLength(3)
+                    .HasColumnName("AgencyID");
 
                 entity.Property(e => e.CaseHistoryId).HasColumnName("CaseHistoryID");
 
                 entity.Property(e => e.CaseId).HasColumnName("CaseID");
 
-                entity.Property(e => e.CridentityNr).HasColumnName("CRIdentityNr");
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DeletedComment).HasMaxLength(2000);
+
+                entity.Property(e => e.DeletedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EldebitorId).HasColumnName("EldebitorID");
+
+                entity.HasOne(d => d.Case)
+                    .WithMany(p => p.RlAgreements)
+                    .HasForeignKey(d => d.CaseId)
+                    .HasConstraintName("FK_RL_Agreement_RL_Cases");
+            });
+
+            modelBuilder.Entity<RlAgreementDetail>(entity =>
+            {
+                entity.HasKey(e => e.AgdetailId);
+
+                entity.ToTable("RL_AgreementDetail");
+
+                entity.Property(e => e.AgdetailId).HasColumnName("AGDetailID");
+
+                entity.Property(e => e.Active)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.AgreementId).HasColumnName("AgreementID");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CridentityNr)
+                    .HasMaxLength(20)
+                    .HasColumnName("CRIdentityNr");
 
                 entity.Property(e => e.CrphoneNr)
-                    .HasMaxLength(50)
+                    .HasMaxLength(20)
                     .HasColumnName("CRPhoneNr");
+
+                entity.Property(e => e.CusAddress).HasMaxLength(500);
+
+                entity.Property(e => e.CustomerName).HasMaxLength(250);
 
                 entity.Property(e => e.CustomerRepresentative).HasMaxLength(250);
 
                 entity.Property(e => e.DocumentPath).HasMaxLength(500);
 
-                entity.Property(e => e.PhoneNr).HasMaxLength(50);
+                entity.Property(e => e.IdentityNr).HasMaxLength(20);
 
-                entity.HasOne(d => d.CaseHistory)
-                    .WithMany(p => p.RlAgreements)
-                    .HasForeignKey(d => d.CaseHistoryId)
-                    .HasConstraintName("FK_RL_Agreement_RL_CaseHistory");
+                entity.Property(e => e.PhoneNr).HasMaxLength(20);
+
+                entity.HasOne(d => d.Agreement)
+                    .WithMany(p => p.RlAgreementDetails)
+                    .HasForeignKey(d => d.AgreementId)
+                    .HasConstraintName("FK_RL_AgreementDetail_RL_Agreement");
             });
 
             modelBuilder.Entity<RlAgrinstallment>(entity =>
@@ -557,6 +809,8 @@ namespace LegalOfficeWeb_DataAccess.Data
                 entity.Property(e => e.Amount).HasColumnType("money");
 
                 entity.Property(e => e.CaseId).HasColumnName("CaseID");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("date");
 
                 entity.Property(e => e.DueDate).HasColumnType("date");
 
@@ -585,7 +839,7 @@ namespace LegalOfficeWeb_DataAccess.Data
 
                 entity.Property(e => e.CaseId).HasColumnName("CaseID");
 
-                entity.Property(e => e.DeletedDate).HasColumnType("date");
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.EldebitorId).HasColumnName("EldebitorID");
 
@@ -613,13 +867,9 @@ namespace LegalOfficeWeb_DataAccess.Data
 
                 entity.Property(e => e.CaseId).HasColumnName("CaseID");
 
-                entity.Property(e => e.Address).HasMaxLength(500);
-
                 entity.Property(e => e.AgencyId)
                     .HasMaxLength(3)
                     .HasColumnName("AgencyID");
-
-                entity.Property(e => e.AmeterId).HasColumnName("AMeterID");
 
                 entity.Property(e => e.CaseNr).HasMaxLength(50);
 
@@ -631,27 +881,48 @@ namespace LegalOfficeWeb_DataAccess.Data
 
                 entity.Property(e => e.DeletedComment).HasMaxLength(2500);
 
-                entity.Property(e => e.DeletedDate).HasColumnType("date");
+                entity.Property(e => e.DeletedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
 
                 entity.Property(e => e.EldebitorId).HasColumnName("EldebitorID");
 
-                entity.Property(e => e.InitiatedDeparment).HasMaxLength(50);
-
-                entity.Property(e => e.LastStatusDate).HasColumnType("date");
-
-                entity.Property(e => e.LastStatusId).HasColumnName("LastStatusID");
-
                 entity.Property(e => e.MainResponsibleUserId).HasColumnName("MainResponsibleUserID");
-
-                entity.Property(e => e.PhoneNr).HasMaxLength(50);
 
                 entity.Property(e => e.SecondResponsibleUserId).HasColumnName("SecondResponsibleUserID");
 
                 entity.Property(e => e.SourceApp).HasMaxLength(50);
 
+                entity.Property(e => e.SourceDate).HasColumnType("datetime");
+
                 entity.Property(e => e.SourceId).HasColumnName("SourceID");
 
-                entity.Property(e => e.Subdistrict).HasMaxLength(250);
+                entity.HasOne(d => d.Department)
+                    .WithMany(p => p.RlCases)
+                    .HasForeignKey(d => d.DepartmentId)
+                    .HasConstraintName("FK_RL_Cases_RL_Department");
+            });
+
+            modelBuilder.Entity<RlCaseDoc>(entity =>
+            {
+                entity.HasKey(e => e.CaseDocId);
+
+                entity.ToTable("RL_CaseDoc");
+
+                entity.Property(e => e.CaseDocId).HasColumnName("CaseDocID");
+
+                entity.Property(e => e.CaseId).HasColumnName("CaseID");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DocName).HasMaxLength(250);
+
+                entity.Property(e => e.DocPath).HasMaxLength(250);
+
+                entity.HasOne(d => d.Case)
+                    .WithMany(p => p.RlCaseDocs)
+                    .HasForeignKey(d => d.CaseId)
+                    .HasConstraintName("FK_RL_CaseDoc_RL_Cases");
             });
 
             modelBuilder.Entity<RlCaseHistory>(entity =>
@@ -687,6 +958,42 @@ namespace LegalOfficeWeb_DataAccess.Data
                     .HasConstraintName("FK_RL_CaseHistory_RL_CaseStatus");
             });
 
+            modelBuilder.Entity<RlCaseInput>(entity =>
+            {
+                entity.HasKey(e => e.CaseIputId);
+
+                entity.ToTable("RL_CaseInputs");
+
+                entity.Property(e => e.CaseIputId).HasColumnName("CaseIputID");
+
+                entity.Property(e => e.Address).HasMaxLength(2500);
+
+                entity.Property(e => e.AmeterId).HasColumnName("AMeterID");
+
+                entity.Property(e => e.BirthDate).HasColumnType("date");
+
+                entity.Property(e => e.CaseId).HasColumnName("CaseID");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IdentityNr).HasMaxLength(20);
+
+                entity.Property(e => e.Municipality).HasMaxLength(50);
+
+                entity.Property(e => e.PhoneNr).HasMaxLength(50);
+
+                entity.Property(e => e.Subdistrict).HasMaxLength(250);
+
+                entity.Property(e => e.TariffId)
+                    .HasMaxLength(10)
+                    .HasColumnName("TariffID");
+
+                entity.HasOne(d => d.Case)
+                    .WithMany(p => p.RlCaseInputs)
+                    .HasForeignKey(d => d.CaseId)
+                    .HasConstraintName("FK_RL_CaseInputs_RL_Cases");
+            });
+
             modelBuilder.Entity<RlCaseNatification>(entity =>
             {
                 entity.HasKey(e => e.Cnid);
@@ -700,6 +1007,8 @@ namespace LegalOfficeWeb_DataAccess.Data
                 entity.Property(e => e.CaseHistoryId).HasColumnName("CaseHistoryID");
 
                 entity.Property(e => e.CaseId).HasColumnName("CaseID");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.CustomerName).HasMaxLength(250);
 
@@ -728,6 +1037,49 @@ namespace LegalOfficeWeb_DataAccess.Data
                     .HasColumnName("StatusNameAL");
             });
 
+            modelBuilder.Entity<RlCasesLog>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("RL_CasesLog");
+
+                entity.Property(e => e.AgencyId)
+                    .HasMaxLength(3)
+                    .HasColumnName("AgencyID");
+
+                entity.Property(e => e.CaseId).HasColumnName("CaseID");
+
+                entity.Property(e => e.CaseNr).HasMaxLength(50);
+
+                entity.Property(e => e.CreatedComment).HasMaxLength(2500);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CustomerName).HasMaxLength(250);
+
+                entity.Property(e => e.DeletedComment).HasMaxLength(2500);
+
+                entity.Property(e => e.DeletedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
+
+                entity.Property(e => e.EldebitorId).HasColumnName("EldebitorID");
+
+                entity.Property(e => e.LogDate).HasColumnType("datetime");
+
+                entity.Property(e => e.LogUserId).HasColumnName("LogUserID");
+
+                entity.Property(e => e.MainResponsibleUserId).HasColumnName("MainResponsibleUserID");
+
+                entity.Property(e => e.SecondResponsibleUserId).HasColumnName("SecondResponsibleUserID");
+
+                entity.Property(e => e.SourceApp).HasMaxLength(50);
+
+                entity.Property(e => e.SourceDate).HasColumnType("datetime");
+
+                entity.Property(e => e.SourceId).HasColumnName("SourceID");
+            });
+
             modelBuilder.Entity<RlCninvoice>(entity =>
             {
                 entity.ToTable("RL_CNInvoices");
@@ -736,11 +1088,11 @@ namespace LegalOfficeWeb_DataAccess.Data
                     .HasMaxLength(3)
                     .HasColumnName("AgencyID");
 
+                entity.Property(e => e.CaseHistoryId).HasColumnName("CaseHistoryID");
+
                 entity.Property(e => e.CaseId).HasColumnName("CaseID");
 
                 entity.Property(e => e.Cnid).HasColumnName("CNID");
-
-                entity.Property(e => e.DeletedDate).HasColumnType("date");
 
                 entity.Property(e => e.EldebitorId).HasColumnName("EldebitorID");
 
@@ -762,6 +1114,23 @@ namespace LegalOfficeWeb_DataAccess.Data
                     .HasConstraintName("FK_RL_CNInvoices_RL_CaseNatifications");
             });
 
+            modelBuilder.Entity<RlDepartment>(entity =>
+            {
+                entity.HasKey(e => e.DepartmentId);
+
+                entity.ToTable("RL_Department");
+
+                entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
+
+                entity.Property(e => e.DepartmentName).HasMaxLength(50);
+
+                entity.Property(e => e.DepartmentNameAl)
+                    .HasMaxLength(50)
+                    .HasColumnName("DepartmentNameAL");
+
+                entity.Property(e => e.Modules).HasMaxLength(250);
+            });
+
             modelBuilder.Entity<RlInsType>(entity =>
             {
                 entity.HasKey(e => e.InsTypeId);
@@ -781,13 +1150,9 @@ namespace LegalOfficeWeb_DataAccess.Data
             {
                 entity.ToTable("RL_InvoicePayments");
 
-                entity.Property(e => e.AgencyId)
-                    .HasMaxLength(3)
-                    .HasColumnName("AgencyID");
-
                 entity.Property(e => e.AgreementId).HasColumnName("AgreementID");
 
-                entity.Property(e => e.CaseId).HasColumnName("CaseID");
+                entity.Property(e => e.ArchiveId).HasColumnName("ArchiveID");
 
                 entity.Property(e => e.CollectionId).HasColumnName("CollectionID");
 
@@ -805,17 +1170,7 @@ namespace LegalOfficeWeb_DataAccess.Data
 
                 entity.Property(e => e.DocumentPath).HasMaxLength(500);
 
-                entity.Property(e => e.EldebitorId).HasColumnName("EldebitorID");
-
-                entity.Property(e => e.InvoiceAmount).HasColumnType("money");
-
-                entity.Property(e => e.InvoiceAmountInv).HasColumnType("money");
-
                 entity.Property(e => e.InvoiceId).HasColumnName("InvoiceID");
-
-                entity.Property(e => e.InvoiceIdccp).HasColumnName("InvoiceIDCCP");
-
-                entity.Property(e => e.InvoiceIdrl).HasColumnName("InvoiceIDRL");
 
                 entity.HasOne(d => d.Agreement)
                     .WithMany(p => p.RlInvoicePayments)
@@ -838,15 +1193,19 @@ namespace LegalOfficeWeb_DataAccess.Data
             {
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
-                entity.Property(e => e.BlockedDate)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                entity.Property(e => e.BlockedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.Email).HasMaxLength(250);
+
                 entity.Property(e => e.EmpId).HasColumnName("EmpID");
 
+                entity.Property(e => e.FullName).HasMaxLength(250);
+
                 entity.Property(e => e.Password).HasMaxLength(50);
+
+                entity.Property(e => e.PhoneNr).HasMaxLength(50);
 
                 entity.Property(e => e.UserName).HasMaxLength(50);
             });
@@ -857,7 +1216,9 @@ namespace LegalOfficeWeb_DataAccess.Data
 
                 entity.Property(e => e.UserRoleId).HasColumnName("UserRoleID");
 
-                entity.Property(e => e.CreatedDate).HasColumnType("date");
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.MainRoleId).HasColumnName("MainRoleID");
 
                 entity.Property(e => e.RoleId).HasColumnName("RoleID");
 
@@ -872,6 +1233,35 @@ namespace LegalOfficeWeb_DataAccess.Data
                     .WithMany(p => p.UserRoles)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_UserRole_Users");
+            });
+
+            modelBuilder.Entity<UsersLog>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("UsersLog");
+
+                entity.Property(e => e.BlockedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Email).HasMaxLength(250);
+
+                entity.Property(e => e.EmpId).HasColumnName("EmpID");
+
+                entity.Property(e => e.FullName).HasMaxLength(250);
+
+                entity.Property(e => e.LogDate).HasColumnType("datetime");
+
+                entity.Property(e => e.LogUserId).HasColumnName("LogUserID");
+
+                entity.Property(e => e.Password).HasMaxLength(50);
+
+                entity.Property(e => e.PhoneNr).HasMaxLength(50);
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.Property(e => e.UserName).HasMaxLength(50);
             });
 
             OnModelCreatingPartial(modelBuilder);

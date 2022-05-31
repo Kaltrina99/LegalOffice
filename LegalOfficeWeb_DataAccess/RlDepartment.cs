@@ -3,18 +3,19 @@ using System.Collections.Generic;
 
 namespace LegalOfficeWeb_DataAccess
 {
-    public partial class CvlDepartment
+    public partial class RlDepartment
     {
-        public CvlDepartment()
+        public RlDepartment()
         {
-            CvlProcesses = new HashSet<CvlProcess>();
+            RlCases = new HashSet<RlCase>();
         }
 
         public int DepartmentId { get; set; }
         public string? DepartmentName { get; set; }
         public string? DepartmentNameAl { get; set; }
         public bool? Active { get; set; }
+        public string? Modules { get; set; }
 
-        public virtual ICollection<CvlProcess> CvlProcesses { get; set; }
+        public virtual ICollection<RlCase> RlCases { get; set; }
     }
 }

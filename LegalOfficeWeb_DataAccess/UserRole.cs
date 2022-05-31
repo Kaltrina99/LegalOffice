@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_DataAccess
 {
     public partial class UserRole
     {
@@ -11,6 +11,7 @@ namespace LegalOfficeWeb_DataAccess.Data
         public DateTime? CreatedDate { get; set; }
         public int? CreatedUser { get; set; }
         public bool? Active { get; set; }
+        public bool? MainRoleId { get; set; }
 
         public virtual Role? Role { get; set; }
         public virtual User? User { get; set; }

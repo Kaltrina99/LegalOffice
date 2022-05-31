@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_DataAccess
 {
     public partial class RlCaseHistory
     {
         public RlCaseHistory()
         {
-            RlAgreements = new HashSet<RlAgreement>();
             RlCaseNatifications = new HashSet<RlCaseNatification>();
         }
 
@@ -25,7 +24,6 @@ namespace LegalOfficeWeb_DataAccess.Data
 
         public virtual RlCase? Case { get; set; }
         public virtual RlCaseStatus? Status { get; set; }
-        public virtual ICollection<RlAgreement> RlAgreements { get; set; }
         public virtual ICollection<RlCaseNatification> RlCaseNatifications { get; set; }
     }
 }

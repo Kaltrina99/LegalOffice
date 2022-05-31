@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_DataAccess
 {
     public partial class RlCaseNatification
     {
@@ -19,6 +19,8 @@ namespace LegalOfficeWeb_DataAccess.Data
         public string? Address { get; set; }
         public int? WaitingDays { get; set; }
         public string? DocumentPath { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public bool? Active { get; set; }
 
         public virtual RlCaseHistory? CaseHistory { get; set; }
         public virtual ICollection<RlCninvoice> RlCninvoices { get; set; }

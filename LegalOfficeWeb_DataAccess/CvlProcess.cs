@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_DataAccess
 {
     public partial class CvlProcess
     {
@@ -10,41 +10,39 @@ namespace LegalOfficeWeb_DataAccess.Data
             CvlProcessDetails = new HashSet<CvlProcessDetail>();
         }
 
-        public int CvlProcessId { get; set; }
-        public string? CvlProcessPlaintiffName { get; set; }
-        public int? CvlDefendantCompanyId { get; set; }
-        public int? CvlDepartmentId { get; set; }
-        public int? CvlReasonId { get; set; }
-        public int? CvlSubReasonId { get; set; }
-        public int? CvlBasicCourtId { get; set; }
-        public int? CvlJudgeId { get; set; }
-        public string? CvlExpertIds { get; set; }
-        public string? CvlSexpertIds { get; set; }
-        public int? CvlRiskLevelId { get; set; }
-        public int? CvlLitigationLawyerId { get; set; }
-        public string? CvlProcessCaseNumber { get; set; }
-        public decimal? CvlProcessValue { get; set; }
-        public DateTime? CvlEventDate { get; set; }
-        public DateTime? CvlProcessDate { get; set; }
-        public string? CvlProcessComment { get; set; }
-        public int? CvlLastProcessStatusId { get; set; }
-        public DateTime? CvlLastStatusDate { get; set; }
-        public string? CvlLastStatusComment { get; set; }
-        public DateTime? CvlCreateDate { get; set; }
-        public int? CvlCreateUserId { get; set; }
-        public bool? CvlIsDeleted { get; set; }
-        public int? CvlIsDeletedUserId { get; set; }
-        public DateTime? CvlIsDeletedDate { get; set; }
-        public string? CvlIsDeletedComment { get; set; }
-        public bool? CvlIsFinished { get; set; }
+        public int ProcessId { get; set; }
+        public int? DefendantCompanyId { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? ReasonId { get; set; }
+        public int? SubReasonId { get; set; }
+        public int? BasicCourtId { get; set; }
+        public int? JudgeId { get; set; }
+        public int? RiskLevelId { get; set; }
+        public int? LitigationLawyerId { get; set; }
+        public string? ProcessCaseNumber { get; set; }
+        public decimal? ProcessValue { get; set; }
+        public DateTime? EventDate { get; set; }
+        public DateTime? ProcessDate { get; set; }
+        public string? ProcessComment { get; set; }
+        public int? LastProcessStatusId { get; set; }
+        public DateTime? LastStatusDate { get; set; }
+        public string? LastStatusComment { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? CreatedUser { get; set; }
+        public bool? Deleted { get; set; }
+        public int? DeletedUser { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public string? DeletedComment { get; set; }
+        public int? OldProcessId { get; set; }
 
-        public virtual CvlBasicCourt? CvlBasicCourt { get; set; }
-        public virtual CvlDefendantCompany? CvlDefendantCompany { get; set; }
-        public virtual CvlDepartment? CvlDepartment { get; set; }
-        public virtual CvlJudge? CvlJudge { get; set; }
-        public virtual CvlReason? CvlReason { get; set; }
-        public virtual CvlRiskLevel? CvlRiskLevel { get; set; }
-        public virtual CvlSubReason? CvlSubReason { get; set; }
+        public virtual CvlBasicCourt? BasicCourt { get; set; }
+        public virtual CvlDefendantCompany? DefendantCompany { get; set; }
+        public virtual CvlDepartment? Department { get; set; }
+        public virtual CvlJudge? Judge { get; set; }
+        public virtual CvlLitigationLawyer? LitigationLawyer { get; set; }
+        public virtual CvlReason? Reason { get; set; }
+        public virtual CvlRiskLevel? RiskLevel { get; set; }
+        public virtual CvlSubReason? SubReason { get; set; }
         public virtual ICollection<CvlProcessDetail> CvlProcessDetails { get; set; }
     }
 }

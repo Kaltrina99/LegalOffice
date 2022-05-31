@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_DataAccess
 {
     public partial class RlAgrinstallment
     {
@@ -12,6 +12,9 @@ namespace LegalOfficeWeb_DataAccess.Data
         public int? InsNo { get; set; }
         public int? InsTypeId { get; set; }
         public DateTime? DueDate { get; set; }
+        public int? CreatedUser { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public bool? Active { get; set; }
 
         public virtual RlAgreement? Agreement { get; set; }
         public virtual RlInsType? InsType { get; set; }
