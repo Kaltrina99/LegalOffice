@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess
+namespace LegalOfficeWeb_DataAccess.Data
 {
     public partial class CvlProcessExpert
     {
