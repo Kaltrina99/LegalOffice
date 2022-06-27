@@ -1,6 +1,7 @@
 using LegalOfficeWeb_Business.Repository;
 using LegalOfficeWeb_Business.Repository.IRepository;
 using LegalOfficeWeb_DataAccess.Data;
+using LegalOfficeWeb_Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 //IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("DefaultConnection").Build();
+builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("ConnectionStrings"));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
