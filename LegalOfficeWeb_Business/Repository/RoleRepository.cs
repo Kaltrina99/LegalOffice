@@ -15,12 +15,10 @@ namespace LegalOfficeWeb_Business.Repository
     public class RoleRepository : IRoleRepository
     {
         private readonly BaseRepository baseRepo;
-        private readonly ApplicationDbContext _context;
-        public RoleRepository(ApplicationDbContext context, IOptions<DatabaseSettings> dbOptions)
+        public RoleRepository(IOptions<DatabaseSettings> dbOptions)
         {
             DatabaseSettings dbSettings = dbOptions.Value;
             baseRepo = new BaseRepository(dbSettings.DefaultConnection);
-            _context = context;
         }
         public List<Role> GetAll()
         {
@@ -53,10 +51,6 @@ namespace LegalOfficeWeb_Business.Repository
             }
         }
 
-        //public List<Role> GetAll()
-        //{
-        //    var role = _context.Roles.AsEnumerable();
-        //    return role.ToList();
-        //}
+        
     }
 }
