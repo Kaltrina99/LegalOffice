@@ -1,5 +1,7 @@
 using LegalOfficeWeb_Business.Repository;
 using LegalOfficeWeb_Business.Repository.IRepository;
+using LegalOfficeWeb_Business.Service;
+using LegalOfficeWeb_Business.Service.IService;
 using LegalOfficeWeb_DataAccess.Data;
 using LegalOfficeWeb_Models;
 using Microsoft.AspNetCore.Components;
@@ -15,6 +17,8 @@ builder.Services.AddServerSideBlazor();
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("ConnectionStrings"));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 var app = builder.Build();
 
