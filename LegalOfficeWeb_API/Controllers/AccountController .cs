@@ -19,12 +19,12 @@ namespace LegalOfficeWeb_API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class LoginController : Controller
+    public class AccountController : Controller
     {
         private readonly LegalOfficeWeb_Common.Helpers.IAuthenticationService authenticationService;
         private readonly IAccountService accountService;
         private readonly APISettings _aPISettings;
-        public LoginController(LegalOfficeWeb_Common.Helpers.IAuthenticationService authenticationService, IAccountService accountService, IOptions<APISettings> options)
+        public AccountController(LegalOfficeWeb_Common.Helpers.IAuthenticationService authenticationService, IAccountService accountService, IOptions<APISettings> options)
         {
             this.authenticationService = authenticationService;
             this.accountService = accountService;

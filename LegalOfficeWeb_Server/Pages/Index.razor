@@ -1,9 +1,12 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<AuthorizeView>
+    <Authorized>
+       <LegalOfficeWeb_Server.Pages.Dashboard.Index></LegalOfficeWeb_Server.Pages.Dashboard.Index>
+    </Authorized>
+    <NotAuthorized>
+        <LegalOfficeWeb_Server.Pages.Account.Login></LegalOfficeWeb_Server.Pages.Account.Login>
+    </NotAuthorized>
+</AuthorizeView>
 
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />

@@ -28,4 +28,19 @@
     <ProjectReference Include="..\LegalOfficeWeb_Models\LegalOfficeWeb_Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\AdministrativeProcess\" />
+    <Folder Include="Pages\Charges\" />
+    <Folder Include="Pages\Reports\" />
+    <Folder Include="Pages\ReclaimLosses\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\bootstrap\bootstrap.min.css.map" />
+    <None Include="wwwroot\css\open-iconic\FONT-LICENSE" />
+    <None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
+    <None Include="wwwroot\css\open-iconic\ICON-LICENSE" />
+    <None Include="wwwroot\css\open-iconic\README.md" />
+  </ItemGroup>
+
 </Project>
