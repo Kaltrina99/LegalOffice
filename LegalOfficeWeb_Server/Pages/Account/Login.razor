@@ -1,34 +1,97 @@
 ﻿@page "/login"
+@using LegalOfficeWeb_Business.Service.IService
+@using LegalOfficeWeb_Common.Helpers
+@using LegalOfficeWeb_Models
+@using System.Web
 
-<form>
-    <div class="py-4">
-        <div class=" row form-group ">
-            <div class="col-6 offset-3 ">
-                <div class="card border">
-                    <div class="card-body px-lg-5 pt-4">
-                        <h3 class="col-12 text-success text-center py-2">
-                            <strong>Sign In</strong>
-                        </h3>
-                        <div class="py-2">
-                            <input id="email" placeholder="Username..." class="form-control mb-2" />
-                        </div>
-                        <div class="py-2">
-                            <input type="password" placeholder="Password..." id="password" class="form-control mb-2" />
-                        </div>
-                        <div class="py-2">
-                            <button type="submit" class="btn btn-success btn-block"><i class="bi bi-person-bounding-box"></i> Sign in</button>
-                        </div>
-                    </div>
+<div class="container">
+    <div class="screen">
+        <div class="screen__content">
+            @* <img class="col-lg-4 col-sm-4 mx-6" src="/logo.png" alt="logo">*@
+            <EditForm class="login" Model="SignInRequest" OnValidSubmit="LoginUser">
+                <DataAnnotationsValidator />
+                @if (ShowSignInErrors)
+                {
+                    <p class="text-center text-danger">@Errors</p>
+                }
+
+                <div class="login__field">
+                    <i class="login__icon fa fa-user"></i>
+                    <InputText @bind-Value="SignInRequest.Username" id="email" type="text" class="login__input" placeholder="First Name..." />
+                    <ValidationMessage For="(()=>SignInRequest.Username)"></ValidationMessage>
+
                 </div>
+
+                <div class="login__field">
+                    <i class="login__icon fa fa-lock"></i>
+                    <InputText @bind-Value="SignInRequest.Password" type="password" placeholder="Password" class="login__input" />
+                    <ValidationMessage For="(()=>SignInRequest.Password)"></ValidationMessage>
+                </div>
+
+                <br>
+
+                <div class="login__field">
+                    <label class="form-check-label">
+                        <InputCheckbox @bind-Value="SignInRequest.RememberMe" />
+                        <span class="form-check-sign"></span>
+                        Remember me
+                    </label>
+                </div>
+                <button type="submit" class="button login__submit">
+                    <span class="button__text">Log In</span>
+                    <i class="button__icon fa fa-chevron-right"></i>
+                </button>
+
+            </EditForm>
+
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
             </div>
         </div>
     </div>
-</form>
-
+</div>
 @code {
+    private LogInRequestDTO SignInRequest = new();
+    public bool IsProcessing { get; set; } = false;
+    public bool ShowSignInErrors { get; set; }
+    public string Errors { get; set; }
 
+    [Inject]
+    public IAccountService _authSerivce { get; set; }
+    [Inject]
+    public NavigationManager _navigationManager { get; set; }
+    public string ReturnUrl { get; set; }
+    private async Task LoginUser()
+    {
+        ShowSignInErrors = false;
+        IsProcessing = true;
+        var result = await _authSerivce.Login(SignInRequest);
+        if (result.IsAuthSuccessful)
+        {
+            //regiration is successful
+            var absoluteUri = new Uri(_navigationManager.Uri);
+            var queryParam = HttpUtility.ParseQueryString(absoluteUri.Query);
+            ReturnUrl = queryParam["returnUrl"];
+            if (string.IsNullOrEmpty(ReturnUrl))
+            {
+                _navigationManager.NavigateTo("/");
+            }
+            else
+            {
+                _navigationManager.NavigateTo("/" + ReturnUrl);
+            }
+        }
+        else
+        {
+            //failure
+            Errors = result.ErrorMessage;
+            ShowSignInErrors = true;
+
+        }
+        IsProcessing = false;
+    }
 }
 
-@code {
-
-}

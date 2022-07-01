@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LegalOfficeWeb_Models
 {
-    public class LoginRequestDTO
+    public class LogInRequestDTO
     {
         [Required]
         public string Username { get; set; }

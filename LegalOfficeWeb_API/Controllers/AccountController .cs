@@ -22,18 +22,18 @@ namespace LegalOfficeWeb_API.Controllers
     public class AccountController : Controller
     {
         private readonly LegalOfficeWeb_Common.Helpers.IAuthenticationService authenticationService;
-        private readonly IAccountService accountService;
+        private readonly IAccountRepository accountRepository;
         private readonly APISettings _aPISettings;
-        public AccountController(LegalOfficeWeb_Common.Helpers.IAuthenticationService authenticationService, IAccountService accountService, IOptions<APISettings> options)
+        public AccountController(LegalOfficeWeb_Common.Helpers.IAuthenticationService authenticationService, IAccountRepository accountRepository, IOptions<APISettings> options)
         {
             this.authenticationService = authenticationService;
-            this.accountService = accountService;
+            this.accountRepository = accountRepository;
             _aPISettings = options.Value;
         }
        
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromForm] LoginRequestDTO model)
+        public async Task<IActionResult> Login([FromBody] LogInRequestDTO model)
         {
                 if (model == null || !ModelState.IsValid)
                 {
@@ -44,7 +44,7 @@ namespace LegalOfficeWeb_API.Controllers
 
             //if (String.IsNullOrEmpty(checkLdap))
             //{
-                var user = accountService.GetByID(userId);
+                var user = accountRepository.GetByID(userId);
                 if (user == null)
                 {
                     return Unauthorized(new LogInResponseDTO

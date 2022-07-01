@@ -23,16 +23,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LegalOfficeWeb_API\LegalOfficeWeb_API.csproj" />
     <ProjectReference Include="..\LegalOfficeWeb_Business\LegalOfficeWeb_Business.csproj" />
     <ProjectReference Include="..\LegalOfficeWeb_DataAccess\LegalOfficeWeb_DataAccess.csproj" />
     <ProjectReference Include="..\LegalOfficeWeb_Models\LegalOfficeWeb_Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\AdministrativeProcess\" />
     <Folder Include="Pages\Charges\" />
+    <Folder Include="Pages\Documents\" />
     <Folder Include="Pages\Reports\" />
-    <Folder Include="Pages\ReclaimLosses\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using LegalOfficeWeb_DataAccess.Data;
+using LegalOfficeWeb_Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace LegalOfficeWeb_Business.Service.IService
 {
     public interface IAccountService
     {
-        User GetByID(int id);
+        Task<LogInResponseDTO> Login(LogInRequestDTO signInRequestDTO);
+        Task Logout();
     }
 }
