@@ -68,6 +68,7 @@ builder.Services.AddScoped<IAuthenticationService, LdapAuthenticationService>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 //builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+//builder.Services.AddScoped<IAdministrativeProcessService, AdministrativeProcessService>();
 //builder.Services.AddBlazoredLocalStorage();
 //builder.Services.AddAuthorizationCore();
 //builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();

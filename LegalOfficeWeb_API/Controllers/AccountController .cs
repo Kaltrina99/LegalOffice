@@ -42,8 +42,6 @@ namespace LegalOfficeWeb_API.Controllers
                 var checkLdap = authenticationService.LDAPLogin(model.Username.ToLower(), model.Password);
                 int.TryParse(model.Username.ToLower().Replace("keds", "").Replace("kesco", ""), out int userId);
 
-            //if (String.IsNullOrEmpty(checkLdap))
-            //{
                 var user = accountRepository.GetByID(userId);
                 if (user == null)
                 {
@@ -75,19 +73,10 @@ namespace LegalOfficeWeb_API.Controllers
                         Name = user.FullName,
                         Id = user.UserId.ToString(),
                         Email = user.Email,
-                        PhoneNumber = user.PhoneNr
+                        PhoneNumber = user.PhoneNr,
+                        EmpId=user.EmpId.ToString(),
                     }
                 });
-            //}
-            //else
-            //{
-            //    return Unauthorized(new LogInResponseDTO
-            //    {
-            //        IsAuthSuccessful = false,
-            //        ErrorMessage = "Invalid Authentication"
-            //    });
-            //}
-            //return StatusCode(201);
           
         }
        

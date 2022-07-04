@@ -18,6 +18,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.3" />
+    <PackageReference Include="Radzen.Blazor" Version="3.19.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
     <PackageReference Include="System.Diagnostics.Tools" Version="4.3.0" />
   </ItemGroup>
@@ -27,12 +28,6 @@
     <ProjectReference Include="..\LegalOfficeWeb_Business\LegalOfficeWeb_Business.csproj" />
     <ProjectReference Include="..\LegalOfficeWeb_DataAccess\LegalOfficeWeb_DataAccess.csproj" />
     <ProjectReference Include="..\LegalOfficeWeb_Models\LegalOfficeWeb_Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\Charges\" />
-    <Folder Include="Pages\Documents\" />
-    <Folder Include="Pages\Reports\" />
   </ItemGroup>
 
   <ItemGroup>

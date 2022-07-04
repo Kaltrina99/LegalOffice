@@ -33,11 +33,12 @@ namespace LegalOfficeWeb_Business.Service
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
             var t=bodyContent.ReadAsStringAsync();
             var response = await _client.PostAsync("api/Account/Login", bodyContent);
-            var contentTemp = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<LogInResponseDTO>(contentTemp);
+            
 
             if (response.IsSuccessStatusCode)
             {
+                var contentTemp = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<LogInResponseDTO>(contentTemp);
                 await _localStorage.SetItemAsync(SD.Local_Token, result.Token);
                 await _localStorage.SetItemAsync(SD.Local_UserDetails, result.UserDTO);
                 ((AuthStateProvider)_authStateProvider).NotifyUserLoggedIn(result.Token);
@@ -46,7 +47,7 @@ namespace LegalOfficeWeb_Business.Service
             }
             else
             {
-                return result;
+                return new LogInResponseDTO() { ErrorMessage="Wrong username or password!"};
             }
         }
 

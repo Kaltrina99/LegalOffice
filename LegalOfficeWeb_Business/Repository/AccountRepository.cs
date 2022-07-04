@@ -45,6 +45,7 @@ namespace LegalOfficeWeb_Business.Repository
                             item.FullName = reader["FullName"].ToString();
                             item.Email = reader["Email"].ToString();
                             item.PhoneNr = reader["PhoneNr"].ToString();
+                            item.EmpId = int.Parse(reader["EmpId"].ToString());
                         }
                         con.Close();
                         return item;

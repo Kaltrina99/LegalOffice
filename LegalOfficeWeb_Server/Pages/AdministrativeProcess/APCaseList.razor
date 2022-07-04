@@ -1,5 +1,68 @@
-﻿<h3>APCaseList</h3>
+﻿@page "/administrativeProcess/index"
+@using LegalOfficeWeb_Models
+@using LegalOfficeWeb_Business.Repository.IRepository
+@inject NavigationManager _navigationManager
+
+        <div class="row">
+            <div class="col-7 mb-3">
+                <button class="btn btn-outline-primary">Create new case</button>
+                </div>
+        </div>
+<div class="card">
+    <div class="card-body">
+        <table class="table table-responsive table-bordered">
+            <thead >
+                <tr>
+                    <td>CaseId</td>
+                    <td>StatusComment </td>
+                    <td>StatusDate </td>
+                    <td>CompensationAmount</td>
+                    <td>EvaluatedAmount</td>
+                    <td>OfferedAmount </td>
+                    <td>PaidAmount </td>
+                    <td>Comment </td>
+                    <td>StatusName</td>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody >
+                    @foreach (var item in dataRecords)
+                    {
+                    <tr >
+                        <td>@item.CaseId</td>
+                        <td>@item.StatusComment </td>
+                        <td>@item.StatusDate </td>
+                        <td>@item.CompensationAmount</td>
+                        <td>@item.EvaluatedAmount</td>
+                        <td>@item.OfferedAmount </td>
+                        <td>@item.PaidAmount </td>
+                        <td>@item.Comment </td>
+                        <td>@item.StatusName</td>
+
+                        <td>
+                            <div class="actions-container">
+                                <RadzenButton Click="(args=> APCDetails(item.AphistoryId))" class="btn btn-info" Text="Details" />
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                
+            </tbody>
+        </table>
+    </div>
+</div>
 
 @code {
+    private IEnumerable<AdministrativeProcessDTO> dataRecords { get; set; } = null;
+    [Inject]
+    public IAdministrativeProcessRepository _apRepository { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        dataRecords = await _apRepository.GetAll();
+    }
+    private void APCDetails(int id)
+    {
+        _navigationManager.NavigateTo("/administrativeProcess/details");
+    }
 
 }

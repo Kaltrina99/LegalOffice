@@ -17,7 +17,7 @@
 }
 
 body {
-	background: linear-gradient(90deg, #f2e8c4, #f0bfa3);
+	background: linear-gradient(90deg, #cfcfd1, #e8e8ea);
 }
 
 .container {
@@ -30,11 +30,11 @@ body {
 }
 
 .screen {
-	background: linear-gradient(90deg, #cfcfb4, #DD4084);
+	background: linear-gradient(90deg, #e7e6e7, #dfbfa8);
 	position: relative;
 	height: 100%;
 	width: 100%;
-	box-shadow: 0px 0px 24px #5c5696;
+	box-shadow: 0px 0px 24px #6cb4a4;
 }
 
 .screen__content {
@@ -66,12 +66,13 @@ body {
 	top: -50px;
 	right: 120px;	
 	border-radius: 0 72px 0 0;
+	/*background-image:url(../../logo.png)*/
 }
 
 .screen__background__shape2 {
 	height: 180px;
 	width: 220px;
-	background: #FFA09D;
+	background: #a1b6ad;
 	top: -130px;
 	right: 10px;
 	border-radius: 32px;
@@ -80,7 +81,7 @@ body {
 .screen__background__shape3 {
 	height: 540px;
 	width: 190px;
-	background: linear-gradient(270deg, #D8D69A, #6A68CC);
+	background: linear-gradient(270deg, #a1b6ad, #b49f94);
 	top: -24px;
 	right: 0;
 	border-radius: 32px;
@@ -89,11 +90,23 @@ body {
 .screen__background__shape4 {
 	height: 255px;
 	width: 111px;
-	background: #FE7D87;
+	background: #deb76a;
 	top: 372px;
 	right: 52px;
 	border-radius: 60px;
 }
+/*.screen__background__image {
+	height: 499px;
+	width: 520px;
+	background: #00000000;
+	top: 94px;
+	right: -33px;
+	border-radius: 0 72px 0 0;
+	background-image: url(../../logo.png);
+	background-size: 258px;
+	background-repeat: no-repeat;
+	transform: rotate(0deg);
+}*/
 
 .login {
 	width: 320px;
@@ -109,12 +122,11 @@ body {
 .login__icon {
 	position: absolute;
 	top: 30px;
-	color: #7875B5;
+	color: #6CB4A0;
 }
-
 .login__input {
 	border: none;
-	border-bottom: 2px solid #D1D1D4;
+	border-bottom: 2px solid #000;
 	background: none;
 	padding: 10px;
 	padding-left: 24px;
@@ -127,7 +139,7 @@ body {
 .login__input:focus,
 .login__input:hover {
 	outline: none;
-	border-bottom-color: #6A679E;
+	border-bottom-color: #6CB4A0;
 }
 
 .login__submit {
@@ -142,8 +154,8 @@ body {
 	display: flex;
 	align-items: center;
 	width: 100%;
-	color: #4C489D;
-	box-shadow: 0px 2px 2px #5C5696;
+	color: #6cb4a4;
+	box-shadow: 0px 2px 2px #6cb4a4;
 	cursor: pointer;
 	transition: .2s;
 }
@@ -151,16 +163,15 @@ body {
 .login__submit:active,
 .login__submit:focus,
 .login__submit:hover {
-	border-color: #6A679E;
+	border-color: #6CB4A0;
 	outline: none;
 }
 
 .button__icon {
 	font-size: 24px;
 	margin-left: auto;
-	color: #7875B5;
+	color: #6cb4a4;
 }
-
 .social-login {	
 	position: absolute;
 	height: 140px;
@@ -186,4 +197,101 @@ body {
 
 .social-login__icon:hover {
 	transform: scale(1.5);	
+}
+
+@charset "UTF-8";
+
+.toggler-wrapper {
+	display: block;
+	width: 45px;
+	height: 25px;
+	cursor: pointer;
+	position: relative;
+}
+
+	.toggler-wrapper input[type="checkbox"] {
+		display: none;
+	}
+
+		.toggler-wrapper input[type="checkbox"]:checked + .toggler-slider {
+			background-color: #44cc66;
+		}
+
+	.toggler-wrapper .toggler-slider {
+		background-color: #ccc;
+		position: absolute;
+		border-radius: 100px;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		-webkit-transition: all 300ms ease;
+		transition: all 300ms ease;
+	}
+
+	.toggler-wrapper .toggler-knob {
+		position: absolute;
+		-webkit-transition: all 300ms ease;
+		transition: all 300ms ease;
+	}
+
+
+
+.toggler-wrapper.style-4 input[type="checkbox"]:checked + .toggler-slider .toggler-knob {
+	left: calc(100% - 19px - 3px);
+}
+
+.toggler-wrapper.style-4 .toggler-knob {
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	left: 0;
+	top: 0;
+	background-color: #fff;
+	-webkit-box-shadow: 0 2px 6px rgba(153, 153, 153, 0.75);
+	box-shadow: 0 2px 6px rgba(153, 153, 153, 0.75);
+}
+.badge {
+	font-size: 100%;
+	color: #757575;
+	padding: 5px 4px;
+	border-radius: 4px;
+}
+.check__div {
+	display: inline-flex;
+}
+.sidebar {
+	background: linear-gradient(308deg, #74b298, #c19077);
+}
+.navbar-avatar {
+	height: auto !important;
+}
+
+.logout__submit {
+	background: #820404;
+	font-size: 14px;
+	margin-top: 30px;
+	padding: 16px 20px;
+	border-radius: 50px;
+	border: 1px solid #fff;
+	text-transform: uppercase;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	color: #fff;
+	box-shadow: 0px 2px 2px #fff;
+	cursor: pointer;
+	transition: .2s;
+	bottom: 0;
+}
+	.logout__submit:active,
+	.logout__submit:focus,
+	.logout__submit:hover {
+		border-color: #820404;
+		outline: none;
+	}
+.text-avatar {
+	color: #fff;
+	font-size: 14px;
 }

@@ -31,12 +31,20 @@
                 <br>
 
                 <div class="login__field">
-                    <label class="form-check-label">
-                        <InputCheckbox @bind-Value="SignInRequest.RememberMe" />
-                        <span class="form-check-sign"></span>
-                        Remember me
-                    </label>
+                    <div class="check__div">
+                        <label class="toggler-wrapper style-4">
+                            <InputCheckbox @bind-Value="SignInRequest.RememberMe" />
+                            <div class="toggler-slider">
+                                <div class="toggler-knob"></div>
+                            </div>
+
+
+                        </label>
+                        <div class="badge">Remember me</div>
+                    </div>
+
                 </div>
+
                 <button type="submit" class="button login__submit">
                     <span class="button__text">Log In</span>
                     <i class="button__icon fa fa-chevron-right"></i>
