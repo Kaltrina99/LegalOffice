@@ -55,10 +55,9 @@ builder.Services.AddAuthentication(opt =>
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("BaseAPIUrl")) });
 builder.Services.AddScoped<IAuthenticationService, LdapAuthenticationService>();
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+//builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IRoleRepository, RoleRepository>();
-builder.Services.AddScoped<IAdministrativeProcessRepository, AdministrativeProcessRepository>();
+builder.Services.AddScoped<IAdministrativeProcessService, AdministrativeProcessService>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();

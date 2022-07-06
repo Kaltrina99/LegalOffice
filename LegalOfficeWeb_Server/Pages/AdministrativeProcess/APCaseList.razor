@@ -1,6 +1,6 @@
 ﻿@page "/administrativeProcess/index"
 @using LegalOfficeWeb_Models
-@using LegalOfficeWeb_Business.Repository.IRepository
+@using LegalOfficeWeb_Business.Service.IService
 @inject NavigationManager _navigationManager
 
         <div class="row">
@@ -26,43 +26,46 @@
                 </tr>
             </thead>
             <tbody >
+                @if (dataRecords != null)
+                {
                     @foreach (var item in dataRecords)
                     {
-                    <tr >
-                        <td>@item.CaseId</td>
-                        <td>@item.StatusComment </td>
-                        <td>@item.StatusDate </td>
-                        <td>@item.CompensationAmount</td>
-                        <td>@item.EvaluatedAmount</td>
-                        <td>@item.OfferedAmount </td>
-                        <td>@item.PaidAmount </td>
-                        <td>@item.Comment </td>
-                        <td>@item.StatusName</td>
+                                <tr >
+                                    <td>@item.CaseId</td>
+                                    <td>@item.StatusComment </td>
+                                    <td>@item.StatusDate </td>
+                                    <td>@item.CompensationAmount</td>
+                                    <td>@item.EvaluatedAmount</td>
+                                    <td>@item.OfferedAmount </td>
+                                    <td>@item.PaidAmount </td>
+                                    <td>@item.Comment </td>
+                                    <td>@item.StatusName</td>
 
-                        <td>
-                            <div class="actions-container">
-                                <RadzenButton Click="(args=> APCDetails(item.AphistoryId))" class="btn btn-info" Text="Details" />
-                            </div>
-                        </td>
-                    </tr>
+                                    <td>
+                                        <div class="actions-container">
+                                            <button class="btn btn-primary" @onclick="@APCDetails">Details</button>
+                                  
+                                        </div>
+                                    </td>
+                                </tr>
                     }
-                
+                }
             </tbody>
         </table>
     </div>
 </div>
 
 @code {
-    private IEnumerable<AdministrativeProcessDTO> dataRecords { get; set; } = null;
+
+    private IEnumerable<AdministrativeProcessDTO> dataRecords { get; set; }
     [Inject]
-    public IAdministrativeProcessRepository _apRepository { get; set; }
+    public IAdministrativeProcessService _apServicess { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        dataRecords = await _apRepository.GetAll();
+        dataRecords = await _apServicess.GetAll();
     }
-    private void APCDetails(int id)
+    private void APCDetails()
     {
         _navigationManager.NavigateTo("/administrativeProcess/details");
     }
-
 }

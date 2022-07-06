@@ -1,4 +1,5 @@
-﻿using LegalOfficeWeb_Business.Service;
+﻿using LegalOfficeWeb_Business.Repository.IRepository;
+using LegalOfficeWeb_Business.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,17 +9,24 @@ namespace LegalOfficeWeb_API.Controllers
     [ApiController]
     public class AdministrativeProcessController : Controller
     {
-        private readonly AdministrativeProcessService administrativeProcessService;
-        public AdministrativeProcessController(AdministrativeProcessService administrativeProcessService)
+        private readonly IAdministrativeProcessRepository administrativeProcessRepository;
+        public AdministrativeProcessController(IAdministrativeProcessRepository administrativeProcessRepository)
         {
-            this.administrativeProcessService = administrativeProcessService;
+            this.administrativeProcessRepository = administrativeProcessRepository;
 
         }
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public async Task<IEnumerable<IActionResult>> GetAll()
-        //{
-        //    return (IEnumerable<IActionResult>)await administrativeProcessService.GetAll();
-        //}
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await administrativeProcessRepository.GetAll());
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAllStatuses()
+        {
+            return Ok(await administrativeProcessRepository.GetAllStatuses());
+        }
     }
 }

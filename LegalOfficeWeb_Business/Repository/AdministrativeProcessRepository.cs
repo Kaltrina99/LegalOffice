@@ -21,15 +21,6 @@ namespace LegalOfficeWeb_Business.Repository
             baseRepo = new BaseRepository(dbSettings.DefaultConnection);
         }
 
-        public Task<AdministrativeProcessDTO> Create(AdministrativeProcessDTO objDTO)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<AdministrativeProcessDTO> Get(int id)
         {
@@ -77,14 +68,37 @@ namespace LegalOfficeWeb_Business.Repository
             }
         }
 
-        public Task<IEnumerable<ApStatus>> GetAllStatuses()
+        public async Task<IEnumerable<AdministrativeProcessStatusesDTO>> GetAllStatuses()
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                using (var con = baseRepo.GetConnection())
+                {
+                    using (var cmd = new SqlCommand("dbo.AP_Statuses_GetAll", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
 
-        public Task<ApStatus> GetApStatus(int id)
-        {
-            throw new NotImplementedException();
+                        var reader = cmd.ExecuteReader();
+                        var items = new List<AdministrativeProcessStatusesDTO>();
+                        if (reader != null && reader.HasRows)
+                            while (reader.Read())
+                            {
+                                var item = new AdministrativeProcessStatusesDTO();
+                                item.StatusId = int.Parse(reader["StatusID"].ToString());
+                                item.StatusName = reader["StatusName"].ToString();
+                                item.StatusNameAl = reader["StatusNameAl"].ToString();
+                                item.Active = bool.Parse(reader["Active"].ToString());
+                                items.Add(item);
+                            }
+                        con.Close();
+                        return items;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public Task<AdministrativeProcessDTO> Update(AdministrativeProcessDTO objDTO)
