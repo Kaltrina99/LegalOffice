@@ -31,7 +31,6 @@ namespace LegalOfficeWeb_Models
         public int? SourceId { get; set; }
         public string? SourceDate { get; set; }
         public string? CreatedComment { get; set; }
-       
-        
+        public int? ProcessType { get; set; }
     }
 }

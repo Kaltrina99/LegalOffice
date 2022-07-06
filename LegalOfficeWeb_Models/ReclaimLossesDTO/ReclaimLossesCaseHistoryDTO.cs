@@ -14,5 +14,6 @@ namespace LegalOfficeWeb_Models
         public int? StatusId { get; set; }
         public string? StatusDate { get; set; }
         public string? CreatedComment { get; set; }
+        public int? ProcessType { get; set; }
     }
 }
