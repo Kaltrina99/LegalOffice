@@ -38,6 +38,12 @@ namespace LegalOfficeWeb_API.Controllers
                 });
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllRLCase()
+        {
+                return Ok(await reclaimLossesRepository.GetAllRLCases());      
+        }
         //[HttpPost]
         //public async Task<IActionResult> CreateRLCase([FromBody] ReclaimLossesCaseDTO reclaimLossesCaseDTO)
         //{

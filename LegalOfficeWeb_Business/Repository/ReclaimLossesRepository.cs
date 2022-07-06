@@ -319,9 +319,56 @@ namespace LegalOfficeWeb_Business.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ReclaimLossesCaseDTO>> GetAllRLCases(int? id = null)
+        public async Task<IEnumerable<ReclaimLossesCaseResponseDTO>> GetAllRLCases()
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var con = baseRepo.GetConnection())
+                {
+                    using (var cmd = new SqlCommand("dbo.RL_Case_GetALL", con))
+                    {
+                      
+                        var reader = cmd.ExecuteReader();
+
+
+                        var items = new List<ReclaimLossesCaseResponseDTO>();
+                        while (await reader.ReadAsync())
+                        {
+                            var item = new ReclaimLossesCaseResponseDTO();
+                            item.CaseId = int.Parse(reader["CaseID"].ToString());
+                            item.CaseNr = reader["CaseNr"].ToString();
+                            item.AgencyId = reader["AgencyId"].ToString();
+                            item.EldebitorId = int.Parse(reader["EldebitorId"].ToString());
+                            item.CustomerName = reader["CustomerName"].ToString();
+                            item.DepartmentId = int.Parse(reader["DepartmentId"].ToString());
+                            item.MainResponsibleUserId = int.Parse(reader["MainResponsibleUserId"].ToString());
+                            item.SecondResponsibleUserId = int.Parse(reader["SecondResponsibleUserId"].ToString());
+                            item.SourceApp = reader["SourceApp"].ToString();
+                            item.SourceId = int.Parse(reader["SourceId"].ToString());
+                            item.SourceDate = reader["SourceDate"].ToString();
+                            item.Subdistrict = reader["Subdistrict"].ToString();
+                            item.AMeterId = int.Parse(reader["AMeterId"].ToString());
+                            item.TariffId = reader["TariffId"].ToString();
+                            item.IdentityNr = reader["IdentityNr"].ToString();
+                            item.PhoneNr = reader["PhoneNr"].ToString();
+                            item.Address = reader["Address"].ToString();
+                            item.Municipality = reader["Municipality"].ToString();
+                            item.BirthDate = reader["BirthDate"].ToString();
+                            item.CreatedDate = reader["CreatedDate"].ToString();
+                            item.CreatedUser = reader["CreatedUser"].ToString();
+                            item.CreatedComment = reader["CreatedComment"].ToString();
+                            item.Active = bool.Parse(reader["Active"].ToString());
+                            items.Add(item);
+                        }
+                        con.Close();
+                        return items;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         #endregion
@@ -492,7 +539,7 @@ namespace LegalOfficeWeb_Business.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ReclaimLossesCaseHistoryDTO>> GetAllRLCaseHistories(int? id = null)
+        public Task<IEnumerable<ReclaimLossesCaseHistoryDTO>> GetAllRLCaseHistories()
         {
             throw new NotImplementedException();
         }
@@ -689,7 +736,7 @@ namespace LegalOfficeWeb_Business.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ReclaimLossesCaseNotificationDTO>> GetAllRLCaseNotifications(int? id = null)
+        public Task<IEnumerable<ReclaimLossesCaseNotificationDTO>> GetAllRLCaseNotifications()
         {
             throw new NotImplementedException();
         }
@@ -922,7 +969,7 @@ namespace LegalOfficeWeb_Business.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ReclaimLossesAgreementDTO>> GetAllRLAgreements(int? id = null)
+        public Task<IEnumerable<ReclaimLossesAgreementDTO>> GetAllRLAgreements()
         {
             throw new NotImplementedException();
         }
@@ -1118,7 +1165,7 @@ namespace LegalOfficeWeb_Business.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ReclaimLossesAgreementNotificationDTO>> GetAllRLAgreementNotifications(int? id = null)
+        public Task<IEnumerable<ReclaimLossesAgreementNotificationDTO>> GetAllRLAgreementNotifications()
         {
             throw new NotImplementedException();
         }
@@ -1308,7 +1355,7 @@ namespace LegalOfficeWeb_Business.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ReclaimLossesCaseDTO>> GetAllRLManualPayment(int? id = null)
+        public Task<IEnumerable<ReclaimLossesCaseDTO>> GetAllRLManualPayment()
         {
             throw new NotImplementedException();
         }
