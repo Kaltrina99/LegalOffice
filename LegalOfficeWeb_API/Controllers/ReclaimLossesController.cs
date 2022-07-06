@@ -7,6 +7,8 @@ namespace LegalOfficeWeb_API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+
+    [AllowAnonymous]
     public class ReclaimLossesController : Controller
     {
         private readonly IReclaimLossesRepository reclaimLossesRepository;
@@ -15,26 +17,125 @@ namespace LegalOfficeWeb_API.Controllers
             this.reclaimLossesRepository = reclaimLossesRepository;
 
         }
+
+        #region RLCases
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> CreateRLCase([FromBody] ReclaimLossesCaseDTO reclaimLossesCaseDTO)
         {
-             
-            return Ok(await reclaimLossesRepository.CreateRLCase(reclaimLossesCaseDTO));
+            try
+            {
+                var result = await reclaimLossesRepository.CreateRLCase(reclaimLossesCaseDTO);
+                return Ok(new SuccessModelDTO()
+                {
+                    Data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = ex.Message
+                });
+            }
         }
         [HttpPut]
-        [AllowAnonymous]
         public async Task<IActionResult> UpdateRLCase([FromBody] ReclaimLossesCaseDTO reclaimLossesCaseDTO)
         {
-
-            return Ok(await reclaimLossesRepository.UpdateRLCase(reclaimLossesCaseDTO));
+            try
+            {
+                var result = await reclaimLossesRepository.UpdateRLCase(reclaimLossesCaseDTO);
+                return Ok(new SuccessModelDTO()
+                {
+                    Data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = ex.Message
+                });
+            }
         }
         [HttpDelete]
-        [AllowAnonymous]
         public async Task<IActionResult> DeleteRLCase([FromBody] ReclaimLossesCaseDTO reclaimLossesCaseDTO)
         {
-
-            return Ok(await reclaimLossesRepository.DeleteRLCase(reclaimLossesCaseDTO));
+            try
+            {
+                var result = await reclaimLossesRepository.DeleteRLCase(reclaimLossesCaseDTO);
+                return Ok(new SuccessModelDTO()
+                {
+                    Data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = ex.Message
+                });
+            }
         }
+        #endregion
+
+        #region RLCaseHistory
+        [HttpPost]
+        public async Task<IActionResult> CreateRLCaseHistory([FromBody] ReclaimLossesCaseHistoryDTO reclaimLossesCaseHistoryDTO)
+        {
+            try
+            {
+                var result = await reclaimLossesRepository.CreateRLCaseHistory(reclaimLossesCaseHistoryDTO);
+                return Ok(new SuccessModelDTO()
+                {
+                    Data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = ex.Message
+                });
+            }
+        }
+        [HttpPut]
+        public async Task<IActionResult> UpdateRLCaseHistory([FromBody] ReclaimLossesCaseHistoryDTO reclaimLossesCaseHistoryDTO)
+        {
+            try
+            {
+                var result = await reclaimLossesRepository.UpdateRLCaseHistory(reclaimLossesCaseHistoryDTO);
+                return Ok(new SuccessModelDTO()
+                {
+                    Data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = ex.Message
+                });
+            }
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteRLCaseHistory([FromBody] ReclaimLossesCaseHistoryDTO reclaimLossesCaseHistoryDTO)
+        {
+            try
+            {
+                var result = await reclaimLossesRepository.DeleteRLCaseHistory(reclaimLossesCaseHistoryDTO);
+                return Ok(new SuccessModelDTO()
+                {
+                    Data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = ex.Message
+                });
+            }
+        }
+        #endregion
     }
 }
