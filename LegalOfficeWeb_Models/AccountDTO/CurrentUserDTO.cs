@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LegalOfficeWeb_Models
+﻿namespace LegalOfficeWeb_Models
 {
-    public class UserDTO
+
+    public class CurrentUserDTO
     {
         public string Id { get; set; }
         public string Name { get; set; }

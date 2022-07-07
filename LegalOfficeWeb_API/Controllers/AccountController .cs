@@ -68,7 +68,7 @@ namespace LegalOfficeWeb_API.Controllers
                 {
                     IsAuthSuccessful = true,
                     Token = token,
-                    UserDTO = new UserDTO()
+                    CurrentUserDTO = new CurrentUserDTO()
                     {
                         Name = user.FullName,
                         Id = user.UserId.ToString(),

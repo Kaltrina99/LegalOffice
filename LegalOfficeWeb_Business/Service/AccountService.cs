@@ -40,7 +40,7 @@ namespace LegalOfficeWeb_Business.Service
                 var contentTemp = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<LogInResponseDTO>(contentTemp);
                 await _localStorage.SetItemAsync(SD.Local_Token, result.Token);
-                await _localStorage.SetItemAsync(SD.Local_UserDetails, result.UserDTO);
+                await _localStorage.SetItemAsync(SD.Local_UserDetails, result.CurrentUserDTO);
                 ((AuthStateProvider)_authStateProvider).NotifyUserLoggedIn(result.Token);
                 _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", result.Token);
                 return new LogInResponseDTO() { IsAuthSuccessful = true };
