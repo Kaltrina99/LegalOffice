@@ -10,7 +10,7 @@ namespace LegalOfficeWeb_Business.Repository.IRepository
     public interface IReclaimLossesRepository
     {
         //RL Case
-        public Task<ReclaimLossesCaseDTO> CUDRLCase(ReclaimLossesCaseDTO objDTO);
+        public Task<ReclaimLossesCaseResponseDTO> CUDRLCase(ReclaimLossesCaseDTO objDTO);
         public Task<ReclaimLossesCaseResponseDTO> GetRLCase(int id);
         public Task<IEnumerable<ReclaimLossesCaseResponseDTO>> GetAllRLCases();
 

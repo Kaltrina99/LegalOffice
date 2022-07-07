@@ -11,9 +11,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\LegalOfficeWeb_Common\LegalOfficeWeb_Common.csproj" />
-    <ProjectReference Include="..\LegalOfficeWeb_Models\LegalOfficeWeb_Models.csproj" />
-  </ItemGroup>
-
 </Project>

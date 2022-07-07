@@ -16,7 +16,7 @@ namespace LegalOfficeWeb_Business.Repository
         }
         
         #region RLCase
-        public async Task<ReclaimLossesCaseDTO> CUDRLCase(ReclaimLossesCaseDTO objDTO)
+        public async Task<ReclaimLossesCaseResponseDTO> CUDRLCase(ReclaimLossesCaseDTO objDTO)
         {
             try
             {
@@ -53,10 +53,10 @@ namespace LegalOfficeWeb_Business.Repository
 
                         var r = await cmd.ExecuteNonQueryAsync();
                         con.Close();
-                        return new ReclaimLossesCaseDTO()
+                        return new ReclaimLossesCaseResponseDTO()
                         {
                             CaseId = objDTO.CaseId,
-                            UserId = objDTO.UserId,
+                            CreatedUser = objDTO.UserId.ToString(),
                             CaseNr = objDTO.CaseNr,
                             AgencyId = objDTO.AgencyId,
                             EldebitorId = objDTO.EldebitorId,
@@ -66,18 +66,13 @@ namespace LegalOfficeWeb_Business.Repository
                             IdentityNr = objDTO.IdentityNr,
                             PhoneNr = objDTO.PhoneNr,
                             Address = objDTO.Address,
-                            TariffId = objDTO.TariffId,
-                            Municipality = objDTO.Municipality,
-                            BirthDate = objDTO.BirthDate,
                             DepartmentId = objDTO.DepartmentId,
-                            StatusId = objDTO.StatusId,
                             CreatedDate = objDTO.CreatedDate,
                             MainResponsibleUserId = objDTO.MainResponsibleUserId,
                             SecondResponsibleUserId = objDTO.SecondResponsibleUserId,
                             SourceApp = objDTO.SourceApp,
                             SourceId = objDTO.SourceId,
                             CreatedComment = objDTO.CreatedComment,
-                            ProcessType= objDTO.ProcessType,
                         };
 
                     }

@@ -44,10 +44,27 @@ namespace LegalOfficeWeb_API.Controllers
         {
                 return Ok(await reclaimLossesRepository.GetAllRLCases());      
         }
-        [HttpGet]
-        public async Task<IActionResult> GetRLCase([FromHeader]int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRLCase(int? id)
         {
-            return Ok(await reclaimLossesRepository.GetRLCase(id));
+            if (id == null || id == 0)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = "Invalid Id",
+                    StatusCode = StatusCodes.Status400BadRequest
+                });
+            }
+            var cases=await reclaimLossesRepository.GetRLCase(id.Value);
+            if (cases == null)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = "Invalid Id",
+                    StatusCode = StatusCodes.Status404NotFound
+                });
+            }
+            return Ok(cases);
         }
         #endregion
 
