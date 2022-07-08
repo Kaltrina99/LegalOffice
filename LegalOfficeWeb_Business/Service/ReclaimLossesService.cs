@@ -24,15 +24,12 @@ namespace LegalOfficeWeb_Business.Service
         {
             var content = JsonConvert.SerializeObject(objDTO);
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var t = bodyContent.ReadAsStringAsync();
             var response = await _httpClient.PostAsync("api/ReclaimLosses/CUDRLCase",bodyContent);
-
-            var contentTemp = response.Content.ReadAsStringAsync().Result;
+            string responseResult = response.Content.ReadAsStringAsync().Result;
             if (response.IsSuccessStatusCode)
             {
-                var apcases = JsonConvert.DeserializeObject<ReclaimLossesCaseResponseDTO>(contentTemp);
-
-                return apcases;
+                var result = JsonConvert.DeserializeObject<ReclaimLossesCaseResponseDTO>(responseResult);
+                return result;
             }
 
             return new ReclaimLossesCaseResponseDTO();

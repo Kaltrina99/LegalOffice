@@ -25,6 +25,10 @@ namespace LegalOfficeWeb_API.Controllers
             try
             {
                 var result = await reclaimLossesRepository.CUDRLCase(reclaimLossesCaseDTO);
+                if(reclaimLossesCaseDTO.ProcessType==1)
+                {
+                    return Ok(result);
+                }
                 return Ok(new SuccessModelDTO()
                 {
                     Data = result
