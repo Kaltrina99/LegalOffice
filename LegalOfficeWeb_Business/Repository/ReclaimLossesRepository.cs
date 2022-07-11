@@ -1,5 +1,6 @@
 ﻿using LegalOfficeWeb_Business.Repository.IRepository;
 using LegalOfficeWeb_Models;
+using LegalOfficeWeb_Models.ReclaimLossesDTO;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using System.Data;
@@ -85,7 +86,7 @@ namespace LegalOfficeWeb_Business.Repository
             }
         }
 
-        public async Task<ReclaimLossesCaseResponseDTO> GetRLCase(int id)
+        public async Task<ReclaimLossesCaseResponseDTO> GetRLCase(ReclaimLossesGetCaseDTO objDTO)
         {
             try
             {
@@ -94,9 +95,9 @@ namespace LegalOfficeWeb_Business.Repository
                     using (var cmd = new SqlCommand("dbo.RL_get_Case", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@prp_CaseID", id);
-                        cmd.Parameters.AddWithValue("@prp_UserID", id);
-                        cmd.Parameters.AddWithValue("@prp_District", id);
+                        cmd.Parameters.AddWithValue("@prp_CaseID", objDTO.CaseId);
+                        cmd.Parameters.AddWithValue("@prp_UserID", objDTO.UserId);
+                        cmd.Parameters.AddWithValue("@prp_District", objDTO.District);
                         cmd.CommandTimeout = 600;
                         var reader =await cmd.ExecuteReaderAsync();
 
@@ -108,12 +109,7 @@ namespace LegalOfficeWeb_Business.Repository
                             item.CaseNr = reader["CaseNr"].ToString();
                             item.AgencyId = reader["AgencyId"].ToString();
                             item.EldebitorId = int.Parse(reader["EldebitorId"].ToString());
-                            item.Subdistrict = reader["Subdistrict"].ToString();
                             item.CustomerName = reader["CustomerName"].ToString();
-                            item.IdentityNr = reader["IdentityNr"].ToString();
-                            item.AMeterId = int.Parse(reader["AMeterId"].ToString());
-                            item.PhoneNr = reader["PhoneNr"].ToString();
-                            item.Address = reader["Address"].ToString();
                             item.DepartmentId = int.Parse(reader["DepartmentId"].ToString());
                             item.MainResponsibleUserId = int.Parse(reader["MainResponsibleUserId"].ToString());
                             item.SecondResponsibleUserId = int.Parse(reader["SecondResponsibleUserId"].ToString());
@@ -137,39 +133,37 @@ namespace LegalOfficeWeb_Business.Repository
             }
         }
 
-        public async Task<IEnumerable<ReclaimLossesCaseResponseDTO>> GetAllRLCases()
+        public async Task<IEnumerable<ReclaimLossesGetAllCasesResponseDTO>> GetAllRLCases(ReclaimLossesGetAllCasesDTO objDTO)
         {
             try
             {
                 using (var con = baseRepo.GetConnection())
                 {
-                    using (var cmd = new SqlCommand("dbo.RL_Case_GetALL", con))
+                    using (var cmd = new SqlCommand("dbo.RL_rpr_Cases", con))
                     {
-
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@prp_UserID", objDTO.UserId);
+                        cmd.Parameters.AddWithValue("@prp_District", objDTO.District);
+                        cmd.Parameters.AddWithValue("@prp_PageIndex", objDTO.PageIndex);
+                        cmd.Parameters.AddWithValue("@prp_PageSize", objDTO.PageSize);
+                        cmd.Parameters.Add("@prp_RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
+                        cmd.CommandTimeout = 600;
                         var reader = await cmd.ExecuteReaderAsync();
 
-                        var items = new List<ReclaimLossesCaseResponseDTO>();
+                        var items = new List<ReclaimLossesGetAllCasesResponseDTO>();
                         while (await reader.ReadAsync())
                         {
-                            var item = new ReclaimLossesCaseResponseDTO();
+                            var item = new ReclaimLossesGetAllCasesResponseDTO();
                             item.CaseId = int.Parse(reader["CaseID"].ToString());
                             item.CaseNr = reader["CaseNr"].ToString();
                             item.AgencyId = reader["AgencyId"].ToString();
-                            item.EldebitorId = int.Parse(reader["EldebitorId"].ToString());
-                            item.Subdistrict = reader["Subdistrict"].ToString();
+                            item.EldebitorId = reader["EldebitorId"].ToString();
                             item.CustomerName = reader["CustomerName"].ToString();
-                            item.IdentityNr = reader["IdentityNr"].ToString();
-                            item.AMeterId = int.Parse(reader["AMeterId"].ToString());
-                            item.PhoneNr = reader["PhoneNr"].ToString();
-                            item.Address = reader["Address"].ToString();
                             item.DepartmentId = int.Parse(reader["DepartmentId"].ToString());
                             item.MainResponsibleUserId = int.Parse(reader["MainResponsibleUserId"].ToString());
                             item.SecondResponsibleUserId = int.Parse(reader["SecondResponsibleUserId"].ToString());
                             item.SourceApp = reader["SourceApp"].ToString();
                             item.SourceId = int.Parse(reader["SourceId"].ToString());
-                            item.SourceDate = reader["SourceDate"].ToString();
-                            item.CreatedDate = reader["CreatedDate"].ToString();
-                            item.CreatedUser = reader["CreatedUser"].ToString();
                             item.CreatedComment = reader["CreatedComment"].ToString();
                             item.StatusName = reader["StatusName"].ToString();
                             item.StatusNameAL = reader["StatusNameAL"].ToString();
@@ -189,7 +183,7 @@ namespace LegalOfficeWeb_Business.Repository
         #endregion
 
         #region RLCaseHistory
-        public async Task<ReclaimLossesCaseHistoryDTO> CUDRLCaseHistory(ReclaimLossesCaseHistoryDTO objDTO)
+        public async Task<ReclaimLossesCaseHistoryResponseDTO> CUDRLCaseHistory(ReclaimLossesCaseHistoryDTO objDTO)
         {
             try
             {
@@ -209,13 +203,13 @@ namespace LegalOfficeWeb_Business.Repository
 
                         var r = await cmd.ExecuteNonQueryAsync();
                         con.Close();
-                        return new ReclaimLossesCaseHistoryDTO()
+                        return new ReclaimLossesCaseHistoryResponseDTO()
                         {
-                            UserId = objDTO.UserId,
-                            CaseHistoryID = objDTO.CaseHistoryID,
+                            CreatedUser = objDTO.UserId,
+                            CaseHistoryId = objDTO.CaseHistoryID,
                             CaseId = objDTO.CaseId,
                             StatusId = objDTO.StatusId,
-                            StatusDate = objDTO.StatusDate,
+                            StatusDate =DateTime.Parse(objDTO.StatusDate),
                             CreatedComment = objDTO.CreatedComment,
                         };
 
@@ -229,15 +223,44 @@ namespace LegalOfficeWeb_Business.Repository
             }
         }
 
-        public Task<ReclaimLossesCaseHistoryDTO> GetRLCaseHistory(int id,int caseID)
+        public async Task<IEnumerable<ReclaimLossesCaseHistoryResponseDTO>> GetRLCaseHistory(ReclaimLossesGetCaseHistoryDTO objDTO)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var con = baseRepo.GetConnection())
+                {
+                    using (var cmd = new SqlCommand("dbo.RL_get_CaseHistory", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@prp_CaseID", objDTO.CaseId);
+                        cmd.Parameters.AddWithValue("@prp_UserID", objDTO.UserId);
+                        cmd.CommandTimeout = 600;
+                        var reader = await cmd.ExecuteReaderAsync();
+
+
+                        var items = new List<ReclaimLossesCaseHistoryResponseDTO>();
+                        while (await reader.ReadAsync())
+                        {
+                            var item = new ReclaimLossesCaseHistoryResponseDTO();
+                            item.CaseId = int.Parse(reader["CaseID"].ToString());
+                            item.CaseHistoryId = int.Parse(reader["CaseHistoryID"].ToString());
+                            item.StatusId = int.Parse(reader["StatusID"].ToString());
+                            item.CreatedComment = reader["CreatedComment"].ToString();
+                            item.StatusName = reader["StatusName"].ToString();
+                            item.StatusNameAL = reader["StatusNameAL"].ToString();
+                            items.Add(item);
+                        }
+                        con.Close();
+                        return items;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
-        public Task<IEnumerable<ReclaimLossesCaseHistoryDTO>> GetAllRLCaseHistories(int id)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
 
         #region RLCaseNotification
@@ -247,7 +270,7 @@ namespace LegalOfficeWeb_Business.Repository
             {
                 using (var con = baseRepo.GetConnection())
                 {
-                    using (var cmd = new SqlCommand("RL_trn_IUDCaseNatification", con))
+                    using (var cmd = new SqlCommand("RL_trn_IUDCasenotification", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
@@ -293,10 +316,6 @@ namespace LegalOfficeWeb_Business.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ReclaimLossesCaseNotificationDTO>> GetAllRLCaseNotifications()
-        {
-            throw new NotImplementedException();
-        }
         #endregion
 
         #region RLAgreement
@@ -374,14 +393,14 @@ namespace LegalOfficeWeb_Business.Repository
             {
                 using (var con = baseRepo.GetConnection())
                 {
-                    using (var cmd = new SqlCommand("dbo.RL_trn_IUDAgNatification", con))
+                    using (var cmd = new SqlCommand("dbo.RL_trn_IUDAgnotification", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
                         cmd.Parameters.AddWithValue("@prp_UserID", objDTO.UserId);
-                        cmd.Parameters.AddWithValue("@prp_NatificationID", objDTO.NotificationID);
+                        cmd.Parameters.AddWithValue("@prp_NotificationID", objDTO.NotificationID);
                         cmd.Parameters.AddWithValue("@prp_AgreementID", objDTO.AgreementID);
-                        cmd.Parameters.AddWithValue("@prp_NatificationText", objDTO.NotificationText);
+                        cmd.Parameters.AddWithValue("@prp_NotificationText", objDTO.NotificationText);
                         cmd.Parameters.AddWithValue("@prp_PhoneNr", objDTO.PhoneNr);
                         cmd.Parameters.AddWithValue("@prp_Email", objDTO.Email);
                         cmd.Parameters.AddWithValue("@prp_ForCustomer", objDTO.ForCustomer);

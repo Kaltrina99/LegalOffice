@@ -1,4 +1,5 @@
 ﻿using LegalOfficeWeb_Models;
+using LegalOfficeWeb_Models.ReclaimLossesDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,20 +10,19 @@ namespace LegalOfficeWeb_Business.Repository.IRepository
 {
     public interface IReclaimLossesRepository
     {
-        //RL Case
+        #region RL Case
         public Task<ReclaimLossesCaseResponseDTO> CUDRLCase(ReclaimLossesCaseDTO objDTO);
-        public Task<ReclaimLossesCaseResponseDTO> GetRLCase(int id);
-        public Task<IEnumerable<ReclaimLossesCaseResponseDTO>> GetAllRLCases();
+        public Task<ReclaimLossesCaseResponseDTO> GetRLCase(ReclaimLossesGetCaseDTO objDTO);
+        public Task<IEnumerable<ReclaimLossesGetAllCasesResponseDTO>> GetAllRLCases(ReclaimLossesGetAllCasesDTO objDTO);
+        #endregion
 
-        //RL CaseHistory
-        public Task<ReclaimLossesCaseHistoryDTO> CUDRLCaseHistory(ReclaimLossesCaseHistoryDTO objDTO);
-        public Task<ReclaimLossesCaseHistoryDTO> GetRLCaseHistory(int id,int caseId);
-        public Task<IEnumerable<ReclaimLossesCaseHistoryDTO>> GetAllRLCaseHistories(int id);
-
+        #region RL CaseHistory
+        public Task<ReclaimLossesCaseHistoryResponseDTO> CUDRLCaseHistory(ReclaimLossesCaseHistoryDTO objDTO);
+        public Task<IEnumerable<ReclaimLossesCaseHistoryResponseDTO>> GetRLCaseHistory(ReclaimLossesGetCaseHistoryDTO objDTO);
+        #endregion
         //RL CaseNotification
         public Task<ReclaimLossesCaseNotificationDTO> CUDRLCaseNotification(ReclaimLossesCaseNotificationDTO objDTO);
         public Task<ReclaimLossesCaseNotificationDTO> GetRLCaseNotification(int id);
-        public Task<IEnumerable<ReclaimLossesCaseNotificationDTO>> GetAllRLCaseNotifications();
 
         //RL Agreement
         public Task<ReclaimLossesAgreementDTO> CUDRLAgreement(ReclaimLossesAgreementDTO objDTO);
@@ -37,6 +37,5 @@ namespace LegalOfficeWeb_Business.Repository.IRepository
         //RL ManualPayment
         public Task<ReclaimLossesManualPaymentDTO> CUDRLManualPayment(ReclaimLossesManualPaymentDTO objDTO);
         public Task<ReclaimLossesCaseDTO> GetRLManualPayment(int id);
-        public Task<IEnumerable<ReclaimLossesCaseDTO>> GetAllRLManualPayment();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using LegalOfficeWeb_Business.Repository.IRepository;
 using LegalOfficeWeb_Models;
+using LegalOfficeWeb_Models.ReclaimLossesDTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,16 +43,25 @@ namespace LegalOfficeWeb_API.Controllers
                 });
             }
         }
-
         [HttpGet]
-        public async Task<IActionResult> GetAllRLCase()
+        public async Task<IActionResult> GetAllRLCase([FromQuery] ReclaimLossesGetAllCasesDTO reclaimLossesGetAllCasesDTO)
         {
-                return Ok(await reclaimLossesRepository.GetAllRLCases());      
+            try
+            {
+                return Ok(await reclaimLossesRepository.GetAllRLCases(reclaimLossesGetAllCasesDTO));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = ex.Message
+                });
+            }
         }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetRLCase(int? id)
+        [HttpGet]
+        public async Task<IActionResult> GetRLCase([FromQuery]ReclaimLossesGetCaseDTO reclaimLossesGetCaseDTO)
         {
-            if (id == null || id == 0)
+            if (reclaimLossesGetCaseDTO.CaseId == null || reclaimLossesGetCaseDTO.CaseId == 0)
             {
                 return BadRequest(new ErrorModelDTO()
                 {
@@ -59,7 +69,7 @@ namespace LegalOfficeWeb_API.Controllers
                     StatusCode = StatusCodes.Status400BadRequest
                 });
             }
-            var cases=await reclaimLossesRepository.GetRLCase(id.Value);
+            var cases=await reclaimLossesRepository.GetRLCase(reclaimLossesGetCaseDTO);
             if (cases == null)
             {
                 return BadRequest(new ErrorModelDTO()
@@ -91,6 +101,28 @@ namespace LegalOfficeWeb_API.Controllers
                     ErrorMessage = ex.Message
                 });
             }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetRLCaseHistory([FromQuery] ReclaimLossesGetCaseHistoryDTO reclaimLossesGetCaseHistoryDTO)
+        {
+            if (reclaimLossesGetCaseHistoryDTO.CaseId == null || reclaimLossesGetCaseHistoryDTO.CaseId == 0)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = "Invalid Id",
+                    StatusCode = StatusCodes.Status400BadRequest
+                });
+            }
+            var cases = await reclaimLossesRepository.GetRLCaseHistory(reclaimLossesGetCaseHistoryDTO);
+            if (cases == null)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = "Invalid Id",
+                    StatusCode = StatusCodes.Status404NotFound
+                });
+            }
+            return Ok(cases);
         }
         #endregion
 
