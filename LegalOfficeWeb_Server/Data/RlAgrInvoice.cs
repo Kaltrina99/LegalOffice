@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_Server.Data
 {
-    public partial class RlCninvoice
+    public partial class RlAgrInvoice
     {
         public int Id { get; set; }
-        public int? Cnid { get; set; }
+        public int? AgreementId { get; set; }
         public int? CaseId { get; set; }
-        public int? CaseHistoryId { get; set; }
         public string? AgencyId { get; set; }
         public int? EldebitorId { get; set; }
         public int? InvoiceId { get; set; }
         public int? InvoiceIdccp { get; set; }
-        public string? InvoiceIdrl { get; set; }
+        public int? InvoiceIdrl { get; set; }
         public decimal? InvoiceAmount { get; set; }
         public decimal? InvoiceAmountInv { get; set; }
+        public int? CreatedUser { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public bool? Active { get; set; }
 
-        public virtual RlCaseNotification? Cn { get; set; }
+        public virtual RlAgreement? Agreement { get; set; }
     }
 }

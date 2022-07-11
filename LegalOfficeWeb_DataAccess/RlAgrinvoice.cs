@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace LegalOfficeWeb_DataAccess.Data
 {
-    public partial class RlAgrinvoice
+    public partial class RlAgrInvoice
     {
         public int Id { get; set; }
         public int? AgreementId { get; set; }

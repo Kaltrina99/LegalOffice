@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace LegalOfficeWeb_DataAccess.Data
 {
-    public partial class RlCaseNatification
+    public partial class RlCaseNotification
     {
-        public RlCaseNatification()
+        public RlCaseNotification()
         {
             RlCninvoices = new HashSet<RlCninvoice>();
         }

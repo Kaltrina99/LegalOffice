@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LegalOfficeWeb_DataAccess.Data
+namespace LegalOfficeWeb_Server.Data
 {
-    public partial class RlAgrNatification
+    public partial class RlAgrNotification
     {
         public int Id { get; set; }
         public int? AgreementId { get; set; }
-        public string? NartificationText { get; set; }
+        public string? NotificationText { get; set; }
         public string? PhoneNr { get; set; }
         public string? Email { get; set; }
         public int? CreatedUser { get; set; }

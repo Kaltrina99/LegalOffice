@@ -91,10 +91,12 @@ namespace LegalOfficeWeb_Business.Repository
             {
                 using (var con = baseRepo.GetConnection())
                 {
-                    using (var cmd = new SqlCommand("dbo.RL_Case_Get", con))
+                    using (var cmd = new SqlCommand("dbo.RL_get_Case", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@prp_CaseID", id);
+                        cmd.Parameters.AddWithValue("@prp_UserID", id);
+                        cmd.Parameters.AddWithValue("@prp_District", id);
                         cmd.CommandTimeout = 600;
                         var reader =await cmd.ExecuteReaderAsync();
 
