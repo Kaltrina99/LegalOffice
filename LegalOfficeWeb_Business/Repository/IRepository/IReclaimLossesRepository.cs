@@ -19,6 +19,7 @@ namespace LegalOfficeWeb_Business.Repository.IRepository
         #region RL CaseHistory
         public Task<ReclaimLossesCaseHistoryResponseDTO> CUDRLCaseHistory(ReclaimLossesCaseHistoryDTO objDTO);
         public Task<IEnumerable<ReclaimLossesCaseHistoryResponseDTO>> GetRLCaseHistory(ReclaimLossesGetCaseHistoryDTO objDTO);
+        public Task<ReclaimLossesCaseInputResponseDTO> GetRLCaseInputs(ReclaimLossesGetCaseInputDTO objDTO);
         #endregion
         //RL CaseNotification
         public Task<ReclaimLossesCaseNotificationDTO> CUDRLCaseNotification(ReclaimLossesCaseNotificationDTO objDTO);

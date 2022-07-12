@@ -80,6 +80,28 @@ namespace LegalOfficeWeb_API.Controllers
             }
             return Ok(cases);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetRLCaseInput([FromQuery] ReclaimLossesGetCaseInputDTO reclaimLossesGetCaseInputDTO)
+        {
+            if (reclaimLossesGetCaseInputDTO.CaseId == null || reclaimLossesGetCaseInputDTO.CaseId == 0)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = "Invalid Id",
+                    StatusCode = StatusCodes.Status400BadRequest
+                });
+            }
+            var cases = await reclaimLossesRepository.GetRLCaseInputs(reclaimLossesGetCaseInputDTO);
+            if (cases == null)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = "Invalid Id",
+                    StatusCode = StatusCodes.Status404NotFound
+                });
+            }
+            return Ok(cases);
+        }
         #endregion
 
         #region RLCaseHistory

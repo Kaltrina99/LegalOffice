@@ -85,7 +85,6 @@ namespace LegalOfficeWeb_Business.Repository
                 throw e;
             }
         }
-
         public async Task<ReclaimLossesCaseResponseDTO> GetRLCase(ReclaimLossesGetCaseDTO objDTO)
         {
             try
@@ -132,7 +131,6 @@ namespace LegalOfficeWeb_Business.Repository
                 throw e;
             }
         }
-
         public async Task<IEnumerable<ReclaimLossesGetAllCasesResponseDTO>> GetAllRLCases(ReclaimLossesGetAllCasesDTO objDTO)
         {
             try
@@ -179,7 +177,47 @@ namespace LegalOfficeWeb_Business.Repository
                 throw e;
             }
         }
+        public async Task<ReclaimLossesCaseInputResponseDTO> GetRLCaseInputs(ReclaimLossesGetCaseInputDTO objDTO)
+        {
+            try
+            {
+                using (var con = baseRepo.GetConnection())
+                {
+                    using (var cmd = new SqlCommand("dbo.RL_get_CaseInputs", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@prp_CaseID", objDTO.CaseId);
+                        cmd.Parameters.AddWithValue("@prp_UserID", objDTO.UserId);
+                        cmd.CommandTimeout = 600;
+                        var reader = await cmd.ExecuteReaderAsync();
 
+
+                        var item = new ReclaimLossesCaseInputResponseDTO();
+                        while (await reader.ReadAsync())
+                        {
+                            item.CaseId = int.Parse(reader["CaseID"].ToString());
+                            item.CaseInputId = int.Parse(reader["CaseIputId"].ToString());
+                            item.AMeterID = int.Parse(reader["AMeterID"].ToString());
+                            item.Subdistrict = reader["Subdistrict"].ToString();
+                            item.IdentityNr = reader["IdentityNr"].ToString();
+                            item.PhoneNr = reader["PhoneNr"].ToString();
+                            item.Address = reader["Address"].ToString();
+                            item.TariffId = reader["TariffID"].ToString();
+                            item.Municipality = reader["Municipality"].ToString();
+                            item.BirthDate = DateTime.Parse(reader["BirthDate"].ToString());
+                            item.CreatedDate = DateTime.Parse(reader["CreatedDate"].ToString());
+                            item.CreatedUser = int.Parse(reader["CreatedUser"].ToString());
+                        }
+                        con.Close();
+                        return item;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         #endregion
 
         #region RLCaseHistory

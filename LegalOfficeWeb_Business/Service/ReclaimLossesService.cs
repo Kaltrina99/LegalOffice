@@ -61,6 +61,19 @@ namespace LegalOfficeWeb_Business.Service
 
             return new List<ReclaimLossesGetAllCasesResponseDTO>();
         }
+        public async Task<ReclaimLossesCaseInputResponseDTO> GetRLCaseInputs(ReclaimLossesGetCaseInputDTO objDTO)
+        {
+            var response = await _httpClient.GetAsync($"/api/ReclaimLosses/GetRLCaseInputs?CaseId={objDTO.CaseId}&UserId={objDTO.UserId}");
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var apcases = JsonConvert.DeserializeObject<ReclaimLossesCaseInputResponseDTO>(content);
+
+                return apcases;
+            }
+
+            return new ReclaimLossesCaseInputResponseDTO();
+        }
 
         public async Task<ReclaimLossesCaseHistoryResponseDTO> CUDRLCaseHistory(ReclaimLossesCaseHistoryDTO objDTO)
         {
