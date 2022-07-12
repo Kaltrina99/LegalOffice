@@ -26,9 +26,9 @@ namespace LegalOfficeWeb_Business.Repository.IRepository
         public Task<ReclaimLossesCaseNotificationInvoicesResponseDTO> GetRLCaseNotificationInvioce(ReclaimLossesGetCaseNotificationsDTO objDTO);
         #endregion
         //RL Agreement
-        public Task<ReclaimLossesAgreementDTO> CUDRLAgreement(ReclaimLossesAgreementDTO objDTO);
-        public Task<ReclaimLossesAgreementDTO> GetRLAgreement(int id);
-        public Task<IEnumerable<ReclaimLossesAgreementDTO>> GetAllRLAgreements();
+        public Task<ReclaimLossesAgreementResponseDTO> CUDRLAgreement(ReclaimLossesAgreementDTO objDTO);
+        public Task<ReclaimLossesAgreementResponseDTO> GetRLAgreement(ReclaimLossesGetAgreementDTO objDTO);
+        public Task<IEnumerable<ReclaimLossesGetAllAgreementResponseDTO>> GetAllRLAgreements(ReclaimLossesGetAllAgreementsDTO objDTO);
 
         //RL AgreementNotification
         public Task<ReclaimLossesAgreementNotificationDTO> CUDRLAgreementNotification(ReclaimLossesAgreementNotificationDTO objDTO);

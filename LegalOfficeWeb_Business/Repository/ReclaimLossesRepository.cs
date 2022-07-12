@@ -298,7 +298,6 @@ namespace LegalOfficeWeb_Business.Repository
         }
 
         #endregion
-
         #region RLCaseNotification
         public async Task<ReclaimLossesCaseNotificationResponseDTO> CUDRLCaseNotification(ReclaimLossesCaseNotificationDTO objDTO)
         {
@@ -413,9 +412,8 @@ namespace LegalOfficeWeb_Business.Repository
         }
 
         #endregion
-
         #region RLAgreement
-        public async Task<ReclaimLossesAgreementDTO> CUDRLAgreement(ReclaimLossesAgreementDTO objDTO)
+        public async Task<ReclaimLossesAgreementResponseDTO> CUDRLAgreement(ReclaimLossesAgreementDTO objDTO)
         {
             try
             {
@@ -442,23 +440,14 @@ namespace LegalOfficeWeb_Business.Repository
 
                         var r = await cmd.ExecuteNonQueryAsync();
                         con.Close();
-                        return new ReclaimLossesAgreementDTO()
+                        return new ReclaimLossesAgreementResponseDTO()
                         {
                             CaseId = objDTO.CaseId,
-                            UserId = objDTO.UserId,
-                            AgreementId = objDTO.AgreementId,
                             CaseHistoryId = objDTO.CaseHistoryId,
-
                             CustomerName = objDTO.CustomerName,
                             IdentityNr = objDTO.IdentityNr,
                             PhoneNr = objDTO.PhoneNr,
-                            CustomerRepresentative = objDTO.CustomerRepresentative,
-                            CRPhoneNr = objDTO.CRPhoneNr,
-                            CRIdentityNr = objDTO.CRIdentityNr,
-                            InvoiceIDs = objDTO.InvoiceIDs,
-                            InsIDs = objDTO.InsIDs,
-                            Comment = objDTO.Comment,
-                            ProcessType = objDTO.ProcessType,
+                            CustomerRepresentative = objDTO.CustomerRepresentative
                         };
 
                     }
@@ -470,15 +459,78 @@ namespace LegalOfficeWeb_Business.Repository
                 throw e;
             }
         }
-
-        public Task<ReclaimLossesAgreementDTO> GetRLAgreement(int id)
+        public async Task<ReclaimLossesAgreementResponseDTO> GetRLAgreement(ReclaimLossesGetAgreementDTO objDTO)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var con = baseRepo.GetConnection())
+                {
+                    using (var cmd = new SqlCommand("dbo.RL_get_Agreement", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@prp_CaseID", objDTO.CaseId);
+                        cmd.Parameters.AddWithValue("@prp_UserID", objDTO.UserId);
+                        cmd.Parameters.AddWithValue("@prp_AgreementId", objDTO.AgreementId);
+                        cmd.CommandTimeout = 600;
+                        var reader = await cmd.ExecuteReaderAsync();
+
+
+                        var item = new ReclaimLossesAgreementResponseDTO();
+                        while (await reader.ReadAsync())
+                        {
+                            item.CaseId = int.Parse(reader["CaseID"].ToString());
+                            item.AgencyId = reader["AgencyId"].ToString();
+                            item.EldebitorId = int.Parse(reader["EldebitorId"].ToString());
+                            item.CustomerName = reader["CustomerName"].ToString();
+                            item.CreatedDate = DateTime.Parse(reader["CreatedDate"].ToString());
+                            item.CreatedUser = int.Parse(reader["CreatedUser"].ToString());
+                        }
+                        con.Close();
+                        return item;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
-
-        public Task<IEnumerable<ReclaimLossesAgreementDTO>> GetAllRLAgreements()
+        public async Task<IEnumerable<ReclaimLossesGetAllAgreementResponseDTO>> GetAllRLAgreements(ReclaimLossesGetAllAgreementsDTO objDTO)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var con = baseRepo.GetConnection())
+                {
+                    using (var cmd = new SqlCommand("dbo.RL_rpr_Agreements", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@prp_UserID", objDTO.UserId);
+                        cmd.Parameters.AddWithValue("@prp_District", objDTO.District);
+                        cmd.Parameters.AddWithValue("@prp_PageIndex", objDTO.PageIndex);
+                        cmd.Parameters.AddWithValue("@prp_PageSize", objDTO.PageSize);
+                        cmd.Parameters.Add("@prp_RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
+                        cmd.CommandTimeout = 600;
+                        var reader = await cmd.ExecuteReaderAsync();
+
+                        var items = new List<ReclaimLossesGetAllAgreementResponseDTO>();
+                        while (await reader.ReadAsync())
+                        {
+                            var item = new ReclaimLossesGetAllAgreementResponseDTO();
+                            item.CaseId = int.Parse(reader["CaseID"].ToString());
+                            item.AgencyId = reader["AgencyId"].ToString();
+                            item.EldebitorId = int.Parse(reader["EldebitorId"].ToString());
+                            item.CustomerName = reader["CustomerName"].ToString();
+                            items.Add(item);
+                        }
+                        con.Close();
+                        return items;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
         #endregion
 
@@ -543,7 +595,6 @@ namespace LegalOfficeWeb_Business.Repository
         #region RLManualPayment
         public async Task<ReclaimLossesManualPaymentDTO> CUDRLManualPayment(ReclaimLossesManualPaymentDTO objDTO)
         {
-
             try
             {
                 using (var con = baseRepo.GetConnection())

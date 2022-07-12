@@ -5,7 +5,9 @@
 @using LegalOfficeWeb_Models
 @inject ILocalStorageService _localStorage
 <h3>RLCaseList</h3>
+<div class="p-3">
 <a class="btn btn-primary" href="/reclaimlosses/RLCreateCase">Create</a>
+</div>
    @if (IsLoading)
 {
     <div class="loader"></div>
@@ -13,6 +15,20 @@
 else
 {
     <table class="table table-sm table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>Source</th>
+            <th>Case Nr</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Email</th>
+            <th>Email</th>
+            <th>Email</th>
+            <th>Email</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+    </thead>
         @foreach (var item in CaseList)
         {
             <tr>
@@ -25,17 +41,10 @@ else
                 <td>@item.DepartmentName</td>
                 <td>@item.SourceApp</td>
                 <td>@item.StatusName</td>
-                <td><a class="btn btn-secondary" href="/reclaimlosses/RLCreateCase">Edit</a><a class="btn btn-danger">Delete</a></td>
+                <td><a><button class="btn btn-secondary">Send back to TS</button></a><a><button class="btn btn-danger">Continue Case</button></a></td>
             </tr>
         }
     </table>
-
-    <!-- pager -->
-
-    <nav class="table-responsive">
-        <ul class="pagination justify-content-center d-flex flex-wrap">
-        </ul>
-    </nav>
 }
 
 @code {
@@ -48,15 +57,12 @@ else
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-
-
         if (firstRender)
         {
-
             await LoadInput();
-
         }
     }
+
     private async Task LoadInput()
     {
         var userInfo = await _localStorage.GetItemAsync<CurrentUserDTO>(SD.Local_UserDetails);

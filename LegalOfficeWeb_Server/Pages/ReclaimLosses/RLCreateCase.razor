@@ -4,28 +4,52 @@
 @using LegalOfficeWeb_Models
 @using System.Web
 <h3>RLCreateCase</h3>
+@if (IsLoading)
+{
+    <div class="loader"></div>
+}
+else
+{
+    <EditForm Model="CaseRequest" OnValidSubmit="CreateCase">
+        <DataAnnotationsValidator />
+        <div class="form-group row">
+            <label for="firstName" class="col-sm-2 col-form-label">
+                CaseNumber
+            </label>
+            <div class="col-sm-10">
+                <InputText id="firstName" class="form-control" placeholder="First Name"
+                       @bind-Value="CaseRequest.CaseNr" />
+            </div>
+        </div>
+         <div class="form-group row">
+            <label for="firstName" class="col-sm-2 col-form-label">
+                CaseNumber
+            </label>
+            <div class="col-sm-10">
+                <InputText id="firstName" class="form-control" placeholder="First Name"
+                       @bind-Value="CaseRequest.CaseNr" />
+            </div>
+        </div>
+         <div class="form-group row">
+            <label for="firstName" class="col-sm-2 col-form-label">
+                CaseNumber
+            </label>
+            <div class="col-sm-10">
+                <InputText id="firstName" class="form-control" placeholder="First Name"
+                       @bind-Value="CaseRequest.CaseNr" />
+            </div>
+        </div>
+        <button type="submit" class="button login__submit">
+            <span class="button__text">Log In</span>
+            <i class="button__icon fa fa-chevron-right"></i>
+        </button>
 
-
-            @if (IsLoading)
-            {
-              <div class="loader"></div>
-            }
-            else
-            {
-                <EditForm Model="CaseRequest" OnValidSubmit="CreateCase">
-                     <DataAnnotationsValidator/>
-                    <button type="submit" class="button login__submit">
-                        <span class="button__text">Log In</span>
-                        <i class="button__icon fa fa-chevron-right"></i>
-                    </button>
-
-                </EditForm>
-            }
+    </EditForm>
+}
 @code {
-     public bool IsLoading { get; set; } = true;
+    public bool IsLoading { get; set; } = true;
     private ReclaimLossesCaseDTO CaseRequest = new();
     public string Errors { get; set; }
-
 
     [Inject]
     public IReclaimLossesService _reclaimLosses { get; set; }
@@ -49,9 +73,9 @@
     private async Task CreateCase()
     {
 
-        CaseRequest.UserId = 2;
-        CaseRequest.CaseId = 5;
-        CaseRequest.CaseNr = "5";
+        //CaseRequest.UserId = 2;
+        //CaseRequest.CaseId = 5;
+        //CaseRequest.CaseNr = "5";
         CaseRequest.AgencyId = "1";
         CaseRequest.EldebitorId = 66;
         CaseRequest.AMeterId = 66;

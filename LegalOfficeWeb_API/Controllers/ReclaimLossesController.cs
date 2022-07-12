@@ -234,7 +234,43 @@ namespace LegalOfficeWeb_API.Controllers
                 });
             }
         }
-        
+        [HttpGet]
+        public async Task<IActionResult> GetAllRLAgreement([FromQuery] ReclaimLossesGetAllAgreementsDTO reclaimLossesGetAllAgreementsDTO)
+        {
+            try
+            {
+                return Ok(await reclaimLossesRepository.GetAllRLAgreements(reclaimLossesGetAllAgreementsDTO));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = ex.Message
+                });
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetRLAgreement([FromQuery] ReclaimLossesGetAgreementDTO reclaimLossesGetAgreementDTO)
+        {
+            if (reclaimLossesGetAgreementDTO.CaseId == null || reclaimLossesGetAgreementDTO.CaseId == 0)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = "Invalid Id",
+                    StatusCode = StatusCodes.Status400BadRequest
+                });
+            }
+            var cases = await reclaimLossesRepository.GetRLAgreement(reclaimLossesGetAgreementDTO);
+            if (cases == null)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = "Invalid Id",
+                    StatusCode = StatusCodes.Status404NotFound
+                });
+            }
+            return Ok(cases);
+        }
         #endregion
 
         #region RLAgreementNotification
@@ -284,3 +320,4 @@ namespace LegalOfficeWeb_API.Controllers
         #endregion
     }
 }
+
