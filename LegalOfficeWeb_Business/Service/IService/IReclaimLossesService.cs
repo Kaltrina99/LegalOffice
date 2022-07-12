@@ -17,5 +17,9 @@ namespace LegalOfficeWeb_Business.Service.IService
 
         public Task<ReclaimLossesCaseHistoryResponseDTO> CUDRLCaseHistory(ReclaimLossesCaseHistoryDTO objDTO);
         public Task<IEnumerable<ReclaimLossesCaseHistoryResponseDTO>> GetRLCaseHistory(ReclaimLossesGetCaseHistoryDTO objDTO);
+
+        public Task<ReclaimLossesCaseNotificationResponseDTO> CUDRLCaseNotification(ReclaimLossesCaseNotificationDTO objDTO);
+        public Task<ReclaimLossesCaseNotificationResponseDTO> GetRLCaseNotification(ReclaimLossesGetCaseNotificationsDTO objDTO);
+        public Task<ReclaimLossesCaseNotificationInvoicesResponseDTO> GetRLCaseNotificationInvioce(ReclaimLossesGetCaseNotificationsDTO objDTO);
     }
 }

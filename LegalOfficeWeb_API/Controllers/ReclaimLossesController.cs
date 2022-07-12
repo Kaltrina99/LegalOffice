@@ -168,6 +168,50 @@ namespace LegalOfficeWeb_API.Controllers
                 });
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> GetRLCaseNotification([FromQuery] ReclaimLossesGetCaseNotificationsDTO reclaimLossesGetCaseNotificationsDTO)
+        {
+            if (reclaimLossesGetCaseNotificationsDTO.CaseId == null || reclaimLossesGetCaseNotificationsDTO.CaseId == 0)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = "Invalid Id",
+                    StatusCode = StatusCodes.Status400BadRequest
+                });
+            }
+            var cases = await reclaimLossesRepository.GetRLCaseNotification(reclaimLossesGetCaseNotificationsDTO);
+            if (cases == null)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = "Invalid Id",
+                    StatusCode = StatusCodes.Status404NotFound
+                });
+            }
+            return Ok(cases);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetRLCaseNotificationInvioce([FromQuery] ReclaimLossesGetCaseNotificationsDTO reclaimLossesGetCaseNotificationsDTO)
+        {
+            if (reclaimLossesGetCaseNotificationsDTO.CaseId == null || reclaimLossesGetCaseNotificationsDTO.CaseId == 0)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = "Invalid Id",
+                    StatusCode = StatusCodes.Status400BadRequest
+                });
+            }
+            var cases = await reclaimLossesRepository.GetRLCaseNotificationInvioce(reclaimLossesGetCaseNotificationsDTO);
+            if (cases == null)
+            {
+                return BadRequest(new ErrorModelDTO()
+                {
+                    ErrorMessage = "Invalid Id",
+                    StatusCode = StatusCodes.Status404NotFound
+                });
+            }
+            return Ok(cases);
+        }
         #endregion
 
         #region RLAgreement

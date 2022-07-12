@@ -14,17 +14,17 @@ namespace LegalOfficeWeb_Business.Repository.IRepository
         public Task<ReclaimLossesCaseResponseDTO> CUDRLCase(ReclaimLossesCaseDTO objDTO);
         public Task<ReclaimLossesCaseResponseDTO> GetRLCase(ReclaimLossesGetCaseDTO objDTO);
         public Task<IEnumerable<ReclaimLossesGetAllCasesResponseDTO>> GetAllRLCases(ReclaimLossesGetAllCasesDTO objDTO);
+        public Task<ReclaimLossesCaseInputResponseDTO> GetRLCaseInputs(ReclaimLossesGetCaseInputDTO objDTO);
         #endregion
-
         #region RL CaseHistory
         public Task<ReclaimLossesCaseHistoryResponseDTO> CUDRLCaseHistory(ReclaimLossesCaseHistoryDTO objDTO);
         public Task<IEnumerable<ReclaimLossesCaseHistoryResponseDTO>> GetRLCaseHistory(ReclaimLossesGetCaseHistoryDTO objDTO);
-        public Task<ReclaimLossesCaseInputResponseDTO> GetRLCaseInputs(ReclaimLossesGetCaseInputDTO objDTO);
         #endregion
-        //RL CaseNotification
-        public Task<ReclaimLossesCaseNotificationDTO> CUDRLCaseNotification(ReclaimLossesCaseNotificationDTO objDTO);
-        public Task<ReclaimLossesCaseNotificationDTO> GetRLCaseNotification(int id);
-
+        #region RL CaseNotification
+        public Task<ReclaimLossesCaseNotificationResponseDTO> CUDRLCaseNotification(ReclaimLossesCaseNotificationDTO objDTO);
+        public Task<ReclaimLossesCaseNotificationResponseDTO> GetRLCaseNotification(ReclaimLossesGetCaseNotificationsDTO objDTO);
+        public Task<ReclaimLossesCaseNotificationInvoicesResponseDTO> GetRLCaseNotificationInvioce(ReclaimLossesGetCaseNotificationsDTO objDTO);
+        #endregion
         //RL Agreement
         public Task<ReclaimLossesAgreementDTO> CUDRLAgreement(ReclaimLossesAgreementDTO objDTO);
         public Task<ReclaimLossesAgreementDTO> GetRLAgreement(int id);

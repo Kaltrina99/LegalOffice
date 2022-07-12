@@ -102,5 +102,46 @@ namespace LegalOfficeWeb_Business.Service
 
             return new List<ReclaimLossesCaseHistoryResponseDTO>();
         }
+
+        public async Task<ReclaimLossesCaseNotificationResponseDTO> CUDRLCaseNotification(ReclaimLossesCaseNotificationDTO objDTO)
+        {
+            var content = JsonConvert.SerializeObject(objDTO);
+            var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("api/ReclaimLosses/CUDRLCaseNotification", bodyContent);
+            string responseResult = response.Content.ReadAsStringAsync().Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var result = JsonConvert.DeserializeObject<ReclaimLossesCaseNotificationResponseDTO>(responseResult);
+                return result;
+            }
+
+            return new ReclaimLossesCaseNotificationResponseDTO();
+        }
+        public async Task<ReclaimLossesCaseNotificationResponseDTO> GetRLCaseNotification(ReclaimLossesGetCaseNotificationsDTO objDTO)
+        {
+            var response = await _httpClient.GetAsync($"/api/ReclaimLosses/GetRLCaseNotification?CaseId={objDTO.CaseId}&UserId={objDTO.UserId}");
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var apcases = JsonConvert.DeserializeObject<ReclaimLossesCaseNotificationResponseDTO>(content);
+
+                return apcases;
+            }
+
+            return new ReclaimLossesCaseNotificationResponseDTO();
+        }
+        public async Task<ReclaimLossesCaseNotificationInvoicesResponseDTO> GetRLCaseNotificationInvioce(ReclaimLossesGetCaseNotificationsDTO objDTO)
+        {
+            var response = await _httpClient.GetAsync($"/api/ReclaimLosses/GetRLCaseNotificationInvioce?CaseId={objDTO.CaseId}&UserId={objDTO.UserId}");
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var apcases = JsonConvert.DeserializeObject<ReclaimLossesCaseNotificationInvoicesResponseDTO>(content);
+
+                return apcases;
+            }
+
+            return new ReclaimLossesCaseNotificationInvoicesResponseDTO();
+        }
     }
 }
