@@ -1,5 +1,6 @@
 ﻿using LegalOfficeWeb_Business.Repository.IRepository;
 using LegalOfficeWeb_Models;
+using LegalOfficeWeb_Models.CaseDTO;
 using LegalOfficeWeb_Models.ReclaimLossesDTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -81,7 +82,7 @@ namespace LegalOfficeWeb_API.Controllers
             return Ok(cases);
         }
         [HttpGet]
-        public async Task<IActionResult> GetRLCaseInput([FromQuery] ReclaimLossesGetCaseInputDTO reclaimLossesGetCaseInputDTO)
+        public async Task<IActionResult> GetRLCaseInput([FromQuery] CaseInputDataDTO reclaimLossesGetCaseInputDTO)
         {
             if (reclaimLossesGetCaseInputDTO.CaseId == null || reclaimLossesGetCaseInputDTO.CaseId == 0)
             {

@@ -8,9 +8,9 @@ namespace LegalOfficeWeb_Models
 {
     public class SearchCustomerDTO
     {
-        public int UserId { get; set; }
-        public string AgencyId { get; set; }
-        public int EldebitorId { get; set; }
-        public int AMeterId { get; set; }
+        public int? UserId { get; set; }
+        public string? AgencyId { get; set; }
+        public int? EldebitorId { get; set; }
+        public string? AMeterId { get; set; }
     }
 }

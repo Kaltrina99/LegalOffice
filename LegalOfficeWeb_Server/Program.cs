@@ -19,7 +19,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
+builder.Services.AddServerSideBlazor()
+    .AddHubOptions(options =>
+    {
+        options.ClientTimeoutInterval = TimeSpan.FromSeconds(60);
+        options.EnableDetailedErrors = true;
+        options.HandshakeTimeout = TimeSpan.FromSeconds(10);
+        options.KeepAliveInterval = TimeSpan.FromSeconds(10);
+        options.MaximumParallelInvocationsPerClient = 1;
+        options.MaximumReceiveMessageSize = 32 * 1024;
+        options.StreamBufferCapacity = 10;
+    });
 //IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("DefaultConnection").Build();
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("ConnectionStrings"));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -57,6 +67,9 @@ builder.Services.AddScoped<IAuthenticationService, LdapAuthenticationService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAdministrativeProcessService, AdministrativeProcessService>();
 builder.Services.AddScoped<IReclaimLossesService, ReclaimLossesService>();
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ICaseService, CaseService>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
@@ -77,6 +90,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseWebSockets();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 

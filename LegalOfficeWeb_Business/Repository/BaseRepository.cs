@@ -21,7 +21,7 @@ namespace LegalOfficeWeb_Business.Repository
             {
                 var con = new SqlConnection(connectionString);
                 con.Open();
-                return con;
+                return  con;
             }
             catch (Exception ex)
             {

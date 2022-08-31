@@ -1,4 +1,5 @@
 ﻿using LegalOfficeWeb_Models;
+using LegalOfficeWeb_Models.CaseDTO;
 using LegalOfficeWeb_Models.ReclaimLossesDTO;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace LegalOfficeWeb_Business.Repository.IRepository
         public Task<ReclaimLossesCaseResponseDTO> CUDRLCase(ReclaimLossesCaseDTO objDTO);
         public Task<ReclaimLossesCaseResponseDTO> GetRLCase(ReclaimLossesGetCaseDTO objDTO);
         public Task<IEnumerable<ReclaimLossesGetAllCasesResponseDTO>> GetAllRLCases(ReclaimLossesGetAllCasesDTO objDTO);
-        public Task<ReclaimLossesCaseInputResponseDTO> GetRLCaseInputs(ReclaimLossesGetCaseInputDTO objDTO);
+        public Task<CaseInputResponseDTO> GetRLCaseInputs(CaseInputDataDTO objDTO);
         #endregion
         #region RL CaseHistory
         public Task<ReclaimLossesCaseHistoryResponseDTO> CUDRLCaseHistory(ReclaimLossesCaseHistoryDTO objDTO);

@@ -1,0 +1,121 @@
+﻿@using LegalOfficeWeb_Business.Service.IService
+@using LegalOfficeWeb_Common
+@using LegalOfficeWeb_Common.Wrappers
+@using LegalOfficeWeb_Models
+@inject ILocalStorageService _localStorage
+@if (IsLoading)
+{
+    <div class="loader"></div>
+}
+else
+{
+    <table class="table table-sm table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>Source</th>
+            <th>Case Nr</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Email</th>
+            <th>Email</th>
+            <th>Email</th>
+            <th>Email</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+        @foreach (var item in CaseList)
+        {
+            <tr>
+                <td>@item.CaseId</td>
+                <td>@item.CaseNr</td>
+                <td>@item.CreatedDate</td>
+                <td>@item.CreatedUserName</td>
+                <td>@item.MainResponsibleUser</td>
+                <td>@item.AgencyId</td>
+                <td>@item.DepartmentName</td>
+                <td>@item.SourceApp</td>
+                <td>@item.StatusName</td>
+                <td><button class="button btn-secondary" @onclick="(()=>SendToTS(item.CaseId,item.CreatedUser,item.AgencyId))">Send back to TS</button><button class="button btn-danger">Continue Case</button></td>
+            </tr>
+        }
+    </table>
+    
+  @if (ShowPopup)
+            {
+                <div class="modal" tabindex="-1" style="display:block" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Reason</h3>
+                                <button type="button" class="close"
+                                @onclick="ClosePopup">
+                                    <span aria-hidden="true">X</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                               <RLReasonModal CaseID="@CaseId" UserId="@UserId" District="@District"></RLReasonModal>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            }
+}
+
+@code {
+    public bool IsLoading { get; set; } = true;
+    private IEnumerable<ReclaimLossesGetAllCasesResponseDTO> CaseList { get; set; } = null;
+    [Parameter]
+    public int CaseId { get; set; }= 1;
+    [Parameter]
+    public int UserId { get; set; }= 2;
+    [Parameter]
+    public string District { get; set; }= "";
+    bool ShowPopup = false;
+    public string Errors { get; set; }
+    [Inject]
+    public IReclaimLossesService _reclaimLosses { get; set; }
+    private ReclaimLossesGetAllCasesDTO page = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadInput();
+        }
+    }
+
+    private async Task LoadInput()
+    {
+        var userInfo = await _localStorage.GetItemAsync<CurrentUserDTO>(SD.Local_UserDetails);
+        IsLoading = true;
+        StateHasChanged();
+        page.UserId = int.Parse(userInfo.Id);
+        page.District = "DFE";
+        page.PageIndex = 1;
+        page.PageSize = 14;
+        CaseList = await _reclaimLosses.GetAllRLCases(page);
+
+        IsLoading = false;
+        StateHasChanged();
+    }
+
+    void ClosePopup()
+    {
+        ShowPopup = false;
+    }
+    void SendToTS(int id, int userid, string district)
+    {
+            CaseId = id;
+            UserId = userid;
+            District = district;
+       
+        ShowPopup = true;
+    }
+    async Task SaveCase()
+    {
+        ShowPopup = false;
+      
+    }
+
+}

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LegalOfficeWeb_Models
+namespace LegalOfficeWeb_Models.CaseDTO
 {
-    public class ReclaimLossesGetCaseInputDTO
+    public class CaseDataDTO
     {
         public int UserId { get; set; }
-        public int CaseId { get; set; }
+        public int? CaseId { get; set; }
+        public string District { get; set; }
     }
 }

@@ -1,0 +1,56 @@
+﻿@page "/cases/add"
+@using LegalOfficeWeb_Business.Service.IService
+@using LegalOfficeWeb_Common
+@using LegalOfficeWeb_Models
+@using LegalOfficeWeb_Models.CaseDTO
+@inject ILocalStorageService _localStorage
+@inject ICaseService caseService
+@inject NavigationManager NavigationManager
+
+<EditForm Model="@cases" OnValidSubmit="SaveCase">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="Name" class="form-label">ID</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="cases.CaseNr" />
+        </div>
+        <ValidationMessage For="@(() => cases.CaseNr)" />
+    </div>
+    <div class="mb-3">
+        <label for="Address" class="form-label">Address</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="cases.Address" />
+        </div>
+        <ValidationMessage For="@(() => cases.Address)" />
+    </div>
+    <div class="mb-3">
+        <label for="Address" class="form-label">AgencyId</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="cases.AgencyId" />
+        </div>
+        <ValidationMessage For="@(() => cases.AgencyId)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+@code {
+    [Parameter]
+    public int casesId { get; set; }
+    protected string Title = "Add";
+    protected CUDCaseDTO cases = new();
+    protected override async Task OnParametersSetAsync()
+    {
+
+    }
+    protected async Task SaveCase()
+    {
+        await caseService.CUDRLCase(cases);
+        Cancel();
+    }
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/cases/list");
+    }
+}

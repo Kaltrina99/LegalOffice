@@ -1,0 +1,94 @@
+﻿@page "/EditUser/{CurretnID}"
+@using System;
+@using LegalOfficeWeb_Models
+@inject IUsersRepository ObjCustomService 
+@inject NavigationManager NavigationManager
+<h2>Create User</h2>
+<hr />
+
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Name" class="control-label">User ID</label>
+                <input for="Name" class="form-control" @bind="@objCI.UserId" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                <select @bind="@objCI.RoleIds" class="form-control">
+                    <option value="1_1">Admin</option>
+                    <option value="2_1">Mediation</option>
+                    <option value="3_1">Administrative Process</option>
+                    <option value="4_1">Civil Case</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Country" class="control-label">Full Name</label>
+                <input for="Country" class="form-control" @bind="@objCI.FullName" />
+            </div>
+            <div class="form-group">
+                <label for="City" class="control-label">Username</label>
+                <input for="City" class="form-control" @bind="@objCI.UserName" />
+            </div>
+            <div class="form-group">
+                <label for="Country1" class="control-label">Email</label>
+                <input for="Country1" class="form-control" @bind="@objCI.Email" />
+            </div>
+            <div class="form-group">
+                <label for="City1" class="control-label">Password</label>
+                <input for="City1" class="form-control" @bind="@objCI.Password" />
+            </div>
+            <div class="form-group">
+                <label for="Country" class="control-label">PhoneNumber</label>
+                <input for="Country" class="form-control" @bind="@objCI.PhoneNumber" />
+            </div>
+            <div class="form-group">
+                <label asp-for="UserType" class="control-label"></label>
+                <select @bind="@objCI.UserType" class="form-control">
+                    <option value="1">keds&kesco</option>
+                    <option value="2">Outsider</option>
+                </select>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@UpdateUser" value="User" />
+                <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Cancel" />
+            </div>
+        </div>
+    </div>
+
+</form>
+@code {
+    [Parameter]
+    public string CurretnID { get; set; }
+      
+    UserDTO objCI = new UserDTO();
+    
+    protected override async Task OnInitializedAsync()
+    {   
+        objCI =await Task.Run(()=>GetUserByID(Convert.ToInt32(CurretnID)));        
+    }
+    protected void UpdateUser()
+    {
+        UpdateUser(objCI);
+        NavigationManager.NavigateTo("Users");
+    }
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("Users");
+    }
+    public UserDTO GetUserByID(int id)
+        {
+            UserDTO User =ObjCustomService.GetUsersDatail(id);
+            return User;
+        }
+        public string UpdateUser(UserDTO objUser)
+        {
+            ObjCustomService.UpdateUsers(objUser);
+            return "Update Successfully";
+        }
+}   

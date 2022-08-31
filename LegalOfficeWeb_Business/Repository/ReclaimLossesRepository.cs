@@ -1,5 +1,6 @@
 ﻿using LegalOfficeWeb_Business.Repository.IRepository;
 using LegalOfficeWeb_Models;
+using LegalOfficeWeb_Models.CaseDTO;
 using LegalOfficeWeb_Models.ReclaimLossesDTO;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
@@ -177,7 +178,7 @@ namespace LegalOfficeWeb_Business.Repository
                 throw e;
             }
         }
-        public async Task<ReclaimLossesCaseInputResponseDTO> GetRLCaseInputs(ReclaimLossesGetCaseInputDTO objDTO)
+        public async Task<CaseInputResponseDTO> GetRLCaseInputs(CaseInputDataDTO objDTO)
         {
             try
             {
@@ -192,7 +193,7 @@ namespace LegalOfficeWeb_Business.Repository
                         var reader = await cmd.ExecuteReaderAsync();
 
 
-                        var item = new ReclaimLossesCaseInputResponseDTO();
+                        var item = new CaseInputResponseDTO();
                         while (await reader.ReadAsync())
                         {
                             item.CaseId = int.Parse(reader["CaseID"].ToString());

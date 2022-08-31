@@ -1,5 +1,6 @@
 ﻿using LegalOfficeWeb_Business.Service.IService;
 using LegalOfficeWeb_Models;
+using LegalOfficeWeb_Models.CaseDTO;
 using LegalOfficeWeb_Models.ReclaimLossesDTO;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -61,18 +62,18 @@ namespace LegalOfficeWeb_Business.Service
 
             return new List<ReclaimLossesGetAllCasesResponseDTO>();
         }
-        public async Task<ReclaimLossesCaseInputResponseDTO> GetRLCaseInputs(ReclaimLossesGetCaseInputDTO objDTO)
+        public async Task<CaseInputResponseDTO> GetRLCaseInputs(CaseInputDataDTO objDTO)
         {
             var response = await _httpClient.GetAsync($"/api/ReclaimLosses/GetRLCaseInputs?CaseId={objDTO.CaseId}&UserId={objDTO.UserId}");
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                var apcases = JsonConvert.DeserializeObject<ReclaimLossesCaseInputResponseDTO>(content);
+                var apcases = JsonConvert.DeserializeObject<CaseInputResponseDTO>(content);
 
                 return apcases;
             }
 
-            return new ReclaimLossesCaseInputResponseDTO();
+            return new CaseInputResponseDTO();
         }
 
         public async Task<ReclaimLossesCaseHistoryResponseDTO> CUDRLCaseHistory(ReclaimLossesCaseHistoryDTO objDTO)
