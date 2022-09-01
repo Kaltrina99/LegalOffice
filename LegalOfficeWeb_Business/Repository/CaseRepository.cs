@@ -211,5 +211,43 @@ namespace LegalOfficeWeb_Business.Repository
                 throw e;
             }
         }
+
+        public async Task<CaseDocumentDTO> GetRLCaseDoc(CaseDataDTO objDTO)
+        {
+            try
+            {
+                using (var con = baseRepo.GetConnection())
+                {
+                    using (var cmd = new SqlCommand("dbo.RL_get_CaseDocs", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@prp_CaseID", objDTO.CaseId);
+                        cmd.Parameters.AddWithValue("@prp_UserID", objDTO.UserId);
+                        cmd.Parameters.AddWithValue("@prp_District", objDTO.District);
+                        cmd.CommandTimeout = 600;
+                        var reader = await cmd.ExecuteReaderAsync();
+
+
+                        var item = new CaseDocumentDTO();
+                        while (await reader.ReadAsync())
+                        {
+                            item.CaseId = int.Parse(reader["CaseID"].ToString());
+                            item.CaseDocId = int.Parse(reader["CaseDocId"].ToString());
+                            item.DocName = reader["DocName"].ToString();
+                            item.DocPath = reader["DocPath"].ToString();
+                            item.CreatedUser = int.Parse(reader["CreatedUser"].ToString());
+                            item.CreatedDate = DateTime.Parse(reader["CreatedDate"].ToString());
+                            item.CreatedUserName = reader["CreatedUserName"].ToString();
+                        }
+                        con.Close();
+                        return item;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

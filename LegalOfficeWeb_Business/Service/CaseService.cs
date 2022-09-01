@@ -63,6 +63,20 @@ namespace LegalOfficeWeb_Business.Service
             return new CasesResponseDTO();
         }
 
+        public async Task<CaseDocumentDTO> GetRLCaseDoc(CaseDataDTO objDTO)
+        {
+            var response = await _httpClient.GetAsync($"/api/Cases/GetRLCaseDoc?CaseId={objDTO.CaseId}&UserId={objDTO.UserId}");
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var apcases = JsonConvert.DeserializeObject<CaseDocumentDTO>(content);
+
+                return apcases;
+            }
+
+            return new CaseDocumentDTO();
+        }
+
         public async Task<CaseInputResponseDTO> GetRLCaseInputs(CaseDataDTO objDTO)
         {
             var response = await _httpClient.GetAsync($"/api/Cases/GetRLCaseInputs?CaseId={objDTO.CaseId}&UserId={objDTO.UserId}");
