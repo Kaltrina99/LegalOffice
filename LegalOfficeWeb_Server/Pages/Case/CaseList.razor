@@ -46,7 +46,7 @@ else
                     <td>@item.SourceApp</td>
                     <td>@item.StatusName</td>
                     <td>
-                        <a class="nav-link" @onclick="() => OnClick(item.CaseId)" >
+                        <a class="nav-link" href="EditCases/@item.CaseId">
                             <span class="oi oi-pencil" aria-hidden="true"></span> Edit
                         </a>
                         
@@ -76,15 +76,6 @@ else
         caseList = await Task.Run(() => GetCases(caseData));
     }
 
-    private async void OnClick(int? casesId)
-    {
-        var userInfo = await _localStorage.GetItemAsync<CurrentUserDTO>(SD.Local_UserDetails);
-        int userId = int.Parse(userInfo.Id);
-        CaseDataDTO caseData = new CaseDataDTO(userId,casesId, "DPR");
-        caseSelected = await Task.Run(() => GetCaseId(caseData));
-
-        NavigationManager.NavigateTo($"/sendBack/{casesId}");
-    }
     public async Task<IEnumerable<CasesResponseDTO>> GetCases(CaseDataDTO casesData)
     {       
 
@@ -92,10 +83,5 @@ else
         return cases;
     }
 
-    public async Task<CasesResponseDTO> GetCaseId(CaseDataDTO casesData)
-    {
-
-        CasesResponseDTO cases = await objCasesService.GetRLCase(casesData);
-        return cases;
-    }
+    
 }

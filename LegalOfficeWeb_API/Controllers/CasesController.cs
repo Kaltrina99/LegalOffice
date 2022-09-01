@@ -80,7 +80,7 @@ namespace LegalOfficeWeb_API.Controllers
             return Ok(cases);
         }
         [HttpGet]
-        public async Task<IActionResult> GetRLCaseInput([FromQuery] CaseInputDataDTO caseDataDTO)
+        public async Task<IActionResult> GetRLCaseInput([FromQuery] CaseDataDTO caseDataDTO)
         {
             if (caseDataDTO.CaseId == null || caseDataDTO.CaseId == 0)
             {

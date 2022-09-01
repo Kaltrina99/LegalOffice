@@ -1,6 +1,5 @@
 ﻿using LegalOfficeWeb_Business.Service.IService;
 using LegalOfficeWeb_Models.CaseHistoryDTO;
-using LegalOfficeWeb_Models.ReclaimLossesDTO;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;

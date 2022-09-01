@@ -5,10 +5,10 @@
 @using LegalOfficeWeb_Models
 @using LegalOfficeWeb_Models.CaseDTO
 @inject ILocalStorageService _localStorage
-@inject ICaseService caseService
+@inject ICaseService objCasesService
 @inject NavigationManager NavigationManager
-@*
-<EditForm Model="@cases" OnValidSubmit="SaveCase">
+
+<EditForm Model="@cases" OnValidSubmit="UpdateCase">
     <DataAnnotationsValidator />
     <div class="mb-3">
         <label for="Name" class="form-label">ID</label>
@@ -146,12 +146,135 @@
         <button type="submit" class="btn btn-primary">Update</button>
         <button class="btn btn-light" @onclick="Cancel">Cancel</button>
     </div>
-</EditForm>*@
+</EditForm>
 
 @code {
+    private string selectedReason = "";
+    private string selectedLocation = "";
     [Parameter]
     public string CurretnID { get; set; }
-    protected CUDCaseDTO cases = new();
+    CasesResponseDTO caseSelected = new CasesResponseDTO();
+    CaseInputResponseDTO caseinput = new CaseInputResponseDTO();
+    CUDCaseDTO cases = new CUDCaseDTO();
+    string userId;
+    public string bDate { get; set; }
+    public string DepartmentIDDrop { get; set; }
+    public string StatusIDDrop { get; set; }
+    private void UpdateBdate(ChangeEventArgs e)
+    {
+        bDate = e.Value.ToString() + " 00:00:00";
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        var userInfo = await _localStorage.GetItemAsync<CurrentUserDTO>(SD.Local_UserDetails);
+        int userId = int.Parse(userInfo.Id);
+        var c = int.Parse(CurretnID);
+        CaseDataDTO caseData = new CaseDataDTO(userId, c, "DPR");
+        caseSelected = await Task.Run(() => GetCaseId(caseData));
+        caseinput = await Task.Run(() =>  objCasesService.GetRLCaseInputs(caseData));
+        cases = new CUDCaseDTO()
+            {
+                CaseId = int.Parse(CurretnID),
+                CaseNr = caseSelected.CaseNr,
+                AgencyId = caseSelected.AgencyId,
+                EldebitorId = int.Parse(caseSelected.EldebitorId),
+                AMeterId = caseinput.AMeterID,
+                Subdistrict = caseinput.Subdistrict,
+                CustomerName = caseSelected.CustomerName,
+                IdentityNr = caseinput.IdentityNr,
+                PhoneNr = caseinput.PhoneNr,
+                Address = caseinput.Address,
+                TariffId = caseinput.TariffId,
+                Municipality = caseinput.Municipality,
+                BirthDate = caseinput.BirthDate.ToString(),
+                DepartmentId = caseSelected.DepartmentId,
+                StatusId = caseSelected.StatusId,
+                StatusDate = DateTime.Now.ToString(),
+                MainResponsibleUserId = caseSelected.MainResponsibleUserId,
+                SecondResponsibleUserId = caseSelected.SecondResponsibleUserId,
+                SourceApp = caseSelected.SourceApp,
+                SourceId = caseSelected.SourceId,
+                SourceDate = caseSelected.SourceDate.ToString(),
+                CreatedComment = caseSelected.CreatedComment
+            };
+        
+
+    }
+    public async Task<CasesResponseDTO> GetCaseId(CaseDataDTO casesData)
+    {
+
+        CasesResponseDTO cases = await objCasesService.GetRLCase(casesData);
+
+        return cases;
+    }
+    public async Task<CaseInputResponseDTO> GetRLCaseInputs(CaseDataDTO casesData)
+    {
+
+        CaseInputResponseDTO cases = await objCasesService.GetRLCaseInputs(casesData);
+
+        return cases;
+    }
+    private async Task UpdateCase()
+    {
+        if (bDate != null)
+        {
+            cases.BirthDate = bDate;
+        }
+        var userInfo = await _localStorage.GetItemAsync<CurrentUserDTO>(SD.Local_UserDetails);
+        userId = userInfo.Id;
+        DateTime sDateTime = DateTime.Now;
+        string sDateFormat = sDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+        cases.StatusDate = sDateFormat;
+        cases.DepartmentId = int.Parse(DepartmentIDDrop);
+        cases.StatusId = int.Parse(StatusIDDrop);
+        cases.SourceApp = "LO";
+        cases.SourceId = 1;
+        cases.ProcessType = 1;
+        if (String.IsNullOrEmpty(cases.Municipality))
+            cases.Municipality = " ";
+        if (String.IsNullOrEmpty(cases.PhoneNr))
+            cases.PhoneNr = "04- --- ---";
+        if (String.IsNullOrEmpty(cases.IdentityNr))
+            cases.IdentityNr = " ";
+        DateTime sourceDateTime = DateTime.Now;
+        string sourceDateFormat = sourceDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+        cases.SourceDate = sourceDateFormat;
+        await UpdateCasesMethod(caseSelected, caseinput);
+    }
+
+    private async Task UpdateCasesMethod(CasesResponseDTO caseSelected, CaseInputResponseDTO caseinput)
+    {
+        cases = new CUDCaseDTO()
+            {
+                UserId = int.Parse(userId),
+                CaseId = int.Parse(CurretnID),
+                CaseNr = caseSelected.CaseNr,
+                AgencyId = caseSelected.AgencyId,
+                EldebitorId = int.Parse(caseSelected.EldebitorId),
+                AMeterId = caseinput.AMeterID,
+                Subdistrict = caseinput.Subdistrict,
+                CustomerName = caseSelected.CustomerName,
+                IdentityNr = caseinput.IdentityNr,
+                PhoneNr = caseinput.PhoneNr,
+                Address = caseinput.Address,
+                TariffId = caseinput.TariffId,
+                Municipality = caseinput.Municipality,
+                BirthDate = caseinput.BirthDate.ToString(),
+                DepartmentId = caseSelected.DepartmentId,
+                StatusId = caseSelected.StatusId,
+                StatusDate = DateTime.Now.ToString(),
+                MainResponsibleUserId = caseSelected.MainResponsibleUserId,
+                SecondResponsibleUserId = caseSelected.SecondResponsibleUserId,
+                SourceApp = caseSelected.SourceApp,
+                SourceId = caseSelected.SourceId,
+                SourceDate = caseSelected.SourceDate.ToString(),
+                CreatedComment = caseSelected.CreatedComment,
+                ProcessType = 2
+            };
+
+        await objCasesService.CUDRLCase(cases);
+    }
+
     public void Cancel()
     {
         NavigationManager.NavigateTo("/cases/list");

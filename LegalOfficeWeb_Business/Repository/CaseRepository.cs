@@ -169,7 +169,7 @@ namespace LegalOfficeWeb_Business.Repository
             }
         }
 
-        public async Task<CaseInputResponseDTO> GetRLCaseInputs(CaseInputDataDTO objDTO)
+        public async Task<CaseInputResponseDTO> GetRLCaseInputs(CaseDataDTO objDTO)
         {
             try
             {

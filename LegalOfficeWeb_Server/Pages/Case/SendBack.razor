@@ -10,14 +10,6 @@
 <h3>SendBack</h3>
 
 <label class="form-label">@caseSelected.CaseId</label>
-<label class="form-label">@caseSelected.CaseNr</label>
-<label class="form-label">@caseSelected.CreatedDate</label>
-<label class="form-label">@caseSelected.CreatedUserName</label>
-<label class="form-label">@caseSelected.MainResponsibleUser</label>
-<label class="form-label">@caseSelected.AgencyId</label>
-<label class="form-label">@caseSelected.DepartmentName</label>
-<label class="form-label">@caseSelected.SourceApp</label>
-<label class="form-label">@caseSelected.StatusName</label>
 <label class="form-label">Reason:</label>
 <select @bind="@selectedReason">
     <option value="1">Mungon ID</option>
@@ -49,6 +41,7 @@
     [Parameter]
     public string CaseID { get; set; }
     CasesResponseDTO caseSelected = new CasesResponseDTO();
+    CaseInputResponseDTO caseinput = new CaseInputResponseDTO();
     protected override async Task OnInitializedAsync()
     {
         var userInfo = await _localStorage.GetItemAsync<CurrentUserDTO>(SD.Local_UserDetails);
@@ -56,14 +49,54 @@
         var c = int.Parse(CaseID);
         CaseDataDTO caseData = new CaseDataDTO(userId, c, "DPR");
         caseSelected = await Task.Run(() => GetCaseId(caseData));
+        caseinput=await objCasesService.GetRLCaseInputs(caseData);
+       
+
     }
     public async Task<CasesResponseDTO> GetCaseId(CaseDataDTO casesData)
     {
 
         CasesResponseDTO cases = await objCasesService.GetRLCase(casesData);
+
         return cases;
     }
     private async Task UpdateCase()
     {
+        await UpdateCasesMethod(caseSelected, caseinput);
     }
+
+    private async Task UpdateCasesMethod(CasesResponseDTO caseSelected, CaseInputResponseDTO caseinput)
+    {
+        CUDCaseDTO newCase = new CUDCaseDTO()
+            {
+                UserId = caseSelected.
+                CaseId = caseSelected.CaseId,
+                CaseNr = caseSelected.CaseNr,
+                AgencyId = caseSelected.AgencyId,
+                EldebitorId = int.Parse(caseSelected.EldebitorId),
+                AMeterId = caseinput.AMeterID,
+                Subdistrict = caseinput.Subdistrict,
+                CustomerName = caseSelected.CustomerName,
+                IdentityNr = caseinput.IdentityNr,
+                PhoneNr = caseinput.PhoneNr,
+                Address = caseinput.Address,
+                TariffId = caseinput.TariffId,
+                Municipality = caseinput.Municipality,
+                BirthDate =caseinput.BirthDate.ToString(),
+                DepartmentId = caseSelected.DepartmentId,
+                StatusId = 5,
+                StatusDate = DateTime.Now.ToString(),
+                MainResponsibleUserId = caseSelected.MainResponsibleUserId,
+                SecondResponsibleUserId = caseSelected.SecondResponsibleUserId,
+                SourceApp = caseSelected.SourceApp,
+                SourceId = caseSelected.SourceId,
+                SourceDate = caseSelected.SourceDate.ToString(),
+                CreatedComment = caseSelected.CreatedComment,
+                ProcessType = 2
+            };
+
+        await objCasesService.CUDRLCase(newCase);
+    }
+
+    
 }

@@ -73,6 +73,7 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IAgreementRepository, AgreementRepository>();
 builder.Services.AddScoped<ICaseHistoryRepository, CaseHistoryRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 //builder.Services.AddBlazoredLocalStorage();
 //builder.Services.AddAuthorizationCore();
 //builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();

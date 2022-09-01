@@ -13,6 +13,6 @@ namespace LegalOfficeWeb_Business.Repository.IRepository
         public Task<CasesResponseDTO> CUDRLCase(CUDCaseDTO objDTO);
         public Task<CasesResponseDTO> GetRLCase(CaseDataDTO objDTO);
         public Task<IEnumerable<CasesResponseDTO>> GetAllRLCases(CaseDataDTO objDTO);
-        public Task<CaseInputResponseDTO> GetRLCaseInputs(CaseInputDataDTO objDTO);
+        public Task<CaseInputResponseDTO> GetRLCaseInputs(CaseDataDTO objDTO);
     }
 }

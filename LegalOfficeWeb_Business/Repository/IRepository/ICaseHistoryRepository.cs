@@ -1,5 +1,4 @@
-﻿using LegalOfficeWeb_Models.ReclaimLossesDTO;
-using LegalOfficeWeb_Models;
+﻿using LegalOfficeWeb_Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

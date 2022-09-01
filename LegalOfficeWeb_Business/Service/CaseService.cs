@@ -63,7 +63,7 @@ namespace LegalOfficeWeb_Business.Service
             return new CasesResponseDTO();
         }
 
-        public async Task<CaseInputResponseDTO> GetRLCaseInputs(CaseInputDataDTO objDTO)
+        public async Task<CaseInputResponseDTO> GetRLCaseInputs(CaseDataDTO objDTO)
         {
             var response = await _httpClient.GetAsync($"/api/Cases/GetRLCaseInputs?CaseId={objDTO.CaseId}&UserId={objDTO.UserId}");
             if (response.IsSuccessStatusCode)

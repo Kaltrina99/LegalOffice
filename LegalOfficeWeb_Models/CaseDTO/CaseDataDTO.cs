@@ -24,6 +24,12 @@ namespace LegalOfficeWeb_Models.CaseDTO
         {
         }
 
+        public CaseDataDTO(int userId, int? caseId)
+        {
+            UserId = userId;
+            CaseId = caseId;
+        }
+
         public int UserId { get; set; }
         public int? CaseId { get; set; }
         public string District { get; set; }

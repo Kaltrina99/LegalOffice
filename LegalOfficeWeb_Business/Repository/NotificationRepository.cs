@@ -1,7 +1,6 @@
 ﻿using LegalOfficeWeb_Business.Repository.IRepository;
 using LegalOfficeWeb_Models;
 using LegalOfficeWeb_Models.CaseNotificationDTO;
-using LegalOfficeWeb_Models.ReclaimLossesDTO;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using System;
