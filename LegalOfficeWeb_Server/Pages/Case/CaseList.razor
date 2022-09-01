@@ -1,40 +1,101 @@
 ﻿@page "/cases/list"
+@using LegalOfficeWeb_Business.Service.IService
+@using LegalOfficeWeb_Common
+@using LegalOfficeWeb_Common.Helpers
+@using LegalOfficeWeb_Models
+@using LegalOfficeWeb_Models.CaseDTO
+@inject ILocalStorageService _localStorage
+@inject ICaseService objCasesService
+@inject NavigationManager NavigationManager
+<NavLink class="nav-link" href="cases/add">
+    <span class="oi oi-plus" aria-hidden="true"></span> Add New
+</NavLink>
 
-<h3>CaseList</h3>
-
-<table border=1>
-				<thead>
-					<tr>
-						<th>userId</th>
-						<th>caseId</th>
-						<th>caseNr</th>
-						<th>agencyId</th>
-						<th>eldebitorId</th>
-						<th>aMeterId</th>
-						<th>subdistrict</th>
-						<th>customerName</th>
-						<th>identityNr</th>
-						<th>phoneNr</th>
-						<th>address</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>6</td>
-						<td>1</td>
-						<td>1</td>
-						<td>DPR</td>
-						<td>90041173</td>
-						<td>34231114</td>
-						<td>Prishtina - Jug</td>
-						<td>Nazmi  Aliu</td>
-						<td>100</td>
-						<td></td>
-						<td>Slivovë - Mukatp.n.</td>
-					</tr>
-				</tbody>
-			</table>
-
+@if (caseList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Case  Id</td>
+                <td>Case Nr</td>
+                <td>Created Date</td>
+                <td>Created UserName</td>
+                <td>MainResponsibleUser</td>
+                <td>AgencyId</td>
+                <td>DepartmentName</td>
+                <td>SourceApp</td>
+                <td>Status Name</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in caseList)
+            {
+                <tr>
+                    <td>@item.CaseId</td>
+                    <td>@item.CaseNr</td>
+                    <td>@item.CreatedDate</td>
+                    <td>@item.CreatedUserName</td>
+                    <td>@item.MainResponsibleUser</td>
+                    <td>@item.AgencyId</td>
+                    <td>@item.DepartmentName</td>
+                    <td>@item.SourceApp</td>
+                    <td>@item.StatusName</td>
+                    <td>
+                        <a class="nav-link" @onclick="() => OnClick(item.CaseId)" >
+                            <span class="oi oi-pencil" aria-hidden="true"></span> Edit
+                        </a>
+                        
+                        <a class="nav-link" href="DeleteCase/@item.CaseId">
+                            <span class="oi oi-trash" aria-hidden="true"></span> Delete
+                        </a>
+                        <a class="nav-link" href="ContinueCase/@item.CaseId">
+                            <span class="oi oi-play-circle" aria-hidden="true"></span> ContinueCase
+                        </a>
+                        <a class="nav-link" href="sendBack/@item.CaseId">
+                            <span class="oi oi-transfer" aria-hidden="true"></span> Send Back To Ticketing
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+} 
 @code {
+    IEnumerable<CasesResponseDTO> caseList;
+    CasesResponseDTO caseSelected;
+    protected override async Task OnInitializedAsync()
+    {
+        var userInfo = await _localStorage.GetItemAsync<CurrentUserDTO>(SD.Local_UserDetails);
+        int userId= int.Parse(userInfo.Id);
+        CaseDataDTO caseData = new CaseDataDTO(userId,"DPR");
+        caseList = await Task.Run(() => GetCases(caseData));
+    }
 
+    private async void OnClick(int? casesId)
+    {
+        var userInfo = await _localStorage.GetItemAsync<CurrentUserDTO>(SD.Local_UserDetails);
+        int userId = int.Parse(userInfo.Id);
+        CaseDataDTO caseData = new CaseDataDTO(userId,casesId, "DPR");
+        caseSelected = await Task.Run(() => GetCaseId(caseData));
+
+        NavigationManager.NavigateTo($"/sendBack/{casesId}");
+    }
+    public async Task<IEnumerable<CasesResponseDTO>> GetCases(CaseDataDTO casesData)
+    {       
+
+        IEnumerable<CasesResponseDTO> cases = await objCasesService.GetAllRLCases(casesData);
+        return cases;
+    }
+
+    public async Task<CasesResponseDTO> GetCaseId(CaseDataDTO casesData)
+    {
+
+        CasesResponseDTO cases = await objCasesService.GetRLCase(casesData);
+        return cases;
+    }
 }

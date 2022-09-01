@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LegalOfficeWeb_Models
+namespace LegalOfficeWeb_Models.CaseNotificationDTO
 {
-    public class ReclaimLossesCaseNotificationDTO
+    public class CUDNotificationDTO
     {
         public int? UserId { get; set; }
         public int? CaseId { get; set; }

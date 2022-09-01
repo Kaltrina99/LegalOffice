@@ -1,0 +1,69 @@
+﻿@page "/sendBack/{CaseID}"
+@using LegalOfficeWeb_Models.CaseDTO
+@using LegalOfficeWeb_Business.Service.IService
+@using LegalOfficeWeb_Common
+@using LegalOfficeWeb_Common.Helpers
+@using LegalOfficeWeb_Models
+@inject ILocalStorageService _localStorage
+@inject ICaseService objCasesService
+@inject NavigationManager NavigationManager
+<h3>SendBack</h3>
+
+<label class="form-label">@caseSelected.CaseId</label>
+<label class="form-label">@caseSelected.CaseNr</label>
+<label class="form-label">@caseSelected.CreatedDate</label>
+<label class="form-label">@caseSelected.CreatedUserName</label>
+<label class="form-label">@caseSelected.MainResponsibleUser</label>
+<label class="form-label">@caseSelected.AgencyId</label>
+<label class="form-label">@caseSelected.DepartmentName</label>
+<label class="form-label">@caseSelected.SourceApp</label>
+<label class="form-label">@caseSelected.StatusName</label>
+<label class="form-label">Reason:</label>
+<select @bind="@selectedReason">
+    <option value="1">Mungon ID</option>
+    <option value="2">ID Gabim</option>
+    <option value="3">I/e vdekur</option>
+    <option value="4">Mungojne fotografite/fotografite e paqarta</option>
+    <option value="5">Mungon procesverbali origjinal i terrenit  </option>
+    <option value="6">Mungon procesverbali origjinal i kalibrimit</option>
+    <option value="7">Mungon procesverbali origjinal i nderrimit te njehsorit  </option>
+    <option value="8">Mungojne zyrtaret e MTI-se ne raportin e kalibrimit</option>
+    <option value="9">Mungojne te dhenat e qiramarresit</option>
+    <option value="10">Vlera e vogel</option>
+    <option value="11">Tjera</option>
+</select>
+<label class="form-label">Doc Location:</label>
+<select @bind="@selectedLocation">
+    <option value="1">Legal Office</option>
+    <option value="2">Customer Care</option>
+</select>
+<button type="submit" @onclick="(()=>UpdateCase())" form="form1" class="btn btn-primary">
+    <span class="button__text">Save</span>
+    <i class="button__icon fa fa-chevron-right"></i>
+</button>
+
+@code {
+
+    private string selectedReason = "";
+    private string selectedLocation = "";
+    [Parameter]
+    public string CaseID { get; set; }
+    CasesResponseDTO caseSelected = new CasesResponseDTO();
+    protected override async Task OnInitializedAsync()
+    {
+        var userInfo = await _localStorage.GetItemAsync<CurrentUserDTO>(SD.Local_UserDetails);
+        int userId = int.Parse(userInfo.Id);
+        var c = int.Parse(CaseID);
+        CaseDataDTO caseData = new CaseDataDTO(userId, c, "DPR");
+        caseSelected = await Task.Run(() => GetCaseId(caseData));
+    }
+    public async Task<CasesResponseDTO> GetCaseId(CaseDataDTO casesData)
+    {
+
+        CasesResponseDTO cases = await objCasesService.GetRLCase(casesData);
+        return cases;
+    }
+    private async Task UpdateCase()
+    {
+    }
+}

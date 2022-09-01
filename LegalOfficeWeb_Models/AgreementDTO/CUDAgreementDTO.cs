@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LegalOfficeWeb_Models
+namespace LegalOfficeWeb_Models.AgreementDTO
 {
-    public class ReclaimLossesAgreementDTO
+    public class CUDAgreementDTO
     {
         public int? UserId { get; set; }
         public int? AgreementId { get; set; }
