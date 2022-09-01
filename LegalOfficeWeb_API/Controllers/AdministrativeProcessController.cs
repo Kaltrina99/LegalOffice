@@ -15,18 +15,6 @@ namespace LegalOfficeWeb_API.Controllers
             this.administrativeProcessRepository = administrativeProcessRepository;
 
         }
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetAll()
-        {
-            return Ok(await administrativeProcessRepository.GetAll());
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetAllStatuses()
-        {
-            return Ok(await administrativeProcessRepository.GetAllStatuses());
-        }
+       
     }
 }

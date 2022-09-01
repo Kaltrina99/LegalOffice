@@ -21,18 +21,6 @@ namespace LegalOfficeWeb_Business.Service
             _configuration = configuration;
         }
 
-        public async Task<IEnumerable<AdministrativeProcessDTO>> GetAll()
-        {
-            var response = await _httpClient.GetAsync("/api/AdministrativeProcess/GetAll");
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                var apcases = JsonConvert.DeserializeObject<IEnumerable<AdministrativeProcessDTO>>(content);
-                
-                return apcases;
-            }
-
-            return new List<AdministrativeProcessDTO>();
-        }
+        
     }
 }

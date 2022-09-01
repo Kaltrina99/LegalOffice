@@ -9,6 +9,6 @@ namespace LegalOfficeWeb_Business.Service.IService
 {
     public interface IAdministrativeProcessService
     {
-        public Task<IEnumerable<AdministrativeProcessDTO>> GetAll();
+        
     }
 }

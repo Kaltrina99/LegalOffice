@@ -73,6 +73,8 @@ builder.Services.AddScoped<ICaseService, CaseService>();
 builder.Services.AddScoped<ICaseHistoryService, CaseHistoryService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IAgreementService, AgreementService>();
+builder.Services.AddScoped<IAgreementExtrasService, AgreementExtrasService>();
+builder.Services.AddScoped<IManualPaymentRepository, ManualPaymentRepository>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
