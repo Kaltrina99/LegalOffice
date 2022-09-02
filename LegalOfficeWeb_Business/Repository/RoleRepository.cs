@@ -1,6 +1,7 @@
 ﻿using LegalOfficeWeb_Business.Repository.IRepository;
 using LegalOfficeWeb_DataAccess.Data;
 using LegalOfficeWeb_Models;
+using LegalOfficeWeb_Models.CaseDTO;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using System;
@@ -20,29 +21,26 @@ namespace LegalOfficeWeb_Business.Repository
             DatabaseSettings dbSettings = dbOptions.Value;
             baseRepo = new BaseRepository(dbSettings.DefaultConnection);
         }
-        public List<Role> GetAll()
+        public async Task<RoleDTO> CUDUserRole(UserRoleDTO userRoleDTO)
         {
             try
             {
                 using (var con = baseRepo.GetConnection())
                 {
-                    using (var cmd = new SqlCommand("dbo.Roles_GetAll", con))
+                    using (var cmd = new SqlCommand("dbo.HMRB_trn_IUDUserRole", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@prp_UserID", userRoleDTO.UserId);
+                        cmd.Parameters.AddWithValue("@prp_CreatedUserID", userRoleDTO.CreatedUserId);
+                        cmd.Parameters.AddWithValue("@prp_RoleIDs", userRoleDTO.RoleIds);
+                         await cmd.ExecuteReaderAsync();
 
-                        var reader = cmd.ExecuteReader();
-                        var items = new List<Role>();
-                        if (reader != null && reader.HasRows)
-                            while (reader.Read())
-                            {
-                                var item = new Role();
-                                item.RoleId = int.Parse(reader["RoleID"].ToString());
-                                item.RoleName = reader["RoleName"].ToString();
-                                items.Add(item);
-                            }
                         con.Close();
-                        return items;
+                        return new RoleDTO()
+                        {
+                        };
                     }
+
                 }
             }
             catch (Exception e)
@@ -50,7 +48,6 @@ namespace LegalOfficeWeb_Business.Repository
                 throw e;
             }
         }
-
-        
     }
+        
 }

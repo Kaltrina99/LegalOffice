@@ -10,4 +10,12 @@
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DetailDTO\" />
+    <Folder Include="ProcessStatusDTO\" />
+    <Folder Include="ProcessDTO\" />
+    <Folder Include="StatusDecisionDTO\" />
+    <Folder Include="PhasesDTO\" />
+  </ItemGroup>
+
 </Project>

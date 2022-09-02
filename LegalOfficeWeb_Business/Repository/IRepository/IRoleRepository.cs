@@ -1,4 +1,5 @@
 ﻿using LegalOfficeWeb_DataAccess.Data;
+using LegalOfficeWeb_Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace LegalOfficeWeb_Business.Repository.IRepository
 {
     public interface IRoleRepository
     {
-        public List<Role> GetAll();
+        public Task<RoleDTO> CUDUserRole(UserRoleDTO userRoleDTO);
     }
 }

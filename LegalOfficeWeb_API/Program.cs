@@ -68,7 +68,6 @@ builder.Services.AddScoped<IAuthenticationService, LdapAuthenticationService>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<ICaseRepository, CaseRepository>();
-builder.Services.AddScoped<IAdministrativeProcessRepository, AdministrativeProcessRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IAgreementRepository, AgreementRepository>();
 builder.Services.AddScoped<IAgreementExtrasRepository, AgreementExtrasRepository>();
@@ -76,9 +75,6 @@ builder.Services.AddScoped<IManualPaymentRepository, ManualPaymentRepository>();
 builder.Services.AddScoped<ICaseHistoryRepository, CaseHistoryRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
-//builder.Services.AddBlazoredLocalStorage();
-//builder.Services.AddAuthorizationCore();
-//builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
 
 builder.Services.AddCors(o => o.AddPolicy("AllowAll", c =>
 {
