@@ -38,7 +38,7 @@ namespace LegalOfficeWeb_API.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> GetAPMain([FromQuery] HistoryDataDTO historyDataDTO)
+        public async Task<IActionResult> GetAPHistory([FromQuery] HistoryDataDTO historyDataDTO)
         {
             if (historyDataDTO.APMainId == null || historyDataDTO.APMainId == 0)
             {

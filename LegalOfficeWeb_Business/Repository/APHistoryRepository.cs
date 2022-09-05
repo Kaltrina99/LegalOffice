@@ -45,7 +45,7 @@ namespace LegalOfficeWeb_Business.Repository
                         {
                             CreatedUser = objDTO.UserId,
                             APHistoryId = objDTO.APHistoryId,
-                            APManinId = objDTO.APManinId,
+                            APMainId = objDTO.APManinId,
                             StatusId = objDTO.StatusId,
                             StatusDate = objDTO.StatusDate,
                             StatusComment = objDTO.CreatedComment,
@@ -80,13 +80,13 @@ namespace LegalOfficeWeb_Business.Repository
                         while (await reader.ReadAsync())
                         {
                             var item = new HistoryResponseDTO();
-                            item.APManinId = int.Parse(reader["APMsinID"].ToString());
+                            item.APMainId = int.Parse(reader["APMainID"].ToString());
                             item.APHistoryId = int.Parse(reader["APHistoryID"].ToString());
                             item.StatusId = int.Parse(reader["StatusID"].ToString());
                             item.StatusComment = reader["StatusComment"].ToString();
                             item.StatusName = reader["StatusName"].ToString();
                             item.StatusNameAL = reader["StatusNameAL"].ToString();
-                            item.StatusDate = DateTime.Parse(reader["StatusName"].ToString());
+                            item.StatusDate = DateTime.Parse(reader["StatusDate"].ToString());
                             item.CreatedUser = int.Parse(reader["CreatedUser"].ToString());
                             item.CreatedDate = DateTime.Parse(reader["CreatedDate"].ToString());
                             item.CreatedUserName = reader["CreatedUserName"].ToString();

@@ -35,9 +35,9 @@ namespace LegalOfficeWeb_Business.Repository
                         cmd.Parameters.AddWithValue("@prp_APMainID", objDTO.APManinId);
                         cmd.Parameters.AddWithValue("@prp_CaseID", objDTO.CaseId);
                         cmd.Parameters.AddWithValue("@prp_CompensationAmount", objDTO.CompensationAmount);
-                        cmd.Parameters.AddWithValue("@prp_EvaluatedAmount", objDTO.EvaluationAmound);
-                        cmd.Parameters.AddWithValue("@prp_OfferedAmount", objDTO.OfferedAmound);
-                        cmd.Parameters.AddWithValue("@prp_PaidAmount", objDTO.PaidAmound);
+                        cmd.Parameters.AddWithValue("@prp_EvaluatedAmount", objDTO.EvaluationAmount);
+                        cmd.Parameters.AddWithValue("@prp_OfferedAmount", objDTO.OfferedAmount);
+                        cmd.Parameters.AddWithValue("@prp_PaidAmount", objDTO.PaidAmount);
                         cmd.Parameters.AddWithValue("@prp_CreatedComment", objDTO.CreatedComment);
                         cmd.Parameters.AddWithValue("@prp_ProcessType", objDTO.ProcessType);
 
@@ -46,12 +46,12 @@ namespace LegalOfficeWeb_Business.Repository
                         return new MainResponseDTO()
                         {
                             CreatedUser = objDTO.UserId,
-                            APManinId = objDTO.APManinId,
+                            APMainId = objDTO.APManinId,
                             CaseId = objDTO.CaseId,
                             CompensationAmount = objDTO.CompensationAmount,
-                            EvaluationAmound = objDTO.EvaluationAmound,
-                            OfferedAmound = objDTO.OfferedAmound,
-                            PaidAmound = objDTO.PaidAmound,
+                            EvaluationAmount = objDTO.EvaluationAmount,
+                            OfferedAmount = objDTO.OfferedAmount,
+                            PaidAmount = objDTO.PaidAmount,
                             CreatedComment = objDTO.CreatedComment
                         };
 
@@ -86,12 +86,12 @@ namespace LegalOfficeWeb_Business.Repository
                         {
                             var item = new MainResponseDTO();
                             item.CaseId = int.Parse(reader["CaseID"].ToString());
-                            item.APManinId = int.Parse(reader["APManinID"].ToString());
+                            item.APMainId = int.Parse(reader["APMainID"].ToString());
                             item.CompensationAmount = double.Parse(reader["CompensationAmount"].ToString());
-                            item.EvaluationAmound = double.Parse(reader["EvaluationAmound"].ToString());
-                            item.OfferedAmound = double.Parse(reader["OfferedAmound"].ToString());
-                            item.PaidAmound = double.Parse(reader["PaidAmound"].ToString());
-                            item.CreatedComment = reader["CreatedComment"].ToString();
+                            item.EvaluationAmount = double.Parse(reader["EvaluatedAmount"].ToString());
+                            item.OfferedAmount = double.Parse(reader["OfferedAmount"].ToString());
+                            item.PaidAmount = double.Parse(reader["PaidAmount"].ToString());
+                            item.CreatedComment = reader["Comment"].ToString();
                             item.CreatedUser = int.Parse(reader["CreatedUser"].ToString());
                             item.CreatedDate = DateTime.Parse(reader["CreatedDate"].ToString());
                             item.CreatedUserName = reader["CreatedUserName"].ToString();

@@ -12,9 +12,9 @@ namespace LegalOfficeWeb_Models.MainDTO
         public int APManinId { get; set; }
         public int CaseId { get; set; }
         public double CompensationAmount { get; set; }
-        public double EvaluationAmound { get; set; }
-        public double OfferedAmound { get; set; }
-        public double PaidAmound { get; set; }
+        public double EvaluationAmount { get; set; }
+        public double OfferedAmount { get; set; }
+        public double PaidAmount { get; set; }
         public string CreatedComment { get; set; }
         public int ProcessType { get; set; }
     }

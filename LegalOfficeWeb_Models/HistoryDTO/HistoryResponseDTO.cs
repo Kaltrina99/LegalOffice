@@ -9,7 +9,7 @@ namespace LegalOfficeWeb_Models.HistoryDTO
     public class HistoryResponseDTO
     {
         public int APHistoryId { get; set; }
-        public int APManinId { get; set; }
+        public int APMainId { get; set; }
         public int StatusId { get; set; }
         public string StatusName { get; set; }
         public string StatusNameAL { get; set; }
