@@ -14,6 +14,6 @@ namespace LegalOfficeWeb_Models.HistoryDTO
         public int StatusId { get; set; }
         public DateTime StatusDate { get; set; }
         public string CreatedComment { get; set; }
-        public int ProocessType { get; set; }
+        public int ProcessType { get; set; }
     }
 }

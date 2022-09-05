@@ -14,7 +14,7 @@ namespace LegalOfficeWeb_Models.MainDTO
         public double EvaluationAmound { get; set; }
         public double OfferedAmound { get; set; }
         public double PaidAmound { get; set; }
-        public string Comment { get; set; }
+        public string CreatedComment { get; set; }
         public int CreatedUser { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedUserName { get; set; }

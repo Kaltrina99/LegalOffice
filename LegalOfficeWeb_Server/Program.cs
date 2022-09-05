@@ -31,7 +31,7 @@ builder.Services.AddServerSideBlazor()
         options.MaximumReceiveMessageSize = 32 * 1024;
         options.StreamBufferCapacity = 10;
     });
-//IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("DefaultConnection").Build();
+
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("ConnectionStrings"));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -73,7 +73,9 @@ builder.Services.AddScoped<ICaseHistoryService, CaseHistoryService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IAgreementService, AgreementService>();
 builder.Services.AddScoped<IAgreementExtrasService, AgreementExtrasService>();
-builder.Services.AddScoped<IManualPaymentRepository, ManualPaymentRepository>();
+builder.Services.AddScoped<IManualPaymentService, ManualPaymentService>();
+builder.Services.AddScoped<IAPMainService, APMainService>();
+builder.Services.AddScoped<IAPHistoryService, APHistoryService>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();

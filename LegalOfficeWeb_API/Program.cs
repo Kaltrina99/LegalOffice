@@ -15,11 +15,8 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -54,16 +51,9 @@ builder.Services.AddAuthentication(opt =>
     };
 });
 
-
-
-
 builder.Services.AddSingleton(_ => builder.Configuration);
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory());
 
-
-
-
-//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("BaseAPIUrl")) });
 builder.Services.AddScoped<IAuthenticationService, LdapAuthenticationService>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
@@ -74,6 +64,8 @@ builder.Services.AddScoped<IAgreementExtrasRepository, AgreementExtrasRepository
 builder.Services.AddScoped<IManualPaymentRepository, ManualPaymentRepository>();
 builder.Services.AddScoped<ICaseHistoryRepository, CaseHistoryRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<IAPMainRepository, APMainRepository>();
+builder.Services.AddScoped<IAPHistoryRepository, APHistoryRepository>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
 builder.Services.AddCors(o => o.AddPolicy("AllowAll", c =>
@@ -84,7 +76,6 @@ builder.Services.AddCors(o => o.AddPolicy("AllowAll", c =>
 }));
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
